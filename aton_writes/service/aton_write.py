@@ -1,6 +1,8 @@
 from models.aton.organization import Organization
+from aton_writes.service.upsert_product import create_product
 import logging
 
+from models.aton.product import Product
 from models.aton.role_instance import RoleInstance
 
 log = logging.getLogger(__name__)
@@ -37,3 +39,6 @@ def write_to_aton(org: Organization):
     except Exception as e:
         log.error(f"Error writing organization to Aton: {e}")
         return False
+
+def write_products_networks(product: Product):
+    create_product(product)
