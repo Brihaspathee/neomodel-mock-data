@@ -1,0 +1,134 @@
+{
+  "provider": {
+    "502": {
+      "category": "identifier",
+      "labels": ["NPI"],
+      "attr_type": "NPI",
+      "relationship": "HAS_NPI",
+      "name": "PROV_NPI",
+      "field_mappings": {
+        "706": "value",
+        "708": "start_date",
+        "709": "end_date",
+        "707": "NOT-MAPPED"
+      }
+    },
+    "101278": {
+      "category": "qualification",
+      "labels": ["Accreditation"],
+      "attr_type": "AASM Accreditation",
+      "issuer": "American Academy of Sleep Medicine",
+      "name": "PROV_AASM_ACCRED",
+      "field_mappings": {
+        "101957": "NOT-MAPPED",
+        "101958": "start_date",
+        "102856": "end_date"
+      },
+      "conditions": [
+        {
+          "field_id": "101957",
+          "operator": "equals",
+          "value": "YES"
+        }
+      ]
+    },
+    "100073": {
+      "category": "identifier",
+      "labels": ["MedicareID"],
+      "attr_type": "MedicareID",
+      "relationship": "HAS_MEDICARE_ID",
+      "name": "PROV_MEDICARE_ID",
+      "field_mappings": {
+        "100283": "value"
+      }
+    },
+    "101277": {
+      "category": "qualification",
+      "labels": ["Accreditation"],
+      "attr_type": "AAAASF Accreditation",
+      "issuer": "American Association for Accreditation of Ambulatory Surgery Facilities",
+      "name": "PROV_AAAASF_ACCRED",
+      "field_mappings": {
+        "101955": "NOT-MAPPED",
+        "101956": "start_date",
+        "102795": "end_date"
+      },
+      "conditions": [
+        {
+          "field_id": "101955",
+          "operator": "equals",
+          "value": "Y"
+        }
+      ]
+    },
+    "100638": {
+      "category": "qualification",
+      "labels": ["Accreditation"],
+      "attr_type": "AAAHC Accreditation",
+      "issuer": "Accreditation Association for Ambulatory Health Care",
+      "name": "PROV_AAAHC_ACCRED",
+      "field_mappings": {
+        "101136": "NOT-MAPPED",
+        "101137": "start_date",
+        "102815": "end_date",
+        "104381": "level"
+      },
+      "conditions": [
+        {
+          "field_id": "101136",
+          "operator": "equals",
+          "value": "Y"
+        }
+      ]
+    },
+    "100640": {
+      "category": "qualification",
+      "labels": ["Accreditation"],
+      "attr_type": "ACR Accreditation",
+      "issuer": "American College of Radiology",
+      "name": "PROV_ACR_ACCRED",
+      "field_mappings": {
+        "101143": "NOT-MAPPED",
+        "101141": "start_date",
+        "102915": "end_date",
+        "104380": "level"
+      },
+      "conditions": [
+        {
+          "field_id": "101143",
+          "operator": "equals",
+          "value": "Y"
+        }
+      ]
+    }
+  },
+  "practitioner": {
+    "201": {
+      "category": "identifier",
+      "labels": ["NPI"],
+      "attr_type": "NPI",
+      "relationship": "HAS_NPI",
+      "name": "PRAC_NPI",
+      "field_mappings": {
+        "2001": "value",
+        "2002": "start_date",
+        "2003": "end_date",
+        "2004": "NOT-MAPPED"
+      }
+    },
+    "202": {
+      "category": "qualification",
+      "labels": ["License"],
+      "attr_type": "Medical License",
+      "name": "PRAC_MEDICAL_LICENSE",
+      "field_mappings": {
+        "2005": "value",
+        "2006": "start_date",
+        "2007": "end_date",
+        "2008": "state",
+        "2009": "status",
+        "2010": "issuer"
+      }
+    }
+  }
+}
