@@ -1,0 +1,17 @@
+from models.aton.nodes.organization import Organization
+from aton_writes.service.upsert_role_location import process_role_locations
+from aton_writes.service.upsert_role_network import process_role_networks
+import logging
+
+log = logging.getLogger(__name__)
+
+
+def process_role_instance(org: Organization,):
+    for role_type, role_instance_list in org.get_pending_role_instances().items():
+        if role_type == "has_role":
+            for role_instance in role_instance_list:
+                role_instance.save()
+                log.info(f"Role instance saved to Aton its element id is: {role_instance.element_id}")
+                process_role_locations(role_instance)
+                process_role_networks(role_instance)
+                org.role.connect(role_instance)

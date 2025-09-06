@@ -1,5 +1,5 @@
-from models.aton.network import Network
-from models.aton.product import Product
+from models.aton.nodes.network import Network
+from models.aton.nodes.product import Product
 from models.portico.pp_net import PPNetDict
 from transform.transformers import transform_to_aton
 import logging

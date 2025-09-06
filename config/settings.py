@@ -2,9 +2,11 @@ import json
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from typing import Dict, List, Any
 
 from sqlalchemy.orm import relationship
 
+from config.attributes_mapping import AttributeMapping
 from config.secrets_api import SecretsAPI
 import logging
 from config import aton_logging
@@ -63,63 +65,36 @@ NEO4J = {
     "database": secrets["ss.neo4j.database"],
 }
 
-# Path to the attributes.json file that has all the attributes
-CONFIG_PATH = Path(__file__).with_name("attributes.json")
+ATTRIBUTES_CONFIG:Dict[str, Dict[str, AttributeMapping]] = {}
 
-# The code below is reading the attributes.json file and
-# transforms it into a flattened structure
+# -----------------------------------------------------------------------------------------
+# Load entity attributes from JSON file
+# ---------------------------------------------------------------------------------------
+def load_entity_attributes(entity_name: str, file_path: Path):
+    with open(file_path, "r") as f:
+        raw = json.load(f)
+    entity_dict = {}
+    for attr_id, details in raw.items():
+        entity_dict[attr_id] = AttributeMapping(
+            name=details["name"],
+            category=details["category"],
+            attr_type=details["attr_type"],
+            class_path=details["class"],
+            fields=details["fields"],
+            ignore=details.get("ignore", []),
+            adornments=details.get("adornments", {})
+        )
+    ATTRIBUTES_CONFIG[entity_name] = entity_dict
 
-# Load the grouped config
-with open(CONFIG_PATH, "r") as f:
-    GROUPED_CONFIG = json.load(f)
-# GROUPED CONFIG contains the attributes json file grouped by entity type
+# -----------------------------------------------------------------------------------------
+# Load all entities at startup
+# -----------------------------------------------------------------------------------------
+def load_all_attributes(base_dir: Path):
+    for entity_dir in base_dir.iterdir():
+        if entity_dir.is_dir():
+            for json_file in entity_dir.glob("*.json"):
+                entity_name = entity_dir.name
+                load_entity_attributes(entity_name, json_file)
 
-# Build flat config for fast lookups
-FLAT_CONFIG = {}
-for entity_type, attributes in GROUPED_CONFIG.items():
-    # - Iterates through each key-value pair in `GROUPED_CONFIG`
-    # entity_type will be the key, attributes will be the value
-    # entity_type = "provider"
-    # attributes = {"101": {"category": "identifier", "name": "PROV_NPI"}
-    for attribute_id, details in attributes.items():
-        # - Iterates through each key-value pair in `attributes`
-        # attribute_id will be the key, details will be the value
-        # attribute_id = "101"
-        # details = {"category": "identifier", "name": "PROV_NPI"}
-
-        # Build the flat config
-        # attribute_id becomes the key in flat config
-        FLAT_CONFIG[attribute_id] = {
-            # the value is the dictionary with keys, "entity_type", "category", "name"
-            "entity_type": entity_type,
-            **details, # this is dictionary unpacking
-            # **details is equivalent to writing the below code
-            # "category": details["category"], "name": details["name"], "field_mappings": details["field_mappings"]
-        }
-
-# FLAT_CONFIG = {
-#     "101": {
-#         "entity_type": "provider",
-#         "category": "identifier",
-#         "name": "PROV_NPI",
-#         "field_mappings": {
-#             "1001": "PROV_NPI",
-#             "1002": "PROV_NPI_START_DATE"
-#         }
-#     }
-# }
-
-# ATTRIBUTE_STRUCTURES: dict[str, AttributeStructure] = {
-#     attr_id: AttributeStructure(
-#         entity_type=cfg['entity_type'],
-#         category=cfg['category'],
-#         labels=cfg.get('labels'),
-#         issuer=cfg.get('issuer'),
-#         attr_type=cfg.get('attr_type'),
-#         relationship=cfg.get('relationship'),
-#         name=cfg.get('name'),
-#         field_mappings=cfg.get('field_mappings'),
-#         conditions=cfg.get('conditions')
-#     )
-#     for attr_id, cfg in FLAT_CONFIG.items()
-# }
+BASE_ATTRIBUTES_DIR = Path(__file__).parent / "attributes"
+load_all_attributes(BASE_ATTRIBUTES_DIR)

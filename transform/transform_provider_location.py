@@ -1,14 +1,118 @@
 import logging
 
-from models.aton.organization import Organization
-from models.aton.role_instance import RoleInstance
-from models.portico import PPProv
+from models.aton.nodes.location import Location
+from models.aton.nodes.validation import Validation
+from utils.location_util import get_hash_key_for_prov_tin_loc
+from models.aton.nodes.organization import Organization
+from models.aton.nodes.role_instance import RoleInstance
+from models.aton.nodes.role_location import RoleLocation
+from models.portico import PPProv, PPProvLoc, PPProvTinLoc
+from transform.transform_provider_net_cycle import transform_provider_net_cycle
 
 log = logging.getLogger(__name__)
 
 def transform_provider_location(provider: PPProv, organization:Organization):
+    """
+    Transforms provider location based on the given provider and organization.
+    This function processes the provider's locations and networks, updates the
+    corresponding role instance, and adds it to the organization.
+
+    :param provider: The provider containing location and network information
+    :param organization: The organization to which the transformed role instance
+        will be added
+    :return: None
+    """
     if provider.prov_locs or provider.networks:
+        # ------------------------------------------------------------------------------
+        # When there are any locations or networks directly associated with the provider,
+        # then a RoleInstance node should be created with the role type "HAS_ROLE"
+        # ------------------------------------------------------------------------------
         log.info("Transforming Portico Provider Location")
         role_instance: RoleInstance = RoleInstance()
         role_instance.set_role_type("has_role")
+        if provider.prov_locs:
+            # ------------------------------------------------------------------------------
+            # Process the provider locations
+            # ------------------------------------------------------------------------------
+            _process_prov_locs(provider.prov_locs, role_instance)
+        if provider.networks:
+            # ------------------------------------------------------------------------------
+            # Process the provider networks
+            # ------------------------------------------------------------------------------
+            log.info("Transforming Portico Provider Network")
+            transform_provider_net_cycle(provider.networks, role_instance)
+        # ------------------------------------------------------------------------------
+        # Add the role instance to the organization
+        # ------------------------------------------------------------------------------
         organization.add_role_instance(role_instance)
+
+def _process_prov_locs(prov_locs: list[PPProvLoc], role_instance: RoleInstance):
+    """
+    Processes a list of provider locations and associates them with a role instance.
+
+    This function iterates through the provided list of provider locations, creating
+    an instance of `RoleLocation` for each, and sets the location details using a
+    hash key generated from the provider's location details. The resulting
+    `RoleLocation` objects are associated with the provided role instance. Logging is
+    performed to provide insights into key operation points such as the processed
+    addresses and generated hash codes.
+
+    :param prov_locs:
+        A list of `PPProvLoc` objects representing the provider locations to process.
+    :param role_instance:
+        An instance of `RoleInstance` where the processed role locations should
+        be associated.
+    :return:
+        This function does not return a value.
+    """
+    for prov_loc in prov_locs:
+        # ------------------------------------------------------------------------------
+        # Create a new RoleLocation instance for each provider location
+        # Set the location details using a hash key generated from the provider's location details'
+        # Add the role location to the role instance
+        # ------------------------------------------------------------------------------
+        role_location: RoleLocation = RoleLocation()
+        prov_tin_loc: PPProvTinLoc = prov_loc.location
+        log.info(f"Location Address:{prov_tin_loc.address}")
+        hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=prov_tin_loc)
+        log.info(f"Hash Code:{hash_code}")
+        location = set_location(hash_code, prov_tin_loc)
+        role_location.set_location(location)
+        role_instance.add_pending_rl(role_location)
+
+
+def set_location(hash_code, prov_tin_loc) -> Location:
+    """
+    Sets the location details for a given hash code and provider location information
+    and initializes a Location object with the specified attributes.
+
+    :param hash_code: A unique string identifier used for address validation.
+        This is used as the validation key while setting the pending validation
+        for the created `Location` object.
+    :type hash_code: str
+    :param prov_tin_loc: A provider location object containing the details
+        of the location such as name, address, city, state, ZIP code, county,
+        FIPS code, latitude, and longitude.
+    :type prov_tin_loc: ProviderLocation
+    :return: A `Location` object populated with the details from the given
+        `prov_tin_loc` and validated using the `hash_code`.
+    :rtype: Location
+    """
+    location: Location = Location()
+    log.info(f"Location name:{prov_tin_loc.name}")
+    location.name = prov_tin_loc.name
+    location.street_address = prov_tin_loc.address.addr1
+    location.secondary_address = prov_tin_loc.address.addr2
+    location.city = prov_tin_loc.address.city
+    location.state = prov_tin_loc.address.state
+    location.zip_code = prov_tin_loc.address.zip
+    location.county = prov_tin_loc.address.county
+    location.county_fips = prov_tin_loc.address.fips
+    location.latitude = prov_tin_loc.address.latitude
+    location.longitude = prov_tin_loc.address.longitude
+    # ------------------------------------------------------------------------------
+    # Set pending validation for the location
+    # ------------------------------------------------------------------------------
+    validation: Validation = Validation(type="address", source="smartystreets", validation_key=hash_code)
+    location.set_pending_validation(validation)
+    return location

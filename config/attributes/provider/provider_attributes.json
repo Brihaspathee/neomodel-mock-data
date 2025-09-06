@@ -1,0 +1,25 @@
+{
+  "502": {
+    "name": "PROV_NPI",
+    "category": "identifier",
+    "attr_type": "NPI",
+    "class": "models.aton.nodes.identifier.NPI",
+    "fields": {
+      "706": "value",
+      "708": "start_date",
+      "709": "end_date"
+    },
+    "ignore": ["707"]
+  },
+  "101278": {
+    "name": "PROV_AASM_ACCRED",
+    "category": "qualification",
+    "attr_type": "AASM Accreditation",
+    "class": "models.aton.nodes.identifier.NPI",
+    "fields": {
+      "101958": "start_date",
+      "102856": "end_date"
+    },
+    "ignore": ["101957"]
+  }
+}

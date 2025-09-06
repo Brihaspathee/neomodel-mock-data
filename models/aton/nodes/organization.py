@@ -1,7 +1,7 @@
 from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatProperty, RelationshipTo, RelationshipFrom
 
-from models.aton.identifier import Identifier, NPI, TIN, PPGID, MedicareId, MedicaidId
-from models.aton.role_instance import RoleInstance
+from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareId, MedicaidId
+from models.aton.nodes.role_instance import RoleInstance
 
 
 class Organization(StructuredNode):
@@ -23,8 +23,12 @@ class Organization(StructuredNode):
     role = RelationshipTo("RoleInstance", "HAS_ROLE")
     contracted_by = RelationshipFrom("RoleInstance", "CONTRACTED_BY")
 
-    # Temporary storage for identifiers
-    _pending_identifiers = {
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Temporary storage for identifiers
+        self._pending_identifiers = {
             "npi": [],
             "tin": [],
             "medicare_id": [],
@@ -32,10 +36,10 @@ class Organization(StructuredNode):
             "ppg_id": []
         }
 
-    _pending_role_instances = {
-        "has_role": [],
-        "contracted_by": []
-    }
+        self._pending_role_instances: dict[str, list[RoleInstance]] = {
+            "has_role": [],
+            "contracted_by": []
+        }
 
     # --------------------------------
     # Associate Identifiers in Memory
@@ -62,4 +66,9 @@ class Organization(StructuredNode):
         else:
             ValueError(f"{role_instance} is not a valid role instance")
 
+    def get_pending_identifiers(self):
+        return self._pending_identifiers
+
+    def get_pending_role_instances(self):
+        return self._pending_role_instances
 

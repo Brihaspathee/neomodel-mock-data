@@ -1,13 +1,13 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom
 
-from models.aton.network import Network
+from models.aton.nodes.network import Network
 
 
 class Product(StructuredNode):
     code = StringProperty(required=True)
     name = StringProperty(required=True)
 
-    network = RelationshipFrom("models.aton.network.Network", "PART_OF")
+    network = RelationshipFrom("models.aton.nodes.network.Network", "PART_OF")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

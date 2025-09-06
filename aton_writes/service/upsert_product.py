@@ -1,6 +1,6 @@
 import logging
 
-from models.aton.product import Product
+from models.aton.nodes.product import Product
 
 log = logging.getLogger(__name__)
 

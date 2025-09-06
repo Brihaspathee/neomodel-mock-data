@@ -5,4 +5,4 @@ class Network(StructuredNode):
     code = StringProperty(required=True)
     name = StringProperty(required=True)
 
-    product = RelationshipTo("models.aton.product.Product", "PART_OF")
+    product = RelationshipTo("models.aton.nodes.product.Product", "PART_OF")
