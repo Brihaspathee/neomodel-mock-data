@@ -1,12 +1,12 @@
-import json
+
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-from typing import Dict, List, Any
+from config.attribute_settings import load_all_attributes
 
 from sqlalchemy.orm import relationship
 
-from config.attributes_mapping import AttributeMapping
+
 from config.secrets_api import SecretsAPI
 import logging
 from config import aton_logging
@@ -65,36 +65,5 @@ NEO4J = {
     "database": secrets["ss.neo4j.database"],
 }
 
-ATTRIBUTES_CONFIG:Dict[str, Dict[str, AttributeMapping]] = {}
 
-# -----------------------------------------------------------------------------------------
-# Load entity attributes from JSON file
-# ---------------------------------------------------------------------------------------
-def load_entity_attributes(entity_name: str, file_path: Path):
-    with open(file_path, "r") as f:
-        raw = json.load(f)
-    entity_dict = {}
-    for attr_id, details in raw.items():
-        entity_dict[attr_id] = AttributeMapping(
-            name=details["name"],
-            category=details["category"],
-            attr_type=details["attr_type"],
-            class_path=details["class"],
-            fields=details["fields"],
-            ignore=details.get("ignore", []),
-            adornments=details.get("adornments", {})
-        )
-    ATTRIBUTES_CONFIG[entity_name] = entity_dict
-
-# -----------------------------------------------------------------------------------------
-# Load all entities at startup
-# -----------------------------------------------------------------------------------------
-def load_all_attributes(base_dir: Path):
-    for entity_dir in base_dir.iterdir():
-        if entity_dir.is_dir():
-            for json_file in entity_dir.glob("*.json"):
-                entity_name = entity_dir.name
-                load_entity_attributes(entity_name, json_file)
-
-BASE_ATTRIBUTES_DIR = Path(__file__).parent / "attributes"
-load_all_attributes(BASE_ATTRIBUTES_DIR)
+load_all_attributes()

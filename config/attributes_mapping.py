@@ -1,7 +1,7 @@
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Type
 
 
 # -------------------------------------------------------------------------------
@@ -16,6 +16,7 @@ class AttributeMapping:
     category: str
     attr_type: str
     fields: Dict[str, str]
+    node_class: Type
     ignore: List[str] = field(default_factory=list)
     adornments: Dict[str, Any] = field(default_factory=dict)
-    class_path: str = ""
+

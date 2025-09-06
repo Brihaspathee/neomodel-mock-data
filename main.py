@@ -1,4 +1,4 @@
-from config import settings
+from config import settings, attribute_settings
 from db import PorticoDB, init_db
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.product import Product
@@ -19,21 +19,21 @@ def main():
     log.info(f"Running on {settings.ENVIRONMENT} environment")
     log.info(f"POSTGRES info {settings.POSTGRES} environment")
     log.info(f"NEO4J info {settings.NEO4J} environment")
-    log.info(f"ATTRIBUTES CONFIG {settings.ATTRIBUTES_CONFIG}")
+    log.info(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
     logging.basicConfig(level=logging.DEBUG)
 
-    # # Read the providers from Portico
-    # portico_db: PorticoDB = PorticoDB()
-    # portico_db.connect()
-    # init_db()
-    #
-    # with (portico_db.get_session() as session):
-    #     pp_nets: list[PPNet] = network_read.get_networks(session)
-    #     providers: list[PPProv] = provider_read.read_provider(session)
-    # products: list[Product] = transformer(pp_nets)
-    # for product in products:
-    #     write_products_networks(product)
-    # organizations: list[Organization]=transformer(providers)
+    # Read the providers from Portico
+    portico_db: PorticoDB = PorticoDB()
+    portico_db.connect()
+    init_db()
+
+    with (portico_db.get_session() as session):
+        pp_nets: list[PPNet] = network_read.get_networks(session)
+        providers: list[PPProv] = provider_read.read_provider(session)
+    products: list[Product] = transformer(pp_nets)
+    for product in products:
+        write_products_networks(product)
+    organizations: list[Organization]=transformer(providers)
     # write_to_aton(organizations)
 
 

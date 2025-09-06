@@ -2,6 +2,7 @@ from models.aton.nodes.identifier import TIN
 from models.aton.nodes.organization import Organization
 from transform.transformers import transform_to_aton
 from transform.transform_provider_location import transform_provider_location
+from transform.transform_attribute import get_provider_attributes
 import logging
 
 from models.portico import PPProv
@@ -31,6 +32,7 @@ def _(provider:PPProv) -> Organization:
     tax_id: TIN = get_tin(provider)
     log.info(f"TIN is {tax_id}")
     organization.add_identifier(tax_id)
+    get_provider_attributes(provider, organization)
     # ------------------------------------------------------------------------------
     # Populate locations associated with the organization
     # ------------------------------------------------------------------------------
