@@ -1,6 +1,7 @@
 from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatProperty, RelationshipTo, RelationshipFrom
 
 from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareId, MedicaidId
+from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
 
@@ -14,14 +15,15 @@ class Organization(StructuredNode):
     atypical: bool = BooleanProperty(required=False)
     popularity: float = FloatProperty(required=False)
 
-    npi = RelationshipTo("NPI", "HAS_NPI")
-    tin = RelationshipTo("TIN", "HAS_TIN")
-    medicare_id = RelationshipTo("MedicareId", "HAS_MEDICAID")
-    medicaid_id = RelationshipTo("MedicaidId", "HAS_MEDICAID")
-    ppg_id = RelationshipTo("PPGID", "HAS_PPG")
+    npi = RelationshipTo("models.aton.nodes.identifier.NPI", "HAS_NPI")
+    tin = RelationshipTo("models.aton.nodes.identifier.TIN", "HAS_TIN")
+    medicare_id = RelationshipTo("models.aton.nodes.identifier.MedicareId", "HAS_MEDICAID")
+    medicaid_id = RelationshipTo("models.aton.nodes.identifier.MedicaidId", "HAS_MEDICAID")
+    ppg_id = RelationshipTo("models.aton.nodes.identifier.PPGID", "HAS_PPG")
+    qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification", "HAS_QUALIFICATION")
 
-    role = RelationshipTo("RoleInstance", "HAS_ROLE")
-    contracted_by = RelationshipFrom("RoleInstance", "CONTRACTED_BY")
+    role = RelationshipTo("models.aton.nodes.role_instance.RoleInstance", "HAS_ROLE")
+    contracted_by = RelationshipFrom("models.aton.nodes.role_instance.RoleInstance", "CONTRACTED_BY")
 
 
 
@@ -35,7 +37,9 @@ class Organization(StructuredNode):
             "medicaid_id": [],
             "ppg_id": []
         }
-
+        # Temporary storage for qualifications
+        self._pending_qualifications: list[Qualification] = []
+        # Temporary storage for role instances
         self._pending_role_instances: dict[str, list[RoleInstance]] = {
             "has_role": [],
             "contracted_by": []
@@ -65,6 +69,12 @@ class Organization(StructuredNode):
             self._pending_role_instances["contracted_by"].append(role_instance)
         else:
             ValueError(f"{role_instance} is not a valid role instance")
+
+    def add_qualification(self, qualification):
+        self._pending_qualifications.append(qualification)
+
+    def get_pending_qualifications(self):
+        return self._pending_qualifications
 
     def get_pending_identifiers(self):
         return self._pending_identifiers

@@ -4,7 +4,9 @@ from neomodel import StructuredNode
 
 from config.attribute_settings import ATTRIBUTES_CONFIG
 from config.attributes_mapping import AttributeMapping
+from models.aton.nodes.identifier import NPI, Identifier
 from models.aton.nodes.organization import Organization
+from models.aton.nodes.qualification import Qualification
 from models.portico import PPProv
 import logging
 
@@ -31,9 +33,18 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
         attribute_id = attribute.attribute_id
         if str(attribute_id) == "502" or str(attribute_id) == "101278":
             mapping = ATTRIBUTES_CONFIG["provider"][str(attribute.attribute_id)]
-            log.info(f"Mapping: {mapping}")
-            node: StructuredNode = build_node_for_attribute(mapping, attribute_fields)
-            log.info(f"Node: {node}")
+            # log.info(f"Mapping: {mapping}")
+            node = build_node_for_attribute(mapping, attribute_fields)
+            # log.info(f"Node: {node}")
+            # log.info(f"Node type: {type(node)}")
+            # log.info(f"Is this Type NPI: {isinstance(node, Identifier):}")
+            # log.info(f"Is this Type Qualification: {isinstance(node, Qualification):}")
+            if isinstance(node, Identifier):
+                organization.add_identifier(node)
+            elif isinstance(node, Qualification):
+                organization.add_qualification(node)
+            else:
+                log.error(f"Unable to determine node type for attribute {attribute_id}")
 
 
 def build_node_for_attribute(mapping:AttributeMapping,
@@ -47,6 +58,7 @@ def build_node_for_attribute(mapping:AttributeMapping,
             props[aton_prop] = field_value
 
     props.update(mapping.adornments)
+    log.info(f"Aton Properties: {props}")
 
     node_instance = mapping.node_class(**props)
     return node_instance

@@ -1,7 +1,7 @@
 {
   "502": {
     "name": "PROV_NPI",
-    "category": "identifier",
+    "category": "Identifier",
     "attr_type": "NPI",
     "class": "models.aton.nodes.identifier.NPI",
     "fields": {
@@ -13,13 +13,18 @@
   },
   "101278": {
     "name": "PROV_AASM_ACCRED",
-    "category": "qualification",
-    "attr_type": "AASM Accreditation",
-    "class": "models.aton.nodes.identifier.NPI",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
       "101958": "start_date",
       "102856": "end_date"
     },
-    "ignore": ["101957"]
+    "ignore": ["101957"],
+    "adornments": {
+      "type": "AASM Accreditation",
+      "issuer": "American Association for Sleep Medicine",
+      "secondary_label": "Accreditation"
+    }
   }
 }
