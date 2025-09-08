@@ -1,3 +1,4 @@
+from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import TIN
 from models.aton.nodes.organization import Organization
 from transform.transformers import transform_to_aton
@@ -32,6 +33,7 @@ def _(provider:PPProv) -> Organization:
     tax_id: TIN = get_tin(provider)
     log.info(f"TIN is {tax_id}")
     organization.add_identifier(tax_id)
+    get_provider_address(provider)
     get_provider_attributes(provider, organization)
     # ------------------------------------------------------------------------------
     # Populate locations associated with the organization
@@ -54,3 +56,7 @@ def get_tin(provider:PPProv) -> TIN:
     tin: TIN = TIN(value= provider.tin.tin,
                    legal_name = provider.tin.name)
     return tin
+
+def get_provider_address(provider:PPProv) -> Contact:
+    for address in provider.address:
+        log.info(f"Provider Address is {address}")
