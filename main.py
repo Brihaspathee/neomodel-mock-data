@@ -34,7 +34,7 @@ def main():
     for product in products:
         write_products_networks(product)
     organizations: list[Organization]=transformer(providers)
-    # write_to_aton(organizations)
+    write_to_aton(organizations)
 
 
 

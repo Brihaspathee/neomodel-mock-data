@@ -5,8 +5,8 @@ from neomodel import StringProperty, DateProperty, StructuredNode
 class Identifier(StructuredNode):
 
     value: str= StringProperty(required=True)
-    startDate: DateType= DateProperty(required=False)
-    endDate: DateType= DateProperty(required=False)
+    start_date: DateType= DateProperty(required=False)
+    end_date: DateType= DateProperty(required=False)
     # @property
     # def uid(self):
     #     if hasattr(self, '_node') and self._node is not None:
