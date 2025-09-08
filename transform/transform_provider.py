@@ -58,5 +58,6 @@ def get_tin(provider:PPProv) -> TIN:
     return tin
 
 def get_provider_address(provider:PPProv) -> Contact:
-    for address in provider.address:
+    for address in provider.addresses:
         log.info(f"Provider Address is {address}")
+        log.info(f"Provider Address is {address.address}")

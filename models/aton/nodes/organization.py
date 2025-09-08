@@ -2,6 +2,7 @@ from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatPrope
 
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareId, MedicaidId
+from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
 
@@ -24,6 +25,9 @@ class Organization(StructuredNode):
     contacts = RelationshipTo("models.aton.nodes.contact.Contact",
                               "HAS_ORGANIZATION_CONTACT")
 
+    qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
+                                    "HAS_QUALIFICATION")
+
     role = RelationshipTo("RoleInstance", "HAS_ROLE")
     contracted_by = RelationshipFrom("RoleInstance", "CONTRACTED_BY")
 
@@ -41,6 +45,8 @@ class Organization(StructuredNode):
         }
 
         self._pending_contacts: list[Contact] = []
+
+        self._pending_qualifications: list[Qualification] = []
 
         self._pending_role_instances: dict[str, list[RoleInstance]] = {
             "has_role": [],
@@ -67,6 +73,9 @@ class Organization(StructuredNode):
     def add_contact(self, contact:Contact):
         self._pending_contacts.append(contact)
 
+    def add_qualification(self, qualification:Qualification):
+        self._pending_qualifications.append(qualification)
+
     def add_role_instance(self, role_instance: RoleInstance):
         if role_instance.get_role_type() == "has_role":
             self._pending_role_instances["has_role"].append(role_instance)
@@ -80,6 +89,9 @@ class Organization(StructuredNode):
 
     def get_pending_contacts(self):
         return self._pending_contacts
+
+    def get_pending_qualifications(self):
+        return self._pending_qualifications
 
     def get_pending_role_instances(self):
         return self._pending_role_instances
