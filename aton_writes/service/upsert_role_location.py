@@ -13,6 +13,10 @@ def process_role_locations(role_instance:RoleInstance):
         location = get_or_create_location(location)
         role_location.save()
         create_contacts(role_location)
+        for speciality in role_location.get_pending_specialties():
+            speciality.save()
+            role_instance.specialties.connect(speciality)
+            speciality.role_locations.connect(role_location)
         role_location.location.connect(location)
         role_instance.role_locations.connect(role_location)
         log.info(f"Role location saved to Aton its element id is: {role_location.element_id}")

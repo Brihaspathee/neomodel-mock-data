@@ -34,6 +34,7 @@ def log_provider(provider: PPProv):
         log.info(f"Locations associated with the Provider - {prov_loc.location}")
     for prov_loc_attr in provider.loc_attributes:
         log.info(f"Location Attributes associated with the Provider - {prov_loc_attr.location}")
+        log.info(f"Location Attribute type id - {prov_loc_attr.attribute_id}")
         for value in prov_loc_attr.values:
             log.info(f"Location Attribute Value - {value}")
             log.info(f"Location Attribute Value Field - {value.field}")

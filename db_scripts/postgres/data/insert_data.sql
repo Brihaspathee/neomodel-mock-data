@@ -431,14 +431,22 @@ INSERT INTO portown.pp_prov_loc (prov_id,loc_id,name_usage,"primary",start_date,
 	 (1,2,NULL,'N',NULL,NULL,NULL),
 	 (1,3,NULL,'Y',NULL,NULL,NULL),
 	 (1,4,NULL,'N',NULL,NULL,NULL),
-	 (1,5,NULL,'N',NULL,NULL,NULL);
+	 (1,5,NULL,'N',NULL,NULL,NULL),
+	 (2,1,NULL,'N',NULL,NULL,NULL),
+	 (2,2,NULL,'N',NULL,NULL,NULL),
+	 (2,3,NULL,'N',NULL,NULL,NULL),
+	 (2,4,NULL,'Y',NULL,NULL,NULL),
+	 (2,5,NULL,'N',NULL,NULL,NULL);
+
 
 -- 15. Insert data into PP_PROV_NET_CYCLE
 INSERT INTO portown.pp_prov_net_cycle (id,prov_id,net_id,status,start_date,end_date) VALUES
 	 (1,1,3258,'PAR','2001-06-01','4000-01-01'),
 	 (2,1,7723,'PAR','2005-01-01','2018-12-31'),
 	 (3,1,7723,'PAR','2020-01-01','4000-01-01'),
-	 (4,1,14694,'PAR','2015-01-01','4000-01-01');
+	 (4,1,14694,'PAR','2015-01-01','4000-01-01'),
+	 (5,2,14694,'PAR','2020-01-01','4000-01-01');
+
 
 -- 16. Insert data into PP_PROV_NET_LOC_CYCLE
 INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,start_date,end_date,"primary") VALUES
@@ -448,7 +456,14 @@ INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,s
 	 (4,2,1,3,'2005-01-01','2018-12-31','N'),
 	 (5,3,1,4,'2020-01-01','4000-01-01','N'),
 	 (6,4,1,5,'2015-01-01','4000-01-01','N'),
-	 (7,4,1,4,'2020-01-01','4000-01-01','N');
+	 (7,4,1,4,'2020-01-01','4000-01-01','N'),
+	 (8,5,2,1,'2020-01-01','4000-01-01','N'),
+	 (9,5,2,2,'2020-01-01','4000-01-01','N'),
+	 (10,5,2,3,'2020-01-01','4000-01-01','N');
+INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,start_date,end_date,"primary") VALUES
+	 (11,5,2,4,'2020-01-01','4000-01-01','N'),
+	 (12,5,2,5,'2020-01-01','4000-01-01','N');
+
 
 -- 17. Insert data into PP_PROV_LOC_ATTRIB
 INSERT INTO portown.pp_prov_loc_attrib (id,prov_id,loc_id,attribute_id) VALUES

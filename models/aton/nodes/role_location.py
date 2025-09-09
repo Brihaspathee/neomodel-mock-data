@@ -2,6 +2,7 @@ from neomodel import StructuredNode, RelationshipFrom, RelationshipTo
 
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.location import Location
+from models.aton.nodes.role_specialty import RoleSpecialty
 from models.aton.relationships.exclude_from_directory import ExcludeFromDirectory
 from models.aton.relationships.has_panel import HasPanel
 from models.aton.relationships.role_location_serves import RoleLocationServes
@@ -26,11 +27,13 @@ class RoleLocation(StructuredNode):
     rn_has_panel = RelationshipFrom("models.aton.nodes.role_network.RoleNetwork",
                                     "HAS_PANEL",
                                     model=HasPanel)
+    specialties = RelationshipTo("models.aton.nodes.role_specialty.RoleSpecialty", "PRACTICED_AT")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._location: Location | None = None
         self._pending_contacts: list[Contact] = []
+        self._pending_specialties: list[RoleSpecialty] = []
 
 
     def set_location(self, location: Location):
@@ -44,3 +47,9 @@ class RoleLocation(StructuredNode):
 
     def get_pending_contacts(self) -> list[Contact]:
         return self._pending_contacts
+
+    def add_specialty(self, specialty: RoleSpecialty):
+        self._pending_specialties.append(specialty)
+
+    def get_pending_specialties(self) -> list[RoleSpecialty]:
+        return self._pending_specialties

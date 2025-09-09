@@ -28,17 +28,17 @@ def main():
     # Read the providers from Portico
     portico_db: PorticoDB = PorticoDB()
     portico_db.connect()
-    # init_db()
+    init_db()
 
     with (portico_db.get_session() as session):
         pp_nets: list[PPNet] = network_read.get_networks(session)
         providers: list[PPProv] = provider_read.read_provider(session)
     log_providers(providers)
-    # products: list[Product] = transformer(pp_nets)
-    # for product in products:
-    #     write_products_networks(product)
-    # organizations: list[Organization]=transformer(providers)
-    # write_to_aton(organizations)
+    products: list[Product] = transformer(pp_nets)
+    for product in products:
+        write_products_networks(product)
+    organizations: list[Organization]=transformer(providers)
+    write_to_aton(organizations)
 
 
 

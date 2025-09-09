@@ -12,6 +12,7 @@ from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.portico import PPProv, PPProvLoc, PPProvTinLoc
 from transform.transform_provider_net_cycle import transform_provider_net_cycle
+from transform.transform_attribute import get_prov_loc_attributes
 
 log = logging.getLogger(__name__)
 
@@ -38,7 +39,7 @@ def transform_provider_location(provider: PPProv, organization:Organization):
             # ------------------------------------------------------------------------------
             # Process the provider locations
             # ------------------------------------------------------------------------------
-            _process_prov_locs(provider.prov_locs, role_instance)
+            _process_prov_locs(provider, role_instance)
         if provider.networks:
             # ------------------------------------------------------------------------------
             # Process the provider networks
@@ -50,7 +51,7 @@ def transform_provider_location(provider: PPProv, organization:Organization):
         # ------------------------------------------------------------------------------
         organization.add_role_instance(role_instance)
 
-def _process_prov_locs(prov_locs: list[PPProvLoc], role_instance: RoleInstance):
+def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
     """
     Processes a list of provider locations and associates them with a role instance.
 
@@ -69,7 +70,7 @@ def _process_prov_locs(prov_locs: list[PPProvLoc], role_instance: RoleInstance):
     :return:
         This function does not return a value.
     """
-    for prov_loc in prov_locs:
+    for prov_loc in pp_prov.prov_locs:
         # ------------------------------------------------------------------------------
         # Create a new RoleLocation instance for each provider location
         # Set the location details using a hash key generated from the provider's location details'
@@ -82,6 +83,7 @@ def _process_prov_locs(prov_locs: list[PPProvLoc], role_instance: RoleInstance):
         log.info(f"Hash Code:{hash_code}")
         location = set_location(hash_code, prov_tin_loc)
         contact: Contact = get_location_phone(prov_tin_loc)
+        get_prov_loc_attributes(pp_prov, prov_tin_loc, role_location)
         role_location.set_location(location)
         role_location.add_contact(contact)
         role_instance.add_pending_rl(role_location)
@@ -144,3 +146,6 @@ def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:
                     telecom.afterHoursNumber = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
             contact.set_pending_telecom(telecom)
     return contact
+
+
+

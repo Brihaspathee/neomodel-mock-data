@@ -7,7 +7,9 @@ from config.attributes_mapping import AttributeMapping
 from models.aton.nodes.identifier import NPI, Identifier, PPGID
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.qualification import Qualification
-from models.portico import PPProv
+from models.aton.nodes.role_location import RoleLocation
+from models.aton.nodes.role_specialty import RoleSpecialty
+from models.portico import PPProv, PPProvTinLoc
 import logging
 
 log = logging.getLogger(__name__)
@@ -60,6 +62,30 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                 organization.add_qualification(node)
             else:
                 log.error(f"Unable to determine node type for attribute {attribute_id}")
+
+
+def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
+    for prov_loc_attr in pprov.loc_attributes:
+        location: PPProvTinLoc = prov_loc_attr.location
+        if location.id == pp_prov_tin_loc.id:
+            attribute_id = prov_loc_attr.attribute_id
+            attribute_fields: dict[str, Any] = {}
+            for value in prov_loc_attr.values:
+                field_id = str(value.field_id)
+                if value.value_date:
+                    attribute_fields[field_id] = value.value_date
+                elif value.value_number:
+                    attribute_fields[field_id] = value.value_number
+                elif value.value:
+                    attribute_fields[field_id] = value.value
+            mapping = ATTRIBUTES_CONFIG["prov_loc"][str(attribute_id)]
+            log.info(f"Mapping: {mapping}")
+            log.info(f"Attribute Fields: {attribute_fields}")
+            node = build_node_for_attribute(mapping, attribute_fields)
+            log.info(f"Created Node for prov loc attribute: {node}")
+            if isinstance(node, RoleSpecialty):
+                role_location.add_specialty(node)
+
 
 
 def build_node_for_attribute(mapping:AttributeMapping,

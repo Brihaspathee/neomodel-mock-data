@@ -11,6 +11,7 @@ class RoleInstance(StructuredNode):
     contracted_organization = RelationshipTo("models.aton.nodes.organization.Organization", "CONTRACTED_BY")
     role_locations = RelationshipTo("models.aton.nodes.role_location.RoleLocation", "PERFORMED_AT")
     role_networks = RelationshipTo("models.aton.nodes.role_network.RoleNetwork", "SERVES")
+    specialties = RelationshipTo("models.aton.nodes.role_specialty.RoleSpecialty", "SPECIALIZES")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
