@@ -1,12 +1,16 @@
+from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import TIN
 from models.aton.nodes.organization import Organization
+from models.aton.nodes.telecom import Telecom
 from transform.transformers import transform_to_aton
 from transform.transform_provider_location import transform_provider_location
 from transform.transform_attribute import get_provider_attributes
 import logging
 
 from models.portico import PPProv
+from utils.address_util import portico_address_to_aton
+from config.contact_settings import CONTACT_USE_MAPPING, ADDRESS_USE_MAPPING
 
 log = logging.getLogger(__name__)
 
@@ -33,7 +37,8 @@ def _(provider:PPProv) -> Organization:
     tax_id: TIN = get_tin(provider)
     log.info(f"TIN is {tax_id}")
     organization.add_identifier(tax_id)
-    get_provider_address(provider)
+    contact: Contact = get_provider_address(provider)
+    organization.add_contact(contact)
     get_provider_attributes(provider, organization)
     # ------------------------------------------------------------------------------
     # Populate locations associated with the organization
@@ -58,6 +63,35 @@ def get_tin(provider:PPProv) -> TIN:
     return tin
 
 def get_provider_address(provider:PPProv) -> Contact:
-    for address in provider.addresses:
-        log.info(f"Provider Address is {address}")
-        log.info(f"Provider Address is {address.address}")
+    contact: Contact = Contact()
+    for pp_address in provider.addresses:
+        log.info(f"Provider Address is {pp_address}")
+        log.info(f"Provider Address is {pp_address.address}")
+        address: Address = portico_address_to_aton(pp_address.address)
+        contact_use = ADDRESS_USE_MAPPING.get(pp_address.address.type)
+        if contact_use:
+            contact.use = contact_use
+        else:
+            log.warning(
+                f"Unknown address type {pp_address.address.type} for provider {provider.name}"
+            )
+        contact.set_pending_address(address)
+        if pp_address.address.phones:
+            telecom: Telecom = Telecom()
+            for addr_phone in pp_address.address.phones:
+                log.info(f"Address phone is {addr_phone}")
+                log.info(f"Address phone is {addr_phone.phone}")
+                if addr_phone.phone.type == "PHONE":
+                    telecom.phone = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                elif addr_phone.phone.type == "FAX":
+                    telecom.fax = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                elif addr_phone.phone.type == "TTY":
+                    telecom.tty = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                elif addr_phone.phone.type == "AFH":
+                    telecom.afterHoursNumber = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                else:
+                    log.warning(
+                        f"Unknown phone type {addr_phone.phone.type} for provider {provider.name}"
+                    )
+            contact.set_pending_telecom(telecom)
+    return contact

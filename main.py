@@ -1,4 +1,4 @@
-from config import settings, attribute_settings
+from config import settings, attribute_settings, contact_settings
 from db import PorticoDB, init_db
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.product import Product
@@ -20,6 +20,8 @@ def main():
     log.info(f"POSTGRES info {settings.POSTGRES} environment")
     log.info(f"NEO4J info {settings.NEO4J} environment")
     log.info(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
+    log.info(f"Contact use mapping:{contact_settings.CONTACT_USE_MAPPING}")
+    log.info(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
     logging.basicConfig(level=logging.DEBUG)
 
     # Read the providers from Portico

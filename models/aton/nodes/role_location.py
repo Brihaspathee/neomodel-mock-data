@@ -11,7 +11,7 @@ class RoleLocation(StructuredNode):
     # Relationships
     role_instance = RelationshipFrom("models.aton.nodes.role_instance.RoleInstance", "PERFORMED_AT")
     location = RelationshipTo("models.aton.nodes.location.Location", "LOCATION_IS")
-    contact = RelationshipTo("models.aton.nodes.contact.Contact", "HAS_LOCATION_CONTACT")
+    contacts = RelationshipTo("models.aton.nodes.contact.Contact", "HAS_LOCATION_CONTACT")
 
     role_network = RelationshipTo("models.aton.nodes.role_network.RoleNetwork",
                                   "ROLE_LOCATION_SERVES",
@@ -30,7 +30,7 @@ class RoleLocation(StructuredNode):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._location: Location | None = None
-        self._contacts: list[Contact] = []
+        self._pending_contacts: list[Contact] = []
 
 
     def set_location(self, location: Location):
@@ -40,7 +40,7 @@ class RoleLocation(StructuredNode):
         return self._location
 
     def add_contact(self, contact: Contact):
-        self._contacts.append(contact)
+        self._pending_contacts.append(contact)
 
-    def get_contacts(self) -> list[Contact]:
-        return self._contacts
+    def get_pending_contacts(self) -> list[Contact]:
+        return self._pending_contacts

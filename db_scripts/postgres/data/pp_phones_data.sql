@@ -1,5 +1,5 @@
 INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
-	 (1,'CELL','813','357','9150'),
+	 (1,'PHONE','813','357','9150'),
 	 (2,'PHONE','212','555','1234'),
 	 (3,'PHONE','305','789','4421'),
 	 (4,'PHONE','415','672','9087'),

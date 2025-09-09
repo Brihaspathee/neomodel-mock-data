@@ -1,0 +1,10 @@
+{
+  "address_types": {
+    "BILLING": "Billing",
+    "MAILING": "Mailing",
+    "MAIN": "Directory"
+  },
+  "contact_types": {
+    "MAIN": "Directory"
+  }
+}

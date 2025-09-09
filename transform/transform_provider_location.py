@@ -1,7 +1,11 @@
 import logging
 
+from models.aton.nodes.address import Address
+from models.aton.nodes.contact import Contact
 from models.aton.nodes.location import Location
+from models.aton.nodes.telecom import Telecom
 from models.aton.nodes.validation import Validation
+from utils.address_util import portico_address_to_aton
 from utils.location_util import get_hash_key_for_prov_tin_loc
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.role_instance import RoleInstance
@@ -77,7 +81,9 @@ def _process_prov_locs(prov_locs: list[PPProvLoc], role_instance: RoleInstance):
         hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=prov_tin_loc)
         log.info(f"Hash Code:{hash_code}")
         location = set_location(hash_code, prov_tin_loc)
+        contact: Contact = get_location_phone(prov_tin_loc)
         role_location.set_location(location)
+        role_location.add_contact(contact)
         role_instance.add_pending_rl(role_location)
 
 
@@ -116,3 +122,25 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     validation: Validation = Validation(type="address", source="smartystreets", validation_key=hash_code)
     location.set_pending_validation(validation)
     return location
+
+
+def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:
+    contact: Contact = Contact()
+    contact.use = "Directory"
+    if pp_prov_tin_loc.address:
+        loc_address = pp_prov_tin_loc.address
+        if loc_address.phones:
+            telecom: Telecom = Telecom()
+            for addr_phone in loc_address.phones:
+                log.info(f"Location phone is {addr_phone}")
+                log.info(f"Location phone is {addr_phone.phone}")
+                if addr_phone.phone.type == "PHONE":
+                    telecom.phone = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                elif addr_phone.phone.type == "FAX":
+                    telecom.fax = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                elif addr_phone.phone.type == "TTY":
+                    telecom.tty = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                elif addr_phone.phone.type == "AFH":
+                    telecom.afterHoursNumber = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+            contact.set_pending_telecom(telecom)
+    return contact

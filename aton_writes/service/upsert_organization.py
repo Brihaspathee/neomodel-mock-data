@@ -1,7 +1,9 @@
 import traceback
 
+from models.aton.nodes.contact import Contact
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
+from repository.contact_repo import create_contacts
 import logging
 
 log = logging.getLogger(__name__)
@@ -18,6 +20,7 @@ def create_organization(org: Organization):
         create_identifiers(org)
         # log.info(f"Pending Role instances:{org.get_pending_role_instances()}")
         create_qualifications(org)
+        create_contacts(org)
         process_role_instance(org)
         return True
     except Exception as e:

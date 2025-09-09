@@ -207,7 +207,74 @@ INSERT INTO portown.pp_addr (id,"type",addr1,addr2,city,state,zip,county,latitud
 
 -- 7. Insert data into PP_PHONES table
 INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
-	 (1,'CELL','813','357','9150');
+	 (1,'PHONE','813','357','9150'),
+	 (2,'PHONE','212','555','1234'),
+	 (3,'PHONE','305','789','4421'),
+	 (4,'PHONE','415','672','9087'),
+	 (5,'PHONE','512','431','7623'),
+	 (6,'PHONE','617','384','1029'),
+	 (7,'PHONE','702','648','9902'),
+	 (8,'PHONE','808','733','5566'),
+	 (9,'PHONE','904','845','2389'),
+	 (10,'PHONE','202','476','1182');
+INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+	 (11,'PHONE','213','692','4507'),
+	 (12,'PHONE','312','547','8264'),
+	 (13,'PHONE','404','368','9123'),
+	 (14,'PHONE','503','417','6678'),
+	 (15,'PHONE','602','355','2098'),
+	 (16,'PHONE','713','726','7432'),
+	 (17,'PHONE','801','529','3341'),
+	 (18,'PHONE','914','615','2780'),
+	 (19,'PHONE','971','448','1199'),
+	 (20,'PHONE','984','762','4001');
+INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+	 (21,'PHONE','229','814','6550'),
+	 (22,'PHONE','319','507','9908'),
+	 (23,'PHONE','406','283','1432'),
+	 (24,'PHONE','502','672','7890'),
+	 (25,'PHONE','601','334','9102'),
+	 (26,'PHONE','716','845','3771'),
+	 (27,'PHONE','812','929','5606'),
+	 (28,'PHONE','909','683','2145'),
+	 (29,'PHONE','972','477','6980'),
+	 (30,'PHONE','217','392','8841');
+INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+	 (31,'PHONE','307','284','6321'),
+	 (32,'PHONE','408','715','9983'),
+	 (33,'PHONE','505','821','2374'),
+	 (34,'PHONE','606','498','5732'),
+	 (35,'PHONE','701','667','8920'),
+	 (36,'PHONE','785','382','4477'),
+	 (37,'PHONE','828','990','3142'),
+	 (38,'PHONE','901','483','2056'),
+	 (39,'PHONE','937','624','8112'),
+	 (40,'PHONE','979','751','3309');
+INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+	 (41,'PHONE','234','673','1023'),
+	 (42,'PHONE','276','905','4810'),
+	 (43,'PHONE','325','448','7715'),
+	 (44,'PHONE','423','589','6428'),
+	 (45,'PHONE','530','736','9004'),
+	 (46,'PHONE','620','851','2857'),
+	 (47,'PHONE','731','404','9932'),
+	 (48,'PHONE','765','312','1543'),
+	 (49,'PHONE','812','567','7099'),
+	 (50,'PHONE','859','429','8806');
+INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+	 (51,'PHONE','901','632','4147'),
+	 (52,'PHONE','918','508','2668'),
+	 (53,'PHONE','936','751','9452'),
+	 (54,'PHONE','970','816','7314'),
+	 (55,'PHONE','985','633','2008'),
+	 (56,'PHONE','209','542','9173'),
+	 (57,'PHONE','319','805','6217'),
+	 (58,'PHONE','406','911','8390'),
+	 (59,'PHONE','512','702','1348'),
+	 (60,'PHONE','623','487','5003');
+INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+	 (61,'PHONE','701','254','9427');
+
 
 
 -- 8. Insert data into PP_PROV table
@@ -217,7 +284,74 @@ INSERT INTO portown.pp_prov (id,name,tin_id,prov_type_id,address_id,specialty_id
 -- 9. Insert data into PP_ADDR_PHONES table
 INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
 	 (1,1,1),
-	 (2,2,1);
+	 (2,2,1),
+	 (3,3,2),
+	 (4,4,3),
+	 (5,5,4),
+	 (6,6,5),
+	 (7,7,6),
+	 (8,8,7),
+	 (9,9,8),
+	 (10,10,9);
+INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
+	 (11,11,10),
+	 (12,12,11),
+	 (13,13,12),
+	 (14,14,13),
+	 (15,15,14),
+	 (16,16,15),
+	 (17,17,16),
+	 (18,18,17),
+	 (19,19,18),
+	 (20,20,19);
+INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
+	 (21,21,20),
+	 (22,22,21),
+	 (23,23,22),
+	 (24,24,23),
+	 (25,25,24),
+	 (26,26,25),
+	 (27,27,26),
+	 (28,28,27),
+	 (29,29,28),
+	 (30,30,29);
+INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
+	 (31,31,30),
+	 (32,32,31),
+	 (33,33,32),
+	 (34,34,33),
+	 (35,35,34),
+	 (36,36,35),
+	 (37,37,36),
+	 (38,38,37),
+	 (39,39,38),
+	 (40,40,39);
+INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
+	 (41,41,40),
+	 (42,42,41),
+	 (43,43,42),
+	 (44,44,43),
+	 (45,45,44),
+	 (46,46,45),
+	 (47,47,46),
+	 (48,48,47),
+	 (49,49,48),
+	 (50,50,49);
+INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
+	 (51,51,50),
+	 (52,52,51),
+	 (53,53,52),
+	 (54,54,53),
+	 (55,55,54),
+	 (56,56,55),
+	 (57,57,56),
+	 (58,58,57),
+	 (59,59,58),
+	 (60,60,59);
+INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
+	 (61,61,60),
+	 (62,62,61);
+
 
 -- 10. Insert data into PP_PROV_ADDR table
 INSERT INTO portown.pp_prov_addr (id,prov_id,address_id) VALUES
