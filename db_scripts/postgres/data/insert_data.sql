@@ -90,7 +90,11 @@ INSERT INTO portown.fmg_attribute_types (id,metatype,description) VALUES
 	 (100638,'PROV_AAAHC_ACCRED','AAAHC Accreditation'),
 	 (101278,'PROV_AASM_ACCRED','Provider AASM Accred'),
 	 (502,'PROV_NPI','Provider NPI'),
-	 (100073,'PROV_MEDICARE_ID','Provider Medicare Id');
+	 (100073,'PROV_MEDICARE_ID','Provider Medicare Id'),
+	 (103277,'PROV_PPG_ID','Provider PPG ID'),
+	 (106877,'PROV_LOC_SPECIALTIES', 'Provider Location Specialties');
+
+
 
 
 -- 2. Insert data into FMG_ATTRIBUTE_FIELDS table
@@ -118,7 +122,15 @@ INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"da
 	 (708,502,NULL,'effectiveDate','date');
 INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"datatype") VALUES
 	 (707,502,NULL,'type','string'),
-	 (100283,100073,NULL,'number','string');
+	 (100283,100073,NULL,'number','string'),
+	 (106275,103277,'YES_NO','Capitated PPG','string'),
+	 (106276,103277,'YES_NO','PCP Required','string'),
+	 (105835,103277,NULL,'PPG ID','string'),
+	 (105836,103277,NULL,'Parent PPG ID','string'),
+	 (107275,103277,NULL,'Effective Date','date'),
+	 (111355, 106877, NULL, 'Specialty Description', 'string');
+
+
 
 
 -- 3. Insert data into PP_PROV_TIN table
@@ -127,11 +139,13 @@ INSERT INTO portown.pp_prov_tin (id,name,tin) VALUES
 
 -- 4. Insert data into PP_PROV_TYPE table
 INSERT INTO portown.pp_prov_type (id,"type",category) VALUES
-	 (1,'HOSP','Medical');
+	 (1,'HOSP','Medical'),
+	 (2,'PPG','Physician Practitioner Group');
 
 -- 5. Insert data into PP_SPEC table
 INSERT INTO portown.pp_spec (id,"type",description,site_visit_req) VALUES
-	 (1,'Multi-Specialty','Multi Specialty Institution','No');
+	 (1,'Multi-Specialty','Multi Specialty Institution','No'),
+	 (2, 'Emergency', 'Emergency Care', 'No');
 
 -- 6. Insert data into PP_ADDR table
 INSERT INTO portown.pp_addr (id,"type",addr1,addr2,city,state,zip,county,latitude,longitude,start_date,end_date,fips) VALUES
@@ -278,8 +292,9 @@ INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
 
 
 -- 8. Insert data into PP_PROV table
-INSERT INTO portown.pp_prov (id,name,tin_id,prov_type_id,address_id,specialty_id) VALUES
-	 (1,'Kaptured Hospital',1,1,1,1);
+INSERT INTO portown.pp_prov (id,"name",tin_id,prov_type_id,address_id,specialty_id) VALUES
+	 (1,'Kaptured Hospital',1,2,1,1),
+	 (2,'Kaptured Emergency Care',1,2,1,1);
 
 -- 9. Insert data into PP_ADDR_PHONES table
 INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
@@ -355,7 +370,9 @@ INSERT INTO portown.pp_addr_phones (id,address_id,phone_id) VALUES
 
 -- 10. Insert data into PP_PROV_ADDR table
 INSERT INTO portown.pp_prov_addr (id,prov_id,address_id) VALUES
-	 (1,1,1);
+	 (1,1,1),
+	 (2,2,1),
+	 (3,2,2);
 
 -- 11. Insert data into PP_PROV_ATTRIB table
 INSERT INTO portown.pp_prov_attrib (id,prov_id,attribute_id) VALUES
@@ -364,7 +381,10 @@ INSERT INTO portown.pp_prov_attrib (id,prov_id,attribute_id) VALUES
 	 (6,1,100638),
 	 (2,1,101278),
 	 (1,1,502),
-	 (3,1,100073);
+	 (3,1,100073),
+	 (7,1,103277),
+	 (8,2,502),
+	 (9,2,103277);
 
 
 -- 12. Insert data into PP_PROV_ATTRIB_VALUES table
@@ -383,7 +403,19 @@ INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,v
 	 (1,1,706,'235625546',NULL,NULL),
 	 (2,1,708,NULL,'2019-01-01',NULL),
 	 (3,1,707,'type 1',NULL,NULL),
-	 (6,3,100283,'FL34634359',NULL,NULL);
+	 (6,3,100283,'FL34634359',NULL,NULL),
+	 (15,7,106275,'N',NULL,NULL),
+	 (16,7,106276,'Y',NULL,NULL),
+	 (17,7,105835,'MS0912',NULL,NULL),
+	 (18,8,706,'235625547',NULL,NULL),
+	 (19,8,707,'type 1',NULL,NULL),
+	 (20,8,708,NULL,'2019-01-01',NULL);
+INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,value_date,value_number) VALUES
+	 (21,9,106275,'Y',NULL,NULL),
+	 (22,9,106276,'N',NULL,NULL),
+	 (23,9,105835,'MS0913',NULL,NULL),
+	 (24,9,105836,'MS0912',NULL,NULL);
+
 
 -- 13. Insert data into PP_PROV_TIN_LOC
 INSERT INTO portown.pp_prov_tin_loc (id,tin_id,address_id,"name","primary",print_suppress,office_mgr,train,bus,transit_route,handicap,prov_tin_prc_cont_id) VALUES
@@ -417,6 +449,33 @@ INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,s
 	 (5,3,1,4,'2020-01-01','4000-01-01','N'),
 	 (6,4,1,5,'2015-01-01','4000-01-01','N'),
 	 (7,4,1,4,'2020-01-01','4000-01-01','N');
+
+-- 17. Insert data into PP_PROV_LOC_ATTRIB
+INSERT INTO portown.pp_prov_loc_attrib (id,prov_id,loc_id,attribute_id) VALUES
+	 (1,1,1,106877),
+	 (2,1,2,106877),
+	 (3,1,3,106877),
+	 (4,1,4,106877),
+	 (5,1,5,106877),
+	 (6,2,1,106877),
+	 (7,2,2,106877),
+	 (8,2,3,106877),
+	 (9,2,4,106877),
+	 (10,2,5,106877);
+
+-- 18. Insert data into PP_PROV_LOC_ATTRIB_VALUES
+INSERT INTO portown.pp_prov_loc_attrib_values (id,prov_loc_attribute_id,field_id,value,value_date,value_number) VALUES
+	 ('1',1,111355,'Mutispecialty',NULL,NULL),
+	 ('2',2,111355,'Mutispecialty',NULL,NULL),
+	 ('3',3,111355,'Mutispecialty',NULL,NULL),
+	 ('4',4,111355,'Mutispecialty',NULL,NULL),
+	 ('5',5,111355,'Mutispecialty',NULL,NULL),
+	 ('6',6,111355,'Emergency',NULL,NULL),
+	 ('7',7,111355,'Emergency',NULL,NULL),
+	 ('8',8,111355,'Emergency',NULL,NULL),
+	 ('9',9,111355,'Emergency',NULL,NULL),
+	 ('10',10,111355,'Emergency',NULL,NULL);
+
 
 
 

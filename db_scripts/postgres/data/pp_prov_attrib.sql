@@ -4,4 +4,7 @@ INSERT INTO portown.pp_prov_attrib (id,prov_id,attribute_id) VALUES
 	 (6,1,100638),
 	 (2,1,101278),
 	 (1,1,502),
-	 (3,1,100073);
+	 (3,1,100073),
+	 (7,1,103277),
+	 (8,2,502),
+	 (9,2,103277);

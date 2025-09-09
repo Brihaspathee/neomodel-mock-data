@@ -17,10 +17,13 @@ from .fmg_attribute_types import FmgAttributeType
 from .fmg_attribute_fields import FmgAttributeField
 from .pp_prov_attrib import PPProvAttrib
 from .pp_prov_attrib_values import PPProvAttribValues
+from .pp_prov_loc_attrib import PPProvLocAttrib
+from .pp_prov_loc_attrib_values import PPProvLocAttribValues
 
 __all__ = ["Person", "Base", "PPAddr","PPNet",
            "PPPhones", "PPAddrPhones", "PPProvTIN",
            "PPProvType", "PPSpec", "PPProv", "PPProvAddr", "PPProvLoc",
            "PPProvTinLoc",  "PPProvNetCycle", "PPProvNetLocCycle",
            "FmgAttributeType", "FmgAttributeField",
-           "PPProvAttrib", "PPProvAttribValues"]
+           "PPProvAttrib", "PPProvAttribValues",
+           "PPProvLocAttrib", "PPProvLocAttribValues"]

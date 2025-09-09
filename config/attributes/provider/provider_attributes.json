@@ -11,6 +11,19 @@
     },
     "ignore": ["707"]
   },
+  "103277": {
+    "name": "PROV_PPG_ID",
+    "category": "Identifier",
+    "attr_type": "PPG_ID",
+    "class": "models.aton.nodes.identifier.PPGID",
+    "fields": {
+      "106275": "capitated_ppg",
+      "106276": "pcp_required",
+      "105835": "value",
+      "105836": "parent_ppg_id"
+    },
+    "ignore": ["107275"]
+  },
   "101278": {
     "name": "PROV_AASM_ACCRED",
     "category": "Qualification",

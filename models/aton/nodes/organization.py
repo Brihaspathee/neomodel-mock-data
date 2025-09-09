@@ -16,11 +16,17 @@ class Organization(StructuredNode):
     atypical: bool = BooleanProperty(required=False)
     popularity: float = FloatProperty(required=False)
 
+    #------------------------------------------------------------------------------
+    # Self-Referential Relationships
+    #------------------------------------------------------------------------------
+    parent = RelationshipTo("Organization", "PART_OF")
+    children = RelationshipFrom("Organization", "PART_OF")
+
     npi = RelationshipTo("NPI", "HAS_NPI")
     tin = RelationshipTo("TIN", "HAS_TIN")
-    medicare_id = RelationshipTo("MedicareId", "HAS_MEDICAID")
-    medicaid_id = RelationshipTo("MedicaidId", "HAS_MEDICAID")
-    ppg_id = RelationshipTo("PPGID", "HAS_PPG")
+    medicare_id = RelationshipTo("MedicareId", "HAS_MEDICAID_ID")
+    medicaid_id = RelationshipTo("MedicaidId", "HAS_MEDICARE_ID")
+    ppg_id = RelationshipTo("PPGID", "HAS_PPG_ID")
 
     contacts = RelationshipTo("models.aton.nodes.contact.Contact",
                               "HAS_ORGANIZATION_CONTACT")
@@ -35,6 +41,7 @@ class Organization(StructuredNode):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.parent_ppg_id = None
         # Temporary storage for identifiers
         self._pending_identifiers = {
             "npi": [],

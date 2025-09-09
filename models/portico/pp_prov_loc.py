@@ -1,6 +1,11 @@
+from typing import List, TYPE_CHECKING
+
 from sqlalchemy import ForeignKey, Column, Integer, Boolean
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped
 from models.portico.base import Base
+
+if TYPE_CHECKING:
+    from models.portico.pp_prov_loc_attrib import PPProvLocAttrib
 
 class PPProvLoc(Base):
 

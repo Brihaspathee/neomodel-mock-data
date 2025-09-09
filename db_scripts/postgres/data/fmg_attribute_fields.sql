@@ -22,6 +22,10 @@ INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"da
 	 (708,502,NULL,'effectiveDate','date');
 INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"datatype") VALUES
 	 (707,502,NULL,'type','string'),
-	 (100283,100073,NULL,'number','string');
-
-
+	 (100283,100073,NULL,'number','string'),
+	 (106275,103277,'YES_NO','Capitated PPG','string'),
+	 (106276,103277,'YES_NO','PCP Required','string'),
+	 (105835,103277,NULL,'PPG ID','string'),
+	 (105836,103277,NULL,'Parent PPG ID','string'),
+	 (107275,103277,NULL,'Effective Date','date'),
+	 (111355, 106877, NULL, 'Specialty Description', 'string');

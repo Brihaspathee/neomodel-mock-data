@@ -4,7 +4,7 @@ from neomodel import StructuredNode
 
 from config.attribute_settings import ATTRIBUTES_CONFIG
 from config.attributes_mapping import AttributeMapping
-from models.aton.nodes.identifier import NPI, Identifier
+from models.aton.nodes.identifier import NPI, Identifier, PPGID
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.qualification import Qualification
 from models.portico import PPProv
@@ -31,7 +31,7 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                 attribute_fields[field_id] = value.value
         log.info(f"Attribute Fields: {attribute_fields}")
         attribute_id = attribute.attribute_id
-        if str(attribute_id) == "502" or str(attribute_id) == "101278":
+        if str(attribute_id) == "502" or str(attribute_id) == "101278" or str(attribute_id) == "103277":
             mapping = ATTRIBUTES_CONFIG["provider"][str(attribute.attribute_id)]
             # log.info(f"Mapping: {mapping}")
             node = build_node_for_attribute(mapping, attribute_fields)
@@ -40,6 +40,21 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
             # log.info(f"Is this Type NPI: {isinstance(node, Identifier):}")
             # log.info(f"Is this Type Qualification: {isinstance(node, Qualification):}")
             if isinstance(node, Identifier):
+                if isinstance(node, PPGID):
+                    log.info(f"This is a PPG ID {node.value}")
+                    log.info(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
+                    log.info(f"This is a PPG ID - PCP required  {node.pcp_required}")
+                    log.info(f"This is a PPG ID - Parent PPG ID  {node.parent_ppg_id}")
+                    if node.capitated_ppg == "Y":
+                        organization.capitated = True
+                    else:
+                        organization.capitated = False
+                    if node.pcp_required == "Y":
+                        organization.pcp_practitioner_required = True
+                    else:
+                        organization.pcp_practitioner_required = False
+                    if node.parent_ppg_id:
+                        organization.parent_ppg_id = node.parent_ppg_id
                 organization.add_identifier(node)
             elif isinstance(node, Qualification):
                 organization.add_qualification(node)
@@ -59,6 +74,6 @@ def build_node_for_attribute(mapping:AttributeMapping,
 
     props.update(mapping.adornments)
     log.info(f"Aton Properties: {props}")
-
+    log.info(f"Aton Node Class: {mapping.node_class}")
     node_instance = mapping.node_class(**props)
     return node_instance

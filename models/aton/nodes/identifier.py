@@ -1,5 +1,5 @@
 from neo4j.time import DateType
-from neomodel import StringProperty, DateProperty, StructuredNode
+from neomodel import StringProperty, DateProperty, StructuredNode, RelationshipFrom
 
 
 class Identifier(StructuredNode):
@@ -16,19 +16,49 @@ class Identifier(StructuredNode):
 class NPI(Identifier):
     _node_labels = ('Identifier', 'NPI')
 
+    organization = RelationshipFrom(
+        "models.aton.nodes.organization.Organization",
+        "HAS_NPI"
+    )
+
 class TIN(Identifier):
     _node_labels = ('Identifier', 'TIN' )
     legal_name: str= StringProperty(required=False)
+    organization = RelationshipFrom(
+        "models.aton.nodes.organization.Organization",
+        "HAS_TIN"
+    )
     def __repr__(self):
         return f"{self.value} - {self.legal_name}"
 
 class MedicareId(Identifier):
     _node_labels = ('Identifier', 'MedicareID')
+    organization = RelationshipFrom(
+        "models.aton.nodes.organization.Organization",
+        "HAS_MEDICARE_ID"
+    )
     pass
 
 class MedicaidId(Identifier):
     _node_labels = ('Identifier', 'MedicaidID')
+    organization = RelationshipFrom(
+        "models.aton.nodes.organization.Organization",
+        "HAS_MEDICAID_ID"
+    )
     state: str= StringProperty(required=False)
 
 class PPGID(Identifier):
-    _node_labels = ('Identifier', 'PPGID')
+    _node_labels = ('Identifier', 'PPGID'),
+
+    # reverse link to org
+    organization = RelationshipFrom(
+        "models.aton.nodes.organization.Organization",
+        "HAS_PPG_ID"
+    )
+
+    def __init__(self, *args, capitated_ppg=None, pcp_required=None, parent_ppg_id=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Temporary storage for other values associated with this identifier
+        self.capitated_ppg = capitated_ppg
+        self.pcp_required = pcp_required
+        self.parent_ppg_id = parent_ppg_id

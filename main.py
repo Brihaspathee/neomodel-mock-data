@@ -5,6 +5,7 @@ from models.aton.nodes.product import Product
 from portico_reads.service.provider import provider_read
 from portico_reads.service.network import network_read
 from transform.transformers import transformer
+from utils.log_provider import log_providers
 from aton_writes.service.aton_write import write_to_aton, write_products_networks
 from transform import transform_network
 from transform import transform_provider
@@ -27,16 +28,17 @@ def main():
     # Read the providers from Portico
     portico_db: PorticoDB = PorticoDB()
     portico_db.connect()
-    init_db()
+    # init_db()
 
     with (portico_db.get_session() as session):
         pp_nets: list[PPNet] = network_read.get_networks(session)
         providers: list[PPProv] = provider_read.read_provider(session)
-    products: list[Product] = transformer(pp_nets)
-    for product in products:
-        write_products_networks(product)
-    organizations: list[Organization]=transformer(providers)
-    write_to_aton(organizations)
+    log_providers(providers)
+    # products: list[Product] = transformer(pp_nets)
+    # for product in products:
+    #     write_products_networks(product)
+    # organizations: list[Organization]=transformer(providers)
+    # write_to_aton(organizations)
 
 
 

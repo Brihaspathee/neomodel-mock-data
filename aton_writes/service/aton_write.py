@@ -13,7 +13,11 @@ log = logging.getLogger(__name__)
 
 @db.transaction
 def write_to_aton(organizations: list[Organization]):
-    for organization in organizations:
+    sorted_orgs = sorted(
+        organizations,
+        key=lambda org: (org.parent_ppg_id is not None, org.parent_ppg_id or "")
+    )
+    for organization in sorted_orgs:
         create_organization(organization)
 
 

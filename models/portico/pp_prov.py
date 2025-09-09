@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from models.portico.pp_prov_addr import PPProvAddr
     from models.portico.pp_prov_attrib import PPProvAttrib
     from models.portico.pp_prov_loc import PPProvLoc
+    from models.portico.pp_prov_loc_attrib import PPProvLocAttrib
     from models.portico.pp_prov_tin_loc import PPProvTinLoc
 
 
@@ -67,6 +68,11 @@ class PPProv(Base):
     addresses: Mapped[List["PPProvAddr"]] = relationship("PPProvAddr", back_populates="providers")
 
     attributes: Mapped[List["PPProvAttrib"]] = relationship("PPProvAttrib", back_populates="provider")
+    loc_attributes: Mapped[List["PPProvLocAttrib"]] = relationship(
+        "PPProvLocAttrib",
+        back_populates="provider",
+        cascade="all, delete-orphan"
+    )
 
     # Association table mapping
     prov_locs: Mapped[List["PPProvLoc"]] = relationship("PPProvLoc", back_populates="provider")

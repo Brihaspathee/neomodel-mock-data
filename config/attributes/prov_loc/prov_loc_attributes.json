@@ -1,0 +1,11 @@
+{
+  "106877": {
+    "name": "PROV_LOC_SPECIALTIES",
+    "category": "Specialties",
+    "attr_type": "Provider Location Specialties",
+    "class": "models.aton.nodes.role_specialty.RoleSpecialty",
+    "fields": {
+      "111355": "specialty"
+    }
+  }
+}

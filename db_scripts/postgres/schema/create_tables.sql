@@ -273,4 +273,29 @@ CREATE TABLE portown.pp_prov_net_loc_cycle (
 	CONSTRAINT pp_prov_net_loc_cycle_pp_prov_tin_loc_fk FOREIGN KEY (loc_id) REFERENCES portown.pp_prov_tin_loc(id)
 );
 
+-- 14. Create PP_PROV_LOC_ATTRIB table
+CREATE TABLE portown.pp_prov_loc_attrib (
+	id numeric NOT NULL,
+	prov_id integer NOT NULL,
+	loc_id numeric NOT NULL,
+	attribute_id integer NOT NULL,
+	CONSTRAINT pp_prov_loc_attrib_pk PRIMARY KEY (id),
+	CONSTRAINT pp_prov_loc_attrib_pp_prov_fk FOREIGN KEY (prov_id) REFERENCES portown.pp_prov(id),
+	CONSTRAINT pp_prov_loc_attrib_pp_prov_tin_loc_fk FOREIGN KEY (loc_id) REFERENCES portown.pp_prov_tin_loc(id),
+	CONSTRAINT pp_prov_loc_attrib_fmg_attribute_types_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attribute_types(id)
+);
+
+-- 15. Create PP_PROV_LOC_ATTRIB_VALUES table
+CREATE TABLE portown.pp_prov_loc_attrib_values (
+	id varchar NOT NULL,
+	prov_loc_attribute_id numeric NOT NULL,
+	field_id integer NOT NULL,
+	value varchar NULL,
+	value_date date NULL,
+	value_number numeric NULL,
+	CONSTRAINT pp_prov_loc_attrib_values_pk PRIMARY KEY (id),
+	CONSTRAINT pp_prov_loc_attrib_values_pp_prov_loc_attrib_fk FOREIGN KEY (prov_loc_attribute_id) REFERENCES portown.pp_prov_loc_attrib(id),
+	CONSTRAINT pp_prov_loc_attrib_values_fmg_attribute_fields_fk FOREIGN KEY (field_id) REFERENCES portown.fmg_attribute_fields(id)
+);
+
 
