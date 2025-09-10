@@ -31,7 +31,7 @@ class TIN(Identifier):
     def __repr__(self):
         return f"{self.value} - {self.legal_name}"
 
-class MedicareId(Identifier):
+class MedicareID(Identifier):
     _node_labels = ('Identifier', 'MedicareID')
     organization = RelationshipFrom(
         "models.aton.nodes.organization.Organization",
@@ -39,7 +39,7 @@ class MedicareId(Identifier):
     )
     pass
 
-class MedicaidId(Identifier):
+class MedicaidID(Identifier):
     _node_labels = ('Identifier', 'MedicaidID')
     organization = RelationshipFrom(
         "models.aton.nodes.organization.Organization",

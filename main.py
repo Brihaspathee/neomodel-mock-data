@@ -16,7 +16,7 @@ from models.portico import PPNet, PPProv
 log = logging.getLogger(__name__)
 
 def main():
-    log.info("Starting...")
+    log.info("Starting fresh...")
     log.info(f"Running on {settings.ENVIRONMENT} environment")
     log.info(f"POSTGRES info {settings.POSTGRES} environment")
     log.info(f"NEO4J info {settings.NEO4J} environment")

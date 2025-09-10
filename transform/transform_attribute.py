@@ -33,35 +33,35 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                 attribute_fields[field_id] = value.value
         log.info(f"Attribute Fields: {attribute_fields}")
         attribute_id = attribute.attribute_id
-        if str(attribute_id) == "502" or str(attribute_id) == "101278" or str(attribute_id) == "103277":
-            mapping = ATTRIBUTES_CONFIG["provider"][str(attribute.attribute_id)]
-            # log.info(f"Mapping: {mapping}")
-            node = build_node_for_attribute(mapping, attribute_fields)
-            # log.info(f"Node: {node}")
-            # log.info(f"Node type: {type(node)}")
-            # log.info(f"Is this Type NPI: {isinstance(node, Identifier):}")
-            # log.info(f"Is this Type Qualification: {isinstance(node, Qualification):}")
-            if isinstance(node, Identifier):
-                if isinstance(node, PPGID):
-                    log.info(f"This is a PPG ID {node.value}")
-                    log.info(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
-                    log.info(f"This is a PPG ID - PCP required  {node.pcp_required}")
-                    log.info(f"This is a PPG ID - Parent PPG ID  {node.parent_ppg_id}")
-                    if node.capitated_ppg == "Y":
-                        organization.capitated = True
-                    else:
-                        organization.capitated = False
-                    if node.pcp_required == "Y":
-                        organization.pcp_practitioner_required = True
-                    else:
-                        organization.pcp_practitioner_required = False
-                    if node.parent_ppg_id:
-                        organization.parent_ppg_id = node.parent_ppg_id
-                organization.add_identifier(node)
-            elif isinstance(node, Qualification):
-                organization.add_qualification(node)
-            else:
-                log.error(f"Unable to determine node type for attribute {attribute_id}")
+        # if str(attribute_id) == "502" or str(attribute_id) == "101278" or str(attribute_id) == "103277":
+        mapping = ATTRIBUTES_CONFIG["provider"][str(attribute.attribute_id)]
+        # log.info(f"Mapping: {mapping}")
+        node = build_node_for_attribute(mapping, attribute_fields)
+        # log.info(f"Node: {node}")
+        # log.info(f"Node type: {type(node)}")
+        # log.info(f"Is this Type NPI: {isinstance(node, Identifier):}")
+        # log.info(f"Is this Type Qualification: {isinstance(node, Qualification):}")
+        if isinstance(node, Identifier):
+            if isinstance(node, PPGID):
+                log.info(f"This is a PPG ID {node.value}")
+                log.info(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
+                log.info(f"This is a PPG ID - PCP required  {node.pcp_required}")
+                log.info(f"This is a PPG ID - Parent PPG ID  {node.parent_ppg_id}")
+                if node.capitated_ppg == "Y":
+                    organization.capitated = True
+                else:
+                    organization.capitated = False
+                if node.pcp_required == "Y":
+                    organization.pcp_practitioner_required = True
+                else:
+                    organization.pcp_practitioner_required = False
+                if node.parent_ppg_id:
+                    organization.parent_ppg_id = node.parent_ppg_id
+            organization.add_identifier(node)
+        elif isinstance(node, Qualification):
+            organization.add_qualification(node)
+        else:
+            log.error(f"Unable to determine node type for attribute {attribute_id}")
 
 
 def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
@@ -89,7 +89,33 @@ def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_lo
 
 
 def build_node_for_attribute(mapping:AttributeMapping,
-                             attribute_fields: dict[str, Any]) -> StructuredNode:
+                             attribute_fields: dict[str, Any]) -> StructuredNode | None:
+    """
+    Builds a structured node for a given attribute mapping and its corresponding fields.
+
+    This function evaluates conditions for the provided mapping and creates a
+    structured node only if all specified conditions are met. If conditions are not
+    met, the function will log the event and return None. Properties of the node are
+    mapped and transformed based on the given attribute mapping, ignoring fields that
+    are explicitly stated to be excluded.
+
+    :param mapping: The attribute mapping configuration defining the structured node
+                    creation logic, including field mappings, ignored fields, and any
+                    adornments to be applied.
+    :type mapping: AttributeMapping
+    :param attribute_fields: A dictionary containing fields associated with the attribute,
+                             where keys are field ids and values are their respective
+                             values.
+    :type attribute_fields: dict[str, Any]
+    :return: A StructuredNode instance created using the provided attribute mapping and
+             attribute fields, or None if the conditions are not satisfied.
+    :rtype: StructuredNode | None
+    """
+    if not evaluate_conditions(mapping, attribute_fields):
+        log.info("Conditions not met, skipping node creation")
+        return None
+    else:
+        log.info("Conditions met, creating node")
     props = {}
     for field_id, field_value in attribute_fields.items():
         if field_id in mapping.ignore:
@@ -103,3 +129,36 @@ def build_node_for_attribute(mapping:AttributeMapping,
     log.info(f"Aton Node Class: {mapping.node_class}")
     node_instance = mapping.node_class(**props)
     return node_instance
+
+def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, Any]) -> bool:
+    """
+    Evaluates a set of conditions on provided attribute values.
+
+    This function checks a list of conditions defined within an ``AttributeMapping``
+    instance against a dictionary of attribute values. Each condition specifies a
+    field, an operator, and an expected value. The function evaluates these conditions
+    and determines whether they are all satisfied based on the given values.
+
+    :param mapping: The ``AttributeMapping`` object containing the list of conditions
+        to evaluate. Each condition includes a field identifier, an operator,
+        and an expected value.
+    :param attribute_fields: A dictionary where keys represent field IDs and the values
+        are the actual attribute values to compare against the conditions.
+    :return: A boolean value indicating whether all conditions are satisfied.
+        Returns ``True`` if all the conditions are met, or ``False`` otherwise.
+    """
+    conditions = getattr(mapping, "conditions", [])
+    log.info(f"Conditions: {conditions}")
+    for condition in conditions:
+        field_id = condition["field_id"]
+        operator = condition["operator"]
+        expected_value = condition["value"]
+        actual_value = attribute_fields.get(field_id)
+        log.info(f"Actual Value: {actual_value}")
+        log.info(f"Expected Value: {expected_value}")
+        log.info(f"Operator: {operator}")
+        if operator == "equals" and actual_value != expected_value:
+            return False
+        elif operator == "not_equals" and actual_value == expected_value:
+            return False
+    return True

@@ -11,6 +11,15 @@
     },
     "ignore": ["707"]
   },
+  "100073": {
+    "name": "PROV_MEDICARE_ID",
+    "category": "Identifier",
+    "attr_type": "MedicareID",
+    "class": "models.aton.nodes.identifier.MedicareID",
+    "fields": {
+      "100283": "value"
+    }
+  },
   "103277": {
     "name": "PROV_PPG_ID",
     "category": "Identifier",
@@ -23,6 +32,63 @@
       "105836": "parent_ppg_id"
     },
     "ignore": ["107275"]
+  },
+  "101277": {
+    "name": "PROV_AAAASF_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "101956": "start_date",
+      "102795": "end_date"
+    },
+    "ignore": ["101955"],
+    "adornments": {
+      "type": "AAAASF Accreditation",
+      "issuer": "American Association for Accreditation of Ambulatory Surgery Facilities",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "101955",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "100638": {
+    "name": "PROV_AAAHC_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "101137": "start_date",
+      "102815": "end_date",
+      "104381": "level"
+    },
+    "ignore": ["101136"],
+    "adornments": {
+      "type": "AAAHC Accreditation",
+      "issuer": "Accreditation Association for Ambulatory Health Care",
+      "secondary_label": "Accreditation"
+    }
+  },
+  "100640": {
+    "name": "PROV_ACR_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "101141": "start_date",
+      "102915": "end_date",
+      "104380": "level"
+    },
+    "ignore": ["101143"],
+    "adornments": {
+      "type": "ACR Accreditation",
+      "issuer": "American College of Radiology",
+      "secondary_label": "Accreditation"
+    }
   },
   "101278": {
     "name": "PROV_AASM_ACCRED",

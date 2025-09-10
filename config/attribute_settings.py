@@ -35,7 +35,8 @@ def load_entity_attributes(entity_name: str, file_path: Path):
             node_class=node_class,
             fields=details["fields"],
             ignore=details.get("ignore", []),
-            adornments=details.get("adornments", {})
+            adornments=details.get("adornments", {}),
+            conditions=details.get("conditions", {}),
         )
     ATTRIBUTES_CONFIG[entity_name] = entity_dict
 

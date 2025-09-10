@@ -1,13 +1,16 @@
 from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatProperty, RelationshipTo, RelationshipFrom
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareId, MedicaidId
+from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareID, MedicaidID
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
+class MockDataTest(StructuredNode):
+    pass
 
-class Organization(StructuredNode):
+class Organization(MockDataTest):
 
+    _node_labels = ('MockDataTest', 'Organization')
     name: str = StringProperty(unique_index=True, required=True)
     description: str = StringProperty(required=False)
     type: str = StringProperty(required=True)
@@ -24,8 +27,8 @@ class Organization(StructuredNode):
 
     npi = RelationshipTo("NPI", "HAS_NPI")
     tin = RelationshipTo("TIN", "HAS_TIN")
-    medicare_id = RelationshipTo("MedicareId", "HAS_MEDICAID_ID")
-    medicaid_id = RelationshipTo("MedicaidId", "HAS_MEDICARE_ID")
+    medicare_id = RelationshipTo("MedicareID", "HAS_MEDICARE_ID")
+    medicaid_id = RelationshipTo("MedicaidID", "HAS_MEDICAID_ID")
     ppg_id = RelationshipTo("PPGID", "HAS_PPG_ID")
 
     contacts = RelationshipTo("models.aton.nodes.contact.Contact",
@@ -70,9 +73,9 @@ class Organization(StructuredNode):
             self._pending_identifiers["tin"].append(identifier)
         elif isinstance(identifier, PPGID):
             self._pending_identifiers["ppg_id"].append(identifier)
-        elif isinstance(identifier, MedicareId):
+        elif isinstance(identifier, MedicareID):
             self._pending_identifiers["medicare_id"].append(identifier)
-        elif isinstance(identifier, MedicaidId):
+        elif isinstance(identifier, MedicaidID):
             self._pending_identifiers["medicaid_id"].append(identifier)
         else:
             ValueError(f"{identifier} is not a valid identifier")
