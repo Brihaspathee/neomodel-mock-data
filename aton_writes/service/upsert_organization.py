@@ -20,8 +20,8 @@ def upsert_organizations(organizations: list[Organization]):
         prov_id = organization.get_portico_source().prov_id
         existing_org = get_organization_by_prov_id(prov_id)
         if existing_org:
-            existing_org.name = organization.name
-            update_organization(existing_org)
+            # existing_org.name = organization.name
+            update_organization(existing_org, organization)
         else:
             create_organization(organization)
 
@@ -78,9 +78,24 @@ def create_qualifications(org: Organization):
             log.info(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
             rel.connect(qual_node)
 
-def update_organization(org: Organization):
+def update_organization(existing_org: Organization,
+                        updated_org: Organization):
     log.info(
-        f"Updating organization {org.name} in Aton"
-        f"Organization parent Id: {org.parent_ppg_id}"
+        f"Updating organization {existing_org.name} in Aton"
+        f"Organization parent Id: {existing_org.parent_ppg_id}"
     )
-    org.save()
+    existing_org, changed = update_org_node_properties(existing_org, updated_org)
+    if changed:
+        existing_org.save()
+
+def update_org_node_properties(existing_org: Organization,
+                        updated_org: Organization) -> (Organization, bool):
+    changed: bool = False
+    for property in updated_org.__properties__:
+        new_value = getattr(updated_org, property, None)
+        old_value = getattr(existing_org, property, None)
+        if new_value != old_value:
+            setattr(existing_org, property, new_value)
+            changed = True
+    return existing_org, changed
+

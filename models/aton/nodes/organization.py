@@ -6,13 +6,14 @@ from models.aton.nodes.pp_prov import PPProv
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
-class MockDataTest(StructuredNode):
-    pass
+# class MockDataTest(StructuredNode):
+#     pass
 
-class Organization(MockDataTest):
+class Organization(StructuredNode):
 
     _node_labels = ('MockDataTest', 'Organization')
     name: str = StringProperty(unique_index=True, required=True)
+    alias: str = StringProperty(required=False)
     description: str = StringProperty(required=False)
     type: str = StringProperty(required=True)
     capitated: bool = BooleanProperty(required=False)
