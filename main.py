@@ -46,6 +46,10 @@ def main():
         log.info("Loading data for a single provider")
         with (portico_db.get_session() as session):
             provider: PPProv = provider_read.get_provider_attributes(session, 1)
+            orgs = transformer(list([provider]))
+            for org in orgs:
+                log.info(f"Org:{org.element_id}")
+            write_to_aton(orgs)
         # for attribute in provider.attributes:
         #     log.info(f"Provider Attribute:{attribute.attribute_type}")
         #     log.info(attribute)

@@ -63,3 +63,10 @@ def create_qualifications(org: Organization):
             qual_node.save()
             log.info(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
             rel.connect(qual_node)
+
+def update_organization(org: Organization):
+    log.info(
+        f"Updating organization {org.name} in Aton"
+        f"Organization parent Id: {org.parent_ppg_id}"
+    )
+    org.save()

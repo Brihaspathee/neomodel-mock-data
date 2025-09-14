@@ -2,7 +2,7 @@ from neomodel import db
 
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_product import create_product
-from aton_writes.service.upsert_organization import create_organization
+from aton_writes.service.upsert_organization import create_organization, update_organization
 
 import logging
 
@@ -18,7 +18,10 @@ def write_to_aton(organizations: list[Organization]):
         key=lambda org: (org.parent_ppg_id is not None, org.parent_ppg_id or "")
     )
     for organization in sorted_orgs:
-        create_organization(organization)
+        if organization.element_id is None:
+            create_organization(organization)
+        else:
+            update_organization(organization)
 
 
 def write_products_networks(product: Product):
