@@ -48,7 +48,7 @@ def main():
             provider: PPProv = provider_read.get_provider_attributes(session, 1)
             orgs = transformer(list([provider]))
             for org in orgs:
-                log.info(f"Org:{org.element_id}")
+                log.info(f"Org:{org.name}")
             write_to_aton(orgs)
         # for attribute in provider.attributes:
         #     log.info(f"Provider Attribute:{attribute.attribute_type}")

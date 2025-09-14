@@ -6,10 +6,24 @@ from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
 from models.aton.nodes.pp_prov import PPProv
 from repository.contact_repo import create_contacts
+from repository.organization_repo import get_organization_by_prov_id
 import logging
 
 log = logging.getLogger(__name__)
 
+def upsert_organizations(organizations: list[Organization]):
+    sorted_orgs = sorted(
+        organizations,
+        key=lambda org: (org.parent_ppg_id is not None, org.parent_ppg_id or "")
+    )
+    for organization in sorted_orgs:
+        prov_id = organization.get_portico_source().prov_id
+        existing_org = get_organization_by_prov_id(prov_id)
+        if existing_org:
+            existing_org.name = organization.name
+            update_organization(existing_org)
+        else:
+            create_organization(organization)
 
 def create_organization(org: Organization):
     log.info(
