@@ -4,6 +4,7 @@ from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import PPGID
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
+from models.aton.nodes.pp_prov import PPProv
 from repository.contact_repo import create_contacts
 import logging
 
@@ -18,6 +19,8 @@ def create_organization(org: Organization):
     try:
         log.info(org.__properties__)
         org.save()
+        pp_prov: PPProv = org.get_portico_source().save()
+        pp_prov.aton_org.connect(org)
         if org.parent_ppg_id is not None:
             log.info(f"Organization has parent {org.parent_ppg_id}")
             ppg = PPGID.nodes.get(value=org.parent_ppg_id)

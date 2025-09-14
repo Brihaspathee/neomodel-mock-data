@@ -47,3 +47,14 @@ def read_provider(session:Session) -> list[PPProv] | None:
     log.info(f"Read providers successfully:{providers}")
     return providers
 
+def get_provider_attributes(session:Session, prov_id:int) -> PPProv:
+    stmt = (
+        select(PPProv)
+        .options(
+            joinedload(PPProv.attributes).joinedload(PPProvAttrib.attribute_type),
+            joinedload(PPProv.attributes).joinedload(PPProvAttrib.values).joinedload(PPProvAttribValues.field)
+        ).filter(PPProv.id == prov_id)
+    )
+    result = session.execute(stmt).unique().scalars().first()
+    return result
+

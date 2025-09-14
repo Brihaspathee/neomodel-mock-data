@@ -1,5 +1,6 @@
 import logging
 
+import models
 from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.location import Location
@@ -108,6 +109,8 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     """
     location: Location = Location()
     log.info(f"Location name:{prov_tin_loc.name}")
+    portico_location: models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc = models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc(loc_id=str(prov_tin_loc.id))
+    location.set_portico_source(portico_location)
     location.name = prov_tin_loc.name
     location.street_address = prov_tin_loc.address.addr1
     location.secondary_address = prov_tin_loc.address.addr2

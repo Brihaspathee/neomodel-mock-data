@@ -2,6 +2,7 @@ from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatPrope
 
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareID, MedicaidID
+from models.aton.nodes.pp_prov import PPProv
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
@@ -40,6 +41,8 @@ class Organization(MockDataTest):
     role = RelationshipTo("RoleInstance", "HAS_ROLE")
     contracted_by = RelationshipFrom("RoleInstance", "CONTRACTED_BY")
 
+    pp_prov = RelationshipFrom("models.aton.nodes.pp_prov.PPProv", "SOURCES")
+
 
 
     def __init__(self, *args, **kwargs):
@@ -62,6 +65,8 @@ class Organization(MockDataTest):
             "has_role": [],
             "contracted_by": []
         }
+
+        self._pending_portico_source: PPProv | None = None
 
     # --------------------------------
     # Associate Identifiers in Memory
@@ -105,4 +110,10 @@ class Organization(MockDataTest):
 
     def get_pending_role_instances(self):
         return self._pending_role_instances
+
+    def set_portico_source(self, portico_source: PPProv):
+        self._pending_portico_source = portico_source
+
+    def get_portico_source(self):
+        return self._pending_portico_source
 
