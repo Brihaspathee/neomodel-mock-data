@@ -1,10 +1,15 @@
 import traceback
+from typing import List, Tuple
+
+from neomodel import db
+from sqlalchemy.orm import relationship
 
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import PPGID
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
 from models.aton.nodes.pp_prov import PPProv
+from models.aton.nodes.qualification import Qualification
 from repository.contact_repo import create_contacts
 from repository.organization_repo import get_organization_by_prov_id
 import logging
@@ -21,7 +26,7 @@ def upsert_organizations(organizations: list[Organization]):
         existing_org = get_organization_by_prov_id(prov_id)
         if existing_org:
             # existing_org.name = organization.name
-            update_organization(existing_org, organization)
+            update_organization(existing_org, organization, relationships=['qualifications'])
         else:
             create_organization(organization)
 
@@ -79,23 +84,65 @@ def create_qualifications(org: Organization):
             rel.connect(qual_node)
 
 def update_organization(existing_org: Organization,
-                        updated_org: Organization):
+                        updated_org: Organization,
+                        relationships: List[str]):
     log.info(
         f"Updating organization {existing_org.name} in Aton"
         f"Organization parent Id: {existing_org.parent_ppg_id}"
     )
-    existing_org, changed = update_org_node_properties(existing_org, updated_org)
+    existing_org, changed = update_org_node_properties(existing_org, updated_org,relationships)
     if changed:
         existing_org.save()
 
 def update_org_node_properties(existing_org: Organization,
-                        updated_org: Organization) -> (Organization, bool):
+                        updated_org: Organization, relationships: List[str]) -> Tuple[Organization, bool]:
     changed: bool = False
-    for property in updated_org.__properties__:
-        new_value = getattr(updated_org, property, None)
-        old_value = getattr(existing_org, property, None)
+    for prop in updated_org.__properties__:
+        new_value = getattr(updated_org, prop, None)
+        old_value = getattr(existing_org, prop, None)
         if new_value != old_value:
-            setattr(existing_org, property, new_value)
+            setattr(existing_org, prop, new_value)
             changed = True
+
+    if relationships:
+        for rel in relationships:
+            # Special case for qualifications
+            if rel == "qualifications":
+                new_quals = updated_org.get_pending_qualifications()
+                new_quals.sort(key=lambda q: q.type)
+                query = """
+                        MATCH (org:Organization)-[:HAS_QUALIFICATION]->(q)
+                        WHERE elementId(org) = $org_id
+                        RETURN q
+                    """
+                results, _ = db.cypher_query(query, {"org_id": existing_org.element_id})
+                # Convert raw nodes to Neomodel objects
+                existing_quals =  [Qualification.inflate(row[0]) for row in results]
+                existing_quals.sort(key=lambda q: q.type)
+                log.info(f"Existing quals: {existing_quals}")
+                log.info(f"New quals: {new_quals}")
+                for new_qual in new_quals:
+                    qual_updated, is_new_qual = is_qual_updated(new_qual, existing_quals)
+                    if is_new_qual:
+                        new_qual.save()
+                        log.info(f"Qualification saved to Aton its element id is: {new_qual.element_id}")
+                        existing_org.qualifications.connect(new_qual)
+                    # elif qual_updated:
+                    #     existing_quals.remove(new_qual)
+                    #     existing_quals.append(new_qual)
+                    #     existing_quals.sort(key=lambda q: q.type)
+                    #     existing_qual = existing_quals[0]
+                    #     existing_qual.save()
     return existing_org, changed
+
+def is_qual_updated(new_qual: Qualification, existing_quals: list[Qualification]) -> tuple[bool, bool]:
+    qual_updated: bool = False
+    is_new_qual: bool = True
+    for existing_qual in existing_quals:
+        if new_qual.type == existing_qual.type:
+            is_new_qual = False
+            return qual_updated,is_new_qual
+    return qual_updated, is_new_qual
+
+
 
