@@ -30,9 +30,9 @@ class PPProvAddr(Base):
     __tablename__ = "pp_prov_addr"
     __table_args__ = {"schema": "portown"}
 
-    id = Column(Integer, primary_key=True)
-    prov_id = Column(Integer, ForeignKey("portown.pp_prov.id"))
-    address_id = Column(Integer, ForeignKey("portown.pp_addr.id"))
+    # id = Column(Integer, primary_key=True)
+    prov_id = Column(Integer, ForeignKey("portown.pp_prov.id"), primary_key=True)
+    address_id = Column(Integer, ForeignKey("portown.pp_addr.id"), primary_key=True)
 
     providers = relationship("PPProv", back_populates="addresses")
     address: Mapped["PPAddr"] = relationship("PPAddr", back_populates="provider_address")
@@ -47,6 +47,6 @@ class PPProvAddr(Base):
         :return: A string representation of the PPProvAddr object.
         :rtype: str
         """
-        return (f"<PPProvAddr(id={self.id}, "
+        return (f"<PPProvAddr( "
                 f"prov_id={self.prov_id}, "
                 f"address_id={self.address_id})>")
