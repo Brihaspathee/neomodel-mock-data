@@ -36,12 +36,12 @@ def main():
         with (portico_db.get_session() as session):
             pp_nets: list[PPNet] = network_read.get_networks(session)
             providers: list[PPProv] = provider_read.read_provider(session)
-        log_providers(providers)
-        products: list[Product] = transformer(pp_nets)
-        for product in products:
-            write_products_networks(product)
-        organizations: list[Organization]=transformer(providers)
-        write_to_aton(organizations)
+            log_providers(providers)
+            products: list[Product] = transformer(pp_nets)
+            for product in products:
+                write_products_networks(product)
+            organizations: list[Organization]=transformer(providers)
+            write_to_aton(organizations)
     elif user_input == "2":
         log.info("Loading data for a single provider")
         with (portico_db.get_session() as session):
@@ -50,7 +50,7 @@ def main():
             for org in orgs:
                 log.info(f"Org:{org.name}")
             write_to_aton(orgs)
-        # for attribute in provider.attributes:
+    #     # for attribute in provider.attributes:
         #     log.info(f"Provider Attribute:{attribute.attribute_type}")
         #     log.info(attribute)
         #     log.info(attribute.attribute_type)

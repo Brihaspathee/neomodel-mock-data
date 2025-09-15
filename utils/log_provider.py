@@ -17,6 +17,8 @@ def log_provider(provider: PPProv):
         log.info(address)
         log.info(address.address.type)
         log.info(address.address.addr1)
+        log.info(address.address.city.ds)
+        log.info(address.address.county.ds)
         for phone in address.address.phones:
             log.info(phone)
             log.info(phone.phone.type)

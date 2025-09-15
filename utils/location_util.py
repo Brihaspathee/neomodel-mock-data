@@ -15,8 +15,8 @@ def get_hash_key_for_location(location: Location) -> str:
 def get_hash_key_for_prov_tin_loc(prov_tin_loc: PPProvTinLoc) -> str:
     return hash_utility(prov_tin_loc.address.addr1,
                                  prov_tin_loc.address.addr2,
-                                 prov_tin_loc.address.city,
+                                 prov_tin_loc.address.city.ds,
                                  prov_tin_loc.address.state,
                                  prov_tin_loc.address.zip,
-                                 prov_tin_loc.address.county,
+                                 prov_tin_loc.address.county.ds,
                                  prov_tin_loc.address.fips)

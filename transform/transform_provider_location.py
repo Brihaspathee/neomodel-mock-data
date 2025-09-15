@@ -114,10 +114,10 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     location.name = prov_tin_loc.name
     location.street_address = prov_tin_loc.address.addr1
     location.secondary_address = prov_tin_loc.address.addr2
-    location.city = prov_tin_loc.address.city
+    location.city = prov_tin_loc.address.city.ds
     location.state = prov_tin_loc.address.state
     location.zip_code = prov_tin_loc.address.zip
-    location.county = prov_tin_loc.address.county
+    location.county = prov_tin_loc.address.county.ds
     location.county_fips = prov_tin_loc.address.fips
     location.latitude = prov_tin_loc.address.latitude
     location.longitude = prov_tin_loc.address.longitude

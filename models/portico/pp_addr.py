@@ -46,20 +46,26 @@ class PPAddr(Base):
     type = Column(String, nullable=False)
     addr1 = Column(String, nullable=False)
     addr2 = Column(String, nullable=True)
-    city = Column(String, nullable=False)
+    # city = Column(String, nullable=False)
     state = Column(String, nullable=False)
     zip = Column(String, nullable=False)
-    county = Column(String, nullable=True)
+    # county = Column(String, nullable=True)
     fips = Column(String, nullable=True)
     latitude = Column(String, nullable=True)
     longitude = Column(String, nullable=True)
     start_date = Column(Date, nullable=True)
     end_date = Column(Date, nullable=True)
 
+    # City and county Foreign Keys
+    city_id = Column(Integer, ForeignKey('portown.fmg_cities.id'))
+    county_id = Column(Integer, ForeignKey('portown.fmg_counties.id'))
 
     # providers = relationship("PPProv", back_populates="address")
     phones = relationship("PPAddrPhones", back_populates="address")
     provider_address = relationship("PPProvAddr", back_populates="address")
+
+    city = relationship("FmgCities")
+    county = relationship("FmgCounties")
 
     def __repr__(self):
         """
@@ -74,10 +80,10 @@ class PPAddr(Base):
                 f"type={self.type}, "
                 f"addr1={self.addr1}, "
                 f"addr2={self.addr2}, "
-                f"city={self.city}, "
+                # f"city={self.city}, "
                 f"state={self.state}, "
                 f"zip={self.zip}, "
-                f"county={self.county}, "
+                # f"county={self.county}, "
                 f"fips={self.fips}, "
                 f"latitude={self.latitude}, "
                 f"longitude={self.longitude}, "

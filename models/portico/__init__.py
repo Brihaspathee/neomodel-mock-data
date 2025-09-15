@@ -15,6 +15,8 @@ from .pp_prov_net_cycle import PPProvNetCycle
 from .pp_prov_net_loc_cycle import PPProvNetLocCycle
 from .fmg_attribute_types import FmgAttributeType
 from .fmg_attribute_fields import FmgAttributeField
+from .fmg_cities import FmgCities
+from .fmg_counties import FmgCounties
 from .pp_prov_attrib import PPProvAttrib
 from .pp_prov_attrib_values import PPProvAttribValues
 from .pp_prov_loc_attrib import PPProvLocAttrib
@@ -24,6 +26,6 @@ __all__ = ["Person", "Base", "PPAddr","PPNet",
            "PPPhones", "PPAddrPhones", "PPProvTIN",
            "PPProvType", "PPSpec", "PPProv", "PPProvAddr", "PPProvLoc",
            "PPProvTinLoc",  "PPProvNetCycle", "PPProvNetLocCycle",
-           "FmgAttributeType", "FmgAttributeField",
+           "FmgAttributeType", "FmgAttributeField", "FmgCities", "FmgCounties",
            "PPProvAttrib", "PPProvAttribValues",
            "PPProvLocAttrib", "PPProvLocAttribValues"]

@@ -35,6 +35,22 @@ create table portown.fmg_attribute_fields
     datatype     varchar not null
 );
 
+-- 2.1 Create FMG Cities
+CREATE TABLE portown.fmg_cities (
+	id integer NOT NULL,
+	ds varchar NOT NULL,
+	CONSTRAINT fmg_cities_pk PRIMARY KEY (id)
+);
+
+-- 2.2 Create FMG Counties
+    -- portown.fmg_counties definition
+
+CREATE TABLE portown.fmg_counties (
+	id int4 NOT NULL,
+	ds varchar NOT NULL,
+	CONSTRAINT fmg_counties_pk PRIMARY KEY (id)
+);
+
 -- alter table portown.fmg_attribute_fields
 --     owner to porticoadmin;
 
@@ -80,24 +96,31 @@ create table portown.pp_spec
 --     owner to porticoadmin;
 
 -- 6. Create PP_ADDR table
-create table portown.pp_addr
-(
-    id         integer not null
-        constraint id
-            primary key,
-    type       varchar,
-    addr1      varchar not null,
-    addr2      varchar,
-    city       varchar not null,
-    state      varchar not null,
-    zip        varchar not null,
-    county     varchar,
-    latitude   varchar,
-    longitude  varchar,
-    start_date date,
-    end_date   date,
-    fips       varchar
+-- portown.pp_addr definition
+
+CREATE TABLE portown.pp_addr (
+	id int4 NOT NULL,
+	"type" varchar NULL,
+	addr1 varchar NOT NULL,
+	addr2 varchar NULL,
+	state varchar NOT NULL,
+    addr3 varchar NULL,
+	city_id int4 NOT NULL,
+	county_id int4 NOT NULL,
+    fips varchar NULL,
+	zip varchar NOT NULL,
+	latitude varchar NULL,
+	longitude varchar NULL,
+	start_date date NULL,
+	end_date date NULL,
+	CONSTRAINT id PRIMARY KEY (id)
 );
+
+
+-- portown.pp_addr foreign keys
+
+ALTER TABLE portown.pp_addr ADD CONSTRAINT pp_addr_fmg_cities_fk FOREIGN KEY (city_id) REFERENCES portown.fmg_cities(id);
+ALTER TABLE portown.pp_addr ADD CONSTRAINT pp_addr_fmg_counties_fk FOREIGN KEY (county_id) REFERENCES portown.fmg_counties(id);
 
 -- alter table portown.pp_addr
 --     owner to porticoadmin;
@@ -136,25 +159,30 @@ create table portown.pp_phones
 --     owner to porticoadmin;
 
 -- 8. Create PP_PROV table
-create table portown.pp_prov
-(
-    id           integer not null
-        constraint pp_prov_pk
-            primary key,
-    name         varchar not null,
-    tin_id       integer not null
-        constraint pp_prov_pp_prov_tin_id_fk
-            references portown.pp_prov_tin,
-    prov_type_id integer not null
-        constraint pp_prov_pp_prov_type_id_fk
-            references portown.pp_prov_type,
-    address_id   integer not null
-        constraint pp_prov_pp_addr_id_fk
-            references portown.pp_addr,
-    specialty_id integer not null
-        constraint pp_prov_pp_spec_id_fk
-            references portown.pp_spec
+-- portown.pp_prov definition
+
+
+CREATE TABLE portown.pp_prov (
+	id int4 NOT NULL,
+	"name" varchar NOT NULL,
+	tin_id int4 NOT NULL,
+	prov_type_id int4 NOT NULL,
+	address_id int4 NOT NULL,
+	spec_id int4 NOT NULL,
+	sub_prov_code varchar NULL,
+	name_usage varchar NULL,
+	medicare_no varchar NULL,
+	label_cluster_id varchar NULL,
+	CONSTRAINT pp_prov_pk PRIMARY KEY (id)
 );
+
+
+-- portown.pp_prov foreign keys
+
+ALTER TABLE portown.pp_prov ADD CONSTRAINT pp_prov_pp_addr_id_fk FOREIGN KEY (address_id) REFERENCES portown.pp_addr(id);
+ALTER TABLE portown.pp_prov ADD CONSTRAINT pp_prov_pp_prov_tin_id_fk FOREIGN KEY (tin_id) REFERENCES portown.pp_prov_tin(id);
+ALTER TABLE portown.pp_prov ADD CONSTRAINT pp_prov_pp_prov_type_id_fk FOREIGN KEY (prov_type_id) REFERENCES portown.pp_prov_type(id);
+ALTER TABLE portown.pp_prov ADD CONSTRAINT pp_prov_pp_spec_id_fk FOREIGN KEY (spec_id) REFERENCES portown.pp_spec(id);
 
 -- alter table portown.pp_prov
 --     owner to porticoadmin;

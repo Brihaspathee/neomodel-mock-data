@@ -1,13 +1,11 @@
--- auto-generated definition
-create table portown.pp_prov_tin
-(
-    id   integer not null
-        constraint pp_prov_tin_pk
-            primary key,
-    name varchar not null,
-    tin  varchar not null
-);
+-- portown.pp_prov_tin definition
 
-alter table portown.pp_prov_tin
-    owner to porticoadmin;
+CREATE TABLE portown.pp_prov_tin (
+	id int4 NOT NULL,
+	"name" varchar NOT NULL,
+	tin varchar NOT NULL,
+	"type" varchar NULL,
+	label_cluster_id varchar NULL,
+	CONSTRAINT pp_prov_tin_pk PRIMARY KEY (id)
+);
 

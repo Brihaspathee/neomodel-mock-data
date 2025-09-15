@@ -32,8 +32,8 @@ class PPProv(Base):
     :type prov_type_id: str | None
     :ivar address_id: Foreign key linking to the address in `pp_addr` table.
     :type address_id: str | None
-    :ivar specialty_id: Foreign key linking to the specialty in `pp_spec` table.
-    :type specialty_id: str | None
+    :ivar spec_id: Foreign key linking to the specialty in `pp_spec` table.
+    :type spec_id: str | None
     :ivar tin: Relationship to the `PPProvTIN` entity, enabling access to details about the TIN.
     :type tin: PPProvTIN
     :ivar prov_type: Relationship to the `PPProvType` entity, enabling access to the provider type details.
@@ -55,7 +55,7 @@ class PPProv(Base):
     tin_id = Column(String, ForeignKey('portown.pp_prov_tin.id'))
     prov_type_id = Column(String, ForeignKey('portown.pp_prov_type.id'))
     address_id = Column(String, ForeignKey('portown.pp_addr.id'))
-    specialty_id = Column(String, ForeignKey('portown.pp_spec.id'))
+    spec_id = Column(String, ForeignKey('portown.pp_spec.id'))
 
     tin = relationship("PPProvTIN", back_populates="providers")
     # prov_type = relationship("PPProvType", back_populates="providers")
@@ -105,4 +105,4 @@ class PPProv(Base):
                 f"tin_id={self.tin_id}, "
                 f"prov_type_id={self.prov_type_id}, "
                 f"address_id={self.address_id}, "
-                f"specialty_id={self.specialty_id})>")
+                f"spec_id={self.spec_id})>")
