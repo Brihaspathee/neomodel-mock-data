@@ -140,7 +140,15 @@ def is_qual_updated(new_qual: Qualification, existing_quals: list[Qualification]
     is_new_qual: bool = True
     for existing_qual in existing_quals:
         if new_qual.type == existing_qual.type:
-            is_new_qual = False
+            # Compare the value, issuer and start date to see if a new one of the same type needs to be created
+            if (new_qual.value != existing_qual.value or
+                    new_qual.issuer != existing_qual.issuer or
+                    new_qual.start_date != existing_qual.start_date):
+                is_new_qual = True
+            # if they are all the same, compare the end date to see if it needs to be updated
+            elif new_qual.end_date != existing_qual.end_date:
+                qual_updated = True
+                existing_qual.end_date = new_qual.end_date
             return qual_updated,is_new_qual
     return qual_updated, is_new_qual
 
