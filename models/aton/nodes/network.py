@@ -1,4 +1,6 @@
-from neomodel import StructuredNode, StringProperty, RelationshipTo
+from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom
+
+from models.aton.nodes.pp_net import PPNet
 
 
 class Network(StructuredNode):
@@ -6,3 +8,14 @@ class Network(StructuredNode):
     name = StringProperty(required=True)
 
     product = RelationshipTo("models.aton.nodes.product.Product", "PART_OF")
+    pp_net = RelationshipFrom("models.aton.nodes.pp_net.PPNet", "SOURCES")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._pending_portico_source: PPNet | None = None
+
+    def set_portico_source(self, source: PPNet):
+        self._pending_portico_source = source
+
+    def get_portico_source(self):
+        return self._pending_portico_source
