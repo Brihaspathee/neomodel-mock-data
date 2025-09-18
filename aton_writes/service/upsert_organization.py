@@ -122,35 +122,49 @@ def update_org_node_properties(existing_org: Organization,
                 log.info(f"Existing quals: {existing_quals}")
                 log.info(f"New quals: {new_quals}")
                 for new_qual in new_quals:
-                    qual_updated, is_new_qual = is_qual_updated(new_qual, existing_quals)
-                    if is_new_qual:
-                        new_qual.save()
-                        log.info(f"Qualification saved to Aton its element id is: {new_qual.element_id}")
-                        existing_org.qualifications.connect(new_qual)
+                    is_qual_updated(new_qual, existing_quals, existing_org)
+                    # if is_new_qual:
+                    #     new_qual.save()
+                    #     log.info(f"Qualification saved to Aton its element id is: {new_qual.element_id}")
+                    #     existing_org.qualifications.connect(new_qual)
                     # elif qual_updated:
-                    #     existing_quals.remove(new_qual)
-                    #     existing_quals.append(new_qual)
-                    #     existing_quals.sort(key=lambda q: q.type)
-                    #     existing_qual = existing_quals[0]
-                    #     existing_qual.save()
+                    #     new_qual.save()
+                    #     existing_org.qualifications.connect(new_qual)
     return existing_org, changed
 
-def is_qual_updated(new_qual: Qualification, existing_quals: list[Qualification]) -> tuple[bool, bool]:
-    qual_updated: bool = False
-    is_new_qual: bool = True
+def is_qual_updated(new_qual: Qualification,
+                    existing_quals: list[Qualification],
+                    org:Organization) -> None:
+    is_existing_qual = False
+    same_type_existing_quals = []
     for existing_qual in existing_quals:
         if new_qual.type == existing_qual.type:
+            is_existing_qual = True
             # Compare the value, issuer and start date to see if a new one of the same type needs to be created
             if (new_qual.value != existing_qual.value or
                     new_qual.issuer != existing_qual.issuer or
                     new_qual.start_date != existing_qual.start_date):
-                is_new_qual = True
-            # if they are all the same, compare the end date to see if it needs to be updated
+                new_qual.save()
+                org.qualifications.connect(new_qual)
+                return None
+            # if they are all the same, add the qualification to the list of existing quals to compare with the end date
             elif new_qual.end_date != existing_qual.end_date:
-                qual_updated = True
-                existing_qual.end_date = new_qual.end_date
-            return qual_updated,is_new_qual
-    return qual_updated, is_new_qual
+                same_type_existing_quals.append(existing_qual)
+    # If the qualification is an existing qualification, then if something was changed,
+    # it was immediately saves and returned. If only the end date was changed, then
+    # it is added to the list of existing quals to compare with the end date. If
+    # nothing has changed, then no update is needed for the qualification.
+    if not is_existing_qual:
+        # If it is not an existing qualification, then create a new one.
+        new_qual.save()
+        org.qualifications.connect(new_qual)
+    elif len(same_type_existing_quals) > 0:
+        # if it is an existing qualification, then compare the end date with the existing ones of the same type.
+        # retrieve the latest qualification of the same type and update its end date.
+        latest_qual = max(same_type_existing_quals, key=lambda o: o.end_date)
+        latest_qual.end_date = new_qual.end_date
+        latest_qual.save()
+    return None
 
 
 
