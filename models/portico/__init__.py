@@ -19,6 +19,8 @@ from .fmg_cities import FmgCities
 from .fmg_counties import FmgCounties
 from .pp_prov_attrib import PPProvAttrib
 from .pp_prov_attrib_values import PPProvAttribValues
+from .pp_net_attrib import PPNetAttrib
+from .pp_net_attrib_values import PPNetAttribValues
 from .pp_prov_loc_attrib import PPProvLocAttrib
 from .pp_prov_loc_attrib_values import PPProvLocAttribValues
 
@@ -28,4 +30,5 @@ __all__ = ["Person", "Base", "PPAddr","PPNet",
            "PPProvTinLoc",  "PPProvNetCycle", "PPProvNetLocCycle",
            "FmgAttributeType", "FmgAttributeField", "FmgCities", "FmgCounties",
            "PPProvAttrib", "PPProvAttribValues",
+           "PPNetAttrib", "PPNetAttribValues",
            "PPProvLocAttrib", "PPProvLocAttribValues"]

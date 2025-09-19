@@ -1,8 +1,11 @@
-from typing import TypedDict, Optional
+from typing import TypedDict, Optional, List, TYPE_CHECKING
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from models.portico.base import Base
+
+if TYPE_CHECKING:
+    from models.portico.pp_net_attrib import PPNetAttrib
 
 class PPNetDict(TypedDict, total=False):
     id: str | None
@@ -41,6 +44,8 @@ class PPNet(Base):
         back_populates="parent",
         lazy="selectin" # eager load optimization
     )
+
+    attributes: Mapped[List["PPNetAttrib"]] = relationship("PPNetAttrib", back_populates="net")
 
     def to_dict(self, include_children:bool = True) -> PPNetDict:
         data: PPNetDict = {
