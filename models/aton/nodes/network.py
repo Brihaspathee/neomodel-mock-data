@@ -1,4 +1,4 @@
-from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom
+from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, BooleanProperty
 
 from models.aton.nodes.pp_net import PPNet
 
@@ -6,6 +6,8 @@ from models.aton.nodes.pp_net import PPNet
 class Network(StructuredNode):
     code = StringProperty(required=True)
     name = StringProperty(required=True)
+    isVendorNetwork = BooleanProperty(required=False)
+    isHNETNetwork = BooleanProperty(required=False)
 
     product = RelationshipTo("models.aton.nodes.product.Product", "PART_OF")
     pp_net = RelationshipFrom("models.aton.nodes.pp_net.PPNet", "SOURCES")

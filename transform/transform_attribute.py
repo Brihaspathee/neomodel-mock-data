@@ -5,15 +5,37 @@ from neomodel import StructuredNode
 from config.attribute_settings import ATTRIBUTES_CONFIG
 from config.attributes_mapping import AttributeMapping
 from models.aton.nodes.identifier import NPI, Identifier, PPGID
+from models.aton.nodes.network import Network
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.nodes.role_specialty import RoleSpecialty
-from models.portico import PPProv, PPProvTinLoc
+from models.portico import PPProv, PPProvTinLoc, PPNet
 import logging
+
+from models.portico.pp_net import PPNetDict
 
 log = logging.getLogger(__name__)
 
+def get_net_attributes(pp_net:PPNetDict, network:Network):
+    log.info(f"Network type: {type(pp_net)}")
+    log.info(f"Network Attributes: {pp_net.get("attributes")}")
+    for attribute in pp_net.get("attributes", []):
+        log.info(f"Attribute: {attribute.get('attribute_id')}")
+        try:
+            attr_mapping = ATTRIBUTES_CONFIG["network"][attribute.get('attribute_id')]
+            # Load the attribute only if a mapping is present
+            # else do not load the attribute
+            attribute_fields: dict[str, Any] = {}
+            for value in attribute.get("values", []):
+                field_id = str(value.get("field_id"))
+                attribute_fields[field_id] = value.get("value")
+                if attribute.get("attribute_type") == "NET_IS_VENDOR" and value.get("value") == "Y":
+                    network.isVendorNetwork = True
+                elif attribute.get("attribute_type") == "NET_HEALTHNET" and value.get("value") == "Y":
+                    network.isHNETNetwork = True
+        except KeyError:
+            log.info(f"No mapping found for attribute {attribute.get('attribute_id')}, hence it will not be loaded")
 
 def get_provider_attributes(provider:PPProv, organization: Organization):
     for attribute in provider.attributes:

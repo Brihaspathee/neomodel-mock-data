@@ -1,11 +1,16 @@
 from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
 from sqlalchemy.orm import relationship, Mapped
 from models.portico.base import Base
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
     from models.portico.fmg_attribute_fields import FmgAttributeField
 
+class PPNetAttribValueDict(TypedDict, total=False):
+    id: str
+    field_id: str | None
+    fieldname: str | None
+    value: str | None
 
 class PPNetAttribValues(Base):
     __tablename__ = "pp_net_attrib_values"
@@ -19,6 +24,14 @@ class PPNetAttribValues(Base):
     value_number = Column(Numeric, nullable=True)
 
     field: Mapped["FmgAttributeField"]= relationship("FmgAttributeField")
+
+    def to_dict(self) -> PPNetAttribValueDict:
+        return {
+            "id": str(self.id),
+            "field_id": str(self.field_id),
+            "fieldname": self.field.fieldname if self.field else None,
+            "value": self.value
+        }
 
     def __repr__(self):
         return f"<PPNetAttribValues(id={self.id}, net_attribute_id={self.net_attribute_id}, field_id={self.field_id})>"

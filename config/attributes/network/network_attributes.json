@@ -1,0 +1,20 @@
+{
+  "100434": {
+    "name": "NET_IS_VENDOR",
+    "category": "Vendor",
+    "attr_type": "Vendor Network",
+    "class": "models.aton.nodes.network.Network",
+    "fields": {
+      "100802": "isVendorNetwork"
+    }
+  },
+  "103937": {
+    "name": "HNET_NETWORK",
+    "category": "HENT",
+    "attr_type": "HNET Network",
+    "class": "models.aton.nodes.network.Network",
+    "fields": {
+      "107035": "isHNETNetwork"
+    }
+  }
+}

@@ -5,7 +5,8 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 from models.portico.base import Base
 
 if TYPE_CHECKING:
-    from models.portico.pp_net_attrib import PPNetAttrib
+    from models.portico.pp_net_attrib import PPNetAttrib, PPNetAttribDict
+
 
 class PPNetDict(TypedDict, total=False):
     id: str | None
@@ -13,6 +14,7 @@ class PPNetDict(TypedDict, total=False):
     description: str
     level: int
     children: list["PPNetDict"] | None
+    attributes: list["PPNetAttribDict"] | None
 
 
 class PPNet(Base):
@@ -52,7 +54,8 @@ class PPNet(Base):
             "id": str(self.id) if self.id is not None else None,
             "name": self.name,
             "description": self.description,
-            "level": self.level
+            "level": self.level,
+            "attributes": [attrib.to_dict() for attrib in self.attributes]
         }
 
         if include_children:
