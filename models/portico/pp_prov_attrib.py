@@ -35,7 +35,7 @@ class PPProvAttrib(Base):
 
     id = Column(Integer, primary_key=True)
     prov_id = Column(Integer, ForeignKey("portown.pp_prov.id"))
-    attribute_id = Column(Integer, ForeignKey("portown.fmg_attribute_types.id"))
+    attribute_id = Column(Integer, ForeignKey("portown.fmg_attrib_types.id"))
 
     provider = relationship("PPProv", back_populates="attributes")
     # values = relationship("PPProvAttribValues", back_populates="provider_attribute")

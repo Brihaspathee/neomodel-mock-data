@@ -41,7 +41,7 @@ class PPProvLocAttribValues(Base):
 
     id = Column(Integer, primary_key=True)
     prov_loc_attribute_id = Column(Integer, ForeignKey("portown.pp_prov_loc_attrib.id"))
-    field_id = Column(Integer, ForeignKey("portown.fmg_attribute_fields.id"))
+    field_id = Column(Integer, ForeignKey("portown.fmg_attrib_fields.id"))
     value = Column(String, nullable=True)
     value_date = Column(Date, nullable=True)
     value_number = Column(Numeric, nullable=True)

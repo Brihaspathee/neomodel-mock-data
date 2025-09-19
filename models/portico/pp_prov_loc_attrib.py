@@ -39,7 +39,7 @@ class PPProvLocAttrib(Base):
     id = Column(Integer, primary_key=True)
     prov_id = Column(Integer, ForeignKey("portown.pp_prov.id"))
     loc_id = Column(Integer, ForeignKey("portown.pp_prov_tin_loc.id"))
-    attribute_id = Column(Integer, ForeignKey("portown.fmg_attribute_types.id"))
+    attribute_id = Column(Integer, ForeignKey("portown.fmg_attrib_types.id"))
 
     # Relationships
     provider: Mapped["PPProv"] = relationship("PPProv", back_populates="loc_attributes")

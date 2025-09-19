@@ -22,12 +22,12 @@ class FmgAttributeType(Base):
         with this attribute type.
     :type provider_attributes: list
     """
-    __tablename__ = "fmg_attribute_types"
+    __tablename__ = "fmg_attrib_types"
     __table_args__ = {"schema": "portown"}
 
     id = Column(Integer, primary_key=True)
     metatype = Column(String, nullable=False)
-    description = Column(String, nullable=True)
+    ds = Column(String, nullable=True)
 
     # provider_attributes = relationship("PPProvAttrib", back_populates="attribute_type")
 
@@ -43,4 +43,4 @@ class FmgAttributeType(Base):
             and `description`.
         :rtype: str
         """
-        return f"<FmgAttributeType(id={self.id}, metatype={self.metatype}, description={self.description})>"
+        return f"<FmgAttributeType(id={self.id}, metatype={self.metatype}, description={self.ds})>"

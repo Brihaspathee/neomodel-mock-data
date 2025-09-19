@@ -14,7 +14,7 @@ class PPNetAttrib(Base):
 
     id = Column(Integer, primary_key=True)
     net_id = Column(Integer, ForeignKey("portown.pp_net.id"))
-    attribute_id = Column(Integer, ForeignKey("portown.fmg_attribute_types.id"))
+    attribute_id = Column(Integer, ForeignKey("portown.fmg_attrib_types.id"))
 
     net = relationship("PPNet", back_populates="attributes")
     values: Mapped[List["PPNetAttribValues"]] = relationship("PPNetAttribValues")

@@ -28,14 +28,14 @@ class FmgAttributeField(Base):
         associated attribute values.
     :type values: sqlalchemy.orm.relationship
     """
-    __tablename__ = "fmg_attribute_fields"
+    __tablename__ = "fmg_attrib_fields"
     __table_args__ = {"schema": "portown"}
 
 
     id = Column(Integer, primary_key=True)
     attribute_id = Column(Integer, nullable=False)
     fmgcode = Column(String, nullable=True)
-    field_name = Column(String, nullable=False)
+    fieldname = Column(String, nullable=False)
     datatype = Column(String, nullable=False)
 
     # values = relationship("PPProvAttribValues", back_populates="field")
@@ -53,4 +53,4 @@ class FmgAttributeField(Base):
             formatted with its key attributes.
         :rtype: str
         """
-        return f"<FmgAttributeField(id={self.id}, attribute_id={self.attribute_id}, fmgcode={self.fmgcode}, field_name={self.field_name}, datatype={self.datatype})>"
+        return f"<FmgAttributeField(id={self.id}, attribute_id={self.attribute_id}, fmgcode={self.fmgcode}, field_name={self.fieldname}, datatype={self.datatype})>"
