@@ -4,10 +4,10 @@
 
 -- DROP TABLE portown.fmg_attribute_types;
 
-CREATE TABLE portown.fmg_attribute_types (
+CREATE TABLE portown.fmg_attrib_types (
 	id int4 NOT NULL,
 	metatype varchar NOT NULL,
-	description varchar NULL,
+	ds varchar NULL,
 	category varchar NULL,
 	searchable bpchar(1) NULL,
 	seq_no numeric NULL,

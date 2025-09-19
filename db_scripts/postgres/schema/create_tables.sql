@@ -9,10 +9,10 @@ CREATE TABLE portown.pp_net (
 );
 
 -- 1. Create FMG_ATTRIBUTE_TYPES table
-CREATE TABLE portown.fmg_attribute_types (
+CREATE TABLE portown.fmg_attrib_types (
 	id int4 NOT NULL,
 	metatype varchar NOT NULL,
-	description varchar NULL,
+	ds varchar NULL,
 	category varchar NULL,
 	searchable bpchar(1) NULL,
 	seq_no numeric NULL,
@@ -20,20 +20,20 @@ CREATE TABLE portown.fmg_attribute_types (
 	fmg_lock bpchar(1) NULL,
 	hidden bpchar(1) NULL,
 	fmg_product varchar NULL,
-	CONSTRAINT fmg_attribute_types_pk PRIMARY KEY (id)
+	CONSTRAINT fmg_attrib_types_pk PRIMARY KEY (id)
 );
 
--- alter table portown.fmg_attribute_types
+-- alter table portown.fmg_attrib_types
 --     owner to porticoadmin;
 
 -- 2. Create FMG_ATTRIBUTE_FIELDS table
--- portown.fmg_attribute_fields definition
+-- portown.fmg_attrib_fields definition
 
 -- Drop table
 
--- DROP TABLE portown.fmg_attribute_fields;
+-- DROP TABLE portown.fmg_attrib_fields;
 
-CREATE TABLE portown.fmg_attribute_fields (
+CREATE TABLE portown.fmg_attrib_fields (
 	id int4 NOT NULL,
 	attribute_id int4 NOT NULL,
 	fmgcode varchar NULL,
@@ -47,13 +47,37 @@ CREATE TABLE portown.fmg_attribute_fields (
 	fieldlength numeric NULL,
 	mask varchar(30) NULL,
 	pe_ind bpchar(1) NULL,
-	CONSTRAINT fmg_attribute_fields_pk PRIMARY KEY (id)
+	CONSTRAINT fmg_attrib_fields_pk PRIMARY KEY (id)
+);
+
+-- Create PP_NET_ATTRIB table
+CREATE TABLE portown.pp_net_attrib (
+	id integer NOT NULL,
+	net_id integer NOT NULL,
+	attribute_id integer NOT NULL,
+	CONSTRAINT pp_net_attrib_pk PRIMARY KEY (id),
+	CONSTRAINT pp_net_attrib_fmg_attrib_types_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attrib_types(id),
+	CONSTRAINT pp_net_attrib_pp_net_fk FOREIGN KEY (net_id) REFERENCES portown.pp_net(id)
+);
+
+-- Create PP_NET_ATTRIB_VALUES table
+CREATE TABLE portown.pp_net_attrib_values (
+	id integer NOT NULL,
+	net_attribute_id integer NOT NULL,
+	field_id integer NOT NULL,
+	value varchar NULL,
+	value_date date NULL,
+	value_number numeric NULL,
+	label_cluster_id numeric NULL,
+	CONSTRAINT pp_net_attrib_values_pk PRIMARY KEY (id),
+	CONSTRAINT pp_net_attrib_values_fmg_attrib_fields_fk FOREIGN KEY (field_id) REFERENCES portown.fmg_attrib_fields(id),
+	CONSTRAINT pp_net_attrib_values_pp_net_attrib_fk FOREIGN KEY (net_attribute_id) REFERENCES portown.pp_net_attrib(id)
 );
 
 
--- portown.fmg_attribute_fields foreign keys
+-- portown.fmg_attrib_fields foreign keys
 
-ALTER TABLE portown.fmg_attribute_fields ADD CONSTRAINT fmg_attribute_fields_fmg_attribute_types_id_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attribute_types(id);
+ALTER TABLE portown.fmg_attrib_fields ADD CONSTRAINT fmg_attrib_fields_fmg_attrib_types_id_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attrib_types(id);
 
 -- 2.1 Create FMG Cities
 CREATE TABLE portown.fmg_cities (
@@ -71,7 +95,7 @@ CREATE TABLE portown.fmg_counties (
 	CONSTRAINT fmg_counties_pk PRIMARY KEY (id)
 );
 
--- alter table portown.fmg_attribute_fields
+-- alter table portown.fmg_attrib_fields
 --     owner to porticoadmin;
 
 -- 3. Create PP_PROV_TIN table
@@ -244,8 +268,8 @@ create table portown.pp_prov_attrib
         constraint pp_prov_attrib_pp_prov_id_fk
             references portown.pp_prov,
     attribute_id integer
-        constraint pp_prov_attrib_fmg_attribute_types_id_fk
-            references portown.fmg_attribute_types
+        constraint pp_prov_attrib_fmg_attrib_types_id_fk
+            references portown.fmg_attrib_types
 );
 
 -- alter table portown.pp_prov_attrib
@@ -261,8 +285,8 @@ create table portown.pp_prov_attrib_values
         constraint pp_prov_attrib_values_pp_prov_attrib_id_fk
             references portown.pp_prov_attrib,
     field_id          integer
-        constraint pp_prov_attrib_values_fmg_attribute_fields_id_fk
-            references portown.fmg_attribute_fields,
+        constraint pp_prov_attrib_values_fmg_attrib_fields_id_fk
+            references portown.fmg_attrib_fields,
     value             varchar,
     value_date        date,
     value_number      numeric
@@ -323,7 +347,7 @@ CREATE TABLE portown.pp_prov_loc_attrib (
 	CONSTRAINT pp_prov_loc_attrib_pk PRIMARY KEY (id),
 	CONSTRAINT pp_prov_loc_attrib_pp_prov_fk FOREIGN KEY (prov_id) REFERENCES portown.pp_prov(id),
 	CONSTRAINT pp_prov_loc_attrib_pp_prov_tin_loc_fk FOREIGN KEY (loc_id) REFERENCES portown.pp_prov_tin_loc(id),
-	CONSTRAINT pp_prov_loc_attrib_fmg_attribute_types_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attribute_types(id)
+	CONSTRAINT pp_prov_loc_attrib_fmg_attrib_types_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attrib_types(id)
 );
 
 -- 15. Create PP_PROV_LOC_ATTRIB_VALUES table
@@ -336,7 +360,7 @@ CREATE TABLE portown.pp_prov_loc_attrib_values (
 	value_number numeric NULL,
 	CONSTRAINT pp_prov_loc_attrib_values_pk PRIMARY KEY (id),
 	CONSTRAINT pp_prov_loc_attrib_values_pp_prov_loc_attrib_fk FOREIGN KEY (prov_loc_attribute_id) REFERENCES portown.pp_prov_loc_attrib(id),
-	CONSTRAINT pp_prov_loc_attrib_values_fmg_attribute_fields_fk FOREIGN KEY (field_id) REFERENCES portown.fmg_attribute_fields(id)
+	CONSTRAINT pp_prov_loc_attrib_values_fmg_attrib_fields_fk FOREIGN KEY (field_id) REFERENCES portown.fmg_attrib_fields(id)
 );
 
 

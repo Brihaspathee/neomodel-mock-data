@@ -4,7 +4,7 @@
 
 -- DROP TABLE portown.fmg_attribute_fields;
 
-CREATE TABLE portown.fmg_attribute_fields (
+CREATE TABLE portown.fmg_attrib_fields (
 	id int4 NOT NULL,
 	attribute_id int4 NOT NULL,
 	fmgcode varchar NULL,
