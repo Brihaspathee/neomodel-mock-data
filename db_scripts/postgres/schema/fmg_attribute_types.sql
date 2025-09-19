@@ -1,12 +1,19 @@
--- auto-generated definition
-create table portown.fmg_attribute_types
-(
-    id          integer not null
-        constraint fmg_attribute_types_pk
-            primary key,
-    metatype    varchar not null,
-    description varchar
-);
+-- portown.fmg_attribute_types definition
 
-alter table portown.fmg_attribute_types
-    owner to porticoadmin;
+-- Drop table
+
+-- DROP TABLE portown.fmg_attribute_types;
+
+CREATE TABLE portown.fmg_attribute_types (
+	id int4 NOT NULL,
+	metatype varchar NOT NULL,
+	description varchar NULL,
+	category varchar NULL,
+	searchable bpchar(1) NULL,
+	seq_no numeric NULL,
+	one_many bpchar(1) NULL,
+	fmg_lock bpchar(1) NULL,
+	hidden bpchar(1) NULL,
+	fmg_product varchar NULL,
+	CONSTRAINT fmg_attribute_types_pk PRIMARY KEY (id)
+);

@@ -9,31 +9,51 @@ CREATE TABLE portown.pp_net (
 );
 
 -- 1. Create FMG_ATTRIBUTE_TYPES table
-create table portown.fmg_attribute_types
-(
-    id          integer not null
-        constraint fmg_attribute_types_pk
-            primary key,
-    metatype    varchar not null,
-    description varchar
+CREATE TABLE portown.fmg_attribute_types (
+	id int4 NOT NULL,
+	metatype varchar NOT NULL,
+	description varchar NULL,
+	category varchar NULL,
+	searchable bpchar(1) NULL,
+	seq_no numeric NULL,
+	one_many bpchar(1) NULL,
+	fmg_lock bpchar(1) NULL,
+	hidden bpchar(1) NULL,
+	fmg_product varchar NULL,
+	CONSTRAINT fmg_attribute_types_pk PRIMARY KEY (id)
 );
 
 -- alter table portown.fmg_attribute_types
 --     owner to porticoadmin;
 
 -- 2. Create FMG_ATTRIBUTE_FIELDS table
-create table portown.fmg_attribute_fields
-(
-    id           integer not null
-        constraint fmg_attribute_fields_pk
-            primary key,
-    attribute_id integer not null
-        constraint fmg_attribute_fields_fmg_attribute_types_id_fk
-            references portown.fmg_attribute_types,
-    fmgcode      varchar,
-    field_name   varchar not null,
-    datatype     varchar not null
+-- portown.fmg_attribute_fields definition
+
+-- Drop table
+
+-- DROP TABLE portown.fmg_attribute_fields;
+
+CREATE TABLE portown.fmg_attribute_fields (
+	id int4 NOT NULL,
+	attribute_id int4 NOT NULL,
+	fmgcode varchar NULL,
+	field_name varchar NOT NULL,
+	"datatype" varchar NOT NULL,
+	order_by varchar NULL,
+	category numeric NULL,
+	read_only bpchar(1) NULL,
+	lookup_query varchar(2000) NULL,
+	fmg_lock bpchar(1) NULL,
+	fieldlength numeric NULL,
+	mask varchar(30) NULL,
+	pe_ind bpchar(1) NULL,
+	CONSTRAINT fmg_attribute_fields_pk PRIMARY KEY (id)
 );
+
+
+-- portown.fmg_attribute_fields foreign keys
+
+ALTER TABLE portown.fmg_attribute_fields ADD CONSTRAINT fmg_attribute_fields_fmg_attribute_types_id_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attribute_types(id);
 
 -- 2.1 Create FMG Cities
 CREATE TABLE portown.fmg_cities (
