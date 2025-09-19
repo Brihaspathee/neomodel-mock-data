@@ -14,7 +14,7 @@ def _(pp_net:PPNet) -> Product:
     net_dict: PPNetDict = pp_net.to_dict()
     product: Product = Product(
         code=net_dict["id"],
-        name=net_dict["name"])
+        name=net_dict["description"])
     portico_prod: models.aton.nodes.network.PPNet = models.aton.nodes.network.PPNet(net_id= net_dict["id"])
     product.set_portico_source(portico_prod)
     networks: list[PPNetDict] = net_dict["children"]
@@ -22,9 +22,9 @@ def _(pp_net:PPNet) -> Product:
     for network in networks:
         net: Network = Network(
             code=network["id"],
-            name=network["name"]
+            name=network["description"]
         )
-        portico_net: models.aton.nodes.network.PPNet = models.aton.nodes.network.PPNet(net_id=net_dict["id"])
+        portico_net: models.aton.nodes.network.PPNet = models.aton.nodes.network.PPNet(net_id=network["id"])
         net.set_portico_source(portico_net)
         product.add_network(net)
     return product

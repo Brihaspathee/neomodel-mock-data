@@ -5,4 +5,5 @@ class PPNet(StructuredNode):
     __label__ = "PP_Net"
     net_id = StringProperty(required=True)
 
-    aton_net_prod = RelationshipTo("models.aton.nodes.network.Network", "SOURCES")
+    aton_net = RelationshipTo("models.aton.nodes.network.Network", "SOURCES")
+    aton_prod = RelationshipTo("models.aton.nodes.product.Product", "SOURCES")

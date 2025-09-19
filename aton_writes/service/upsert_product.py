@@ -10,7 +10,6 @@ log = logging.getLogger(__name__)
 def create_product(product: Product):
     try:
         product = find_or_create_product(product)
-        log.info(f"Created product {product.name}, it has {len(product.get_pending_networks())} networks")
         for network in product.get_pending_networks():
             network = find_or_create_network(network)
             # log.info(f"Product {product.code} is connected to {network.name}")
@@ -27,7 +26,7 @@ def find_or_create_product(product):
         product.save()
         pp_net: PPNet = product.get_portico_source()
         pp_net.save()
-        pp_net.aton_net_prod.connect(product)
+        pp_net.aton_prod.connect(product)
         log.info(f"Created product {product.name}, it has {len(product.get_pending_networks())} networks")
     else:
         # The product already exists with the same id and/or name
@@ -40,7 +39,7 @@ def find_or_create_product(product):
             # that have the same name but different ids
             pp_net: PPNet = product.get_portico_source()
             pp_net.save()
-            pp_net.aton_net_prod.connect(existing_product)
+            pp_net.aton_prod.connect(existing_product)
     return product
 
 def find_or_create_network(network):
@@ -49,11 +48,11 @@ def find_or_create_network(network):
         network.save()
         pp_net: PPNet = network.get_portico_source()
         pp_net.save()
-        pp_net.aton_net_prod.connect(network)
+        pp_net.aton_net.connect(network)
         log.info(f"Created network  {network.name}")
     else:
         # The network already exists with the same id and/or name
-        network = existing_network
+        log.info(f"Network {network.name} already exists")
         if is_net_found_by_name:
             # This means the network node was found using the name of the network
             # so the portico had two networks with the same name but different ids.
@@ -62,5 +61,6 @@ def find_or_create_network(network):
             # that have the same name but different ids
             pp_net: PPNet = network.get_portico_source()
             pp_net.save()
-            pp_net.aton_net_prod.connect(existing_network)
+            pp_net.aton_net.connect(existing_network)
+        network = existing_network
     return network
