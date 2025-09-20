@@ -18,10 +18,10 @@ CREATE TABLE portown.fmg_attrib_fields (
 	fieldlength numeric NULL,
 	mask varchar(30) NULL,
 	pe_ind bpchar(1) NULL,
-	CONSTRAINT fmg_attribute_fields_pk PRIMARY KEY (id)
+	CONSTRAINT fmg_attrib_fields_pk PRIMARY KEY (id)
 );
 
 
 -- portown.fmg_attribute_fields foreign keys
 
-ALTER TABLE portown.fmg_attribute_fields ADD CONSTRAINT fmg_attribute_fields_fmg_attribute_types_id_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attribute_types(id);
+ALTER TABLE portown.fmg_attrib_fields ADD CONSTRAINT fmg_attrib_fields_fmg_attrib_types_id_fk FOREIGN KEY (attribute_id) REFERENCES portown.fmg_attrib_types(id);
