@@ -11,7 +11,7 @@ def log_providers(providers: list[PPProv]):
 def log_provider(provider: PPProv):
     log.info(provider)
     log.info(provider.name)
-    log.info(provider.prov_type.type)
+    log.info(provider.prov_type.type_ds)
     log.info(provider.tin.tin)
     for address in provider.addresses:
         log.info(address)

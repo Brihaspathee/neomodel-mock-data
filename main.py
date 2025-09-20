@@ -1,4 +1,4 @@
-from config import settings, attribute_settings, contact_settings
+from config import settings, attribute_settings, contact_settings, county_settings
 from db import PorticoDB, init_db
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.product import Product
@@ -23,6 +23,7 @@ def main():
     log.info(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
     log.info(f"Contact use mapping:{contact_settings.CONTACT_USE_MAPPING}")
     log.info(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
+    log.info(f"County state mapping:{county_settings.COUNTY_STATE_MAPPING}")
     logging.basicConfig(level=logging.DEBUG)
 
     # Read the providers from Portico
@@ -50,15 +51,6 @@ def main():
             for org in orgs:
                 log.info(f"Org:{org.name}")
             write_to_aton(orgs)
-    #     # for attribute in provider.attributes:
-        #     log.info(f"Provider Attribute:{attribute.attribute_type}")
-        #     log.info(attribute)
-        #     log.info(attribute.attribute_type)
-        #     for value in attribute.values:
-        #         log.info(value)
-        #         log.info(value.field)
-        #         log.info(value.value)
-        #         log.info(value.value_date)
 
 
 

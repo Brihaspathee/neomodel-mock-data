@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 from config.attribute_settings import load_all_attributes
 from config.contact_settings import load_contact_mapping, CONTACT_MAPPING_FILE
+from config.county_settings import load_county_mapping
 
 
 from sqlalchemy.orm import relationship
@@ -70,3 +71,4 @@ NEO4J = {
 
 load_all_attributes()
 load_contact_mapping()
+load_county_mapping()

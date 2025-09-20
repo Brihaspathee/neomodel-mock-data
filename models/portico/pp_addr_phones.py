@@ -26,9 +26,9 @@ class PPAddrPhones(Base):
     __tablename__ = "pp_addr_phones"
     __table_args__ = {'schema': 'portown'}
 
-    id = Column(Integer, primary_key=True)
-    address_id = Column(Integer, ForeignKey('portown.pp_addr.id'))
-    phone_id = Column(Integer, ForeignKey('portown.pp_phones.id'))
+    # id = Column(Integer, primary_key=True)
+    address_id = Column(Integer, ForeignKey('portown.pp_addr.id'), primary_key=True)
+    phone_id = Column(Integer, ForeignKey('portown.pp_phones.id'), primary_key=True)
 
     address = relationship("PPAddr", back_populates="phones")
     phone = relationship("PPPhones", back_populates="addresses")
@@ -40,6 +40,6 @@ class PPAddrPhones(Base):
         :return: A string that includes the id, address_id, and phone_id properties of the object.
         :rtype: str
         """
-        return (f"<PPAddrPhones(id={self.id}, "
+        return (f"<PPAddrPhones( "
                 f"address_id={self.address_id}, "
                 f"phone_id={self.phone_id})>")

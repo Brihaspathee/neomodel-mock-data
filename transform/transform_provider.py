@@ -37,7 +37,7 @@ def _(provider:PPProv) -> Organization:
     organization.set_portico_source(pp_prov)
     organization.alias = provider.name
     organization.description = provider.name
-    organization.type = provider.prov_type.type
+    organization.type = provider.prov_type.type_ds
     organization.capitated = False
     organization.pcp_practitioner_required = False
     organization.atypical = False

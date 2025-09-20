@@ -6,7 +6,7 @@ from models.aton.nodes.contact import Contact
 from models.aton.nodes.location import Location
 from models.aton.nodes.telecom import Telecom
 from models.aton.nodes.validation import Validation
-from utils.address_util import portico_address_to_aton
+from utils.address_util import portico_address_to_aton, get_state
 from utils.location_util import get_hash_key_for_prov_tin_loc
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.role_instance import RoleInstance
@@ -115,10 +115,13 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     location.street_address = prov_tin_loc.address.addr1
     location.secondary_address = prov_tin_loc.address.addr2
     location.city = prov_tin_loc.address.city.ds
-    location.state = prov_tin_loc.address.state
+    if prov_tin_loc.address.county_fips:
+        location.state = get_state(prov_tin_loc.address.county_fips)
+    else:
+        location.state = "COUNTY NOT AVAILABLE"
     location.zip_code = prov_tin_loc.address.zip
     location.county = prov_tin_loc.address.county.ds
-    location.county_fips = prov_tin_loc.address.fips
+    location.county_fips = prov_tin_loc.address.county_fips
     location.latitude = prov_tin_loc.address.latitude
     location.longitude = prov_tin_loc.address.longitude
     # ------------------------------------------------------------------------------
