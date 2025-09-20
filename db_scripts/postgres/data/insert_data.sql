@@ -84,7 +84,7 @@ INSERT INTO portown.pp_net (id,ds,dsl,net_level_id,parent_net_id) VALUES
 	 (7036,'TL','Medi-Cal Dental',6,7019);
 
 -- 1. Insert data into FMG_ATTRIBUTE_TYPES table
-INSERT INTO portown.fmg_attribute_types (id,metatype,description) VALUES
+INSERT INTO portown.fmg_attrib_types (id,metatype,ds) VALUES
 	 (100640,'PROV_ACR_ACCRED','ACR Accreditation'),
 	 (101277,'PROV_AAAASF_ACCRED','AAAASF Accreditation'),
 	 (100638,'PROV_AAAHC_ACCRED','AAAHC Accreditation'),
@@ -139,7 +139,7 @@ INSERT INTO portown.fmg_counties (id,ds) VALUES
 
 
 -- 2. Insert data into FMG_ATTRIBUTE_FIELDS table
-INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"datatype") VALUES
+INSERT INTO portown.fmg_attrib_fields (id,attribute_id,fmgcode,fieldname,"datatype") VALUES
 	 (101143,100640,'YES_NO','ACR Accred?','string'),
 	 (102935,100640,NULL,'Validation Date','date'),
 	 (101141,100640,NULL,'Effective Date','date'),
@@ -150,7 +150,7 @@ INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"da
 	 (101956,101277,NULL,'Effective Date','date'),
 	 (102795,101277,NULL,'Expiration Date','date'),
 	 (101136,100638,'YES_NO','AAAHC Accreditation','string');
-INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"datatype") VALUES
+INSERT INTO portown.fmg_attrib_fields (id,attribute_id,fmgcode,fieldname,"datatype") VALUES
 	 (102835,100638,NULL,'Validation Date','date'),
 	 (101137,100638,NULL,'Effective Date','date'),
 	 (102815,100638,NULL,'Expiration Date','date'),
@@ -161,7 +161,7 @@ INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"da
 	 (709,502,NULL,'endDate','date'),
 	 (706,502,NULL,'number','string'),
 	 (708,502,NULL,'effectiveDate','date');
-INSERT INTO portown.fmg_attribute_fields (id,attribute_id,fmgcode,field_name,"datatype") VALUES
+INSERT INTO portown.fmg_attrib_fields (id,attribute_id,fmgcode,fieldname,"datatype") VALUES
 	 (707,502,NULL,'type','string'),
 	 (100283,100073,NULL,'number','string'),
 	 (106275,103277,'YES_NO','Capitated PPG','string'),
