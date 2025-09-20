@@ -1,3 +1,4 @@
+-- psql "postgresql://porticoadmin:password@localhost:5432/portico?options=-csearch_path%3Dportown" -f master.sql
 -- Run schema scripts
 \i schema/drop_tables.sql
 \i centene/schema/fmg_attribute_types.sql
