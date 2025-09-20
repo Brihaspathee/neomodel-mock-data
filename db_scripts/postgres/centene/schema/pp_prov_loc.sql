@@ -6,6 +6,7 @@ CREATE TABLE portown.pp_prov_loc (
 	start_date date NULL,
 	end_date date NULL,
 	print_supress char(1) NULL,
+    label_cluster_id numeric NULL,
 	CONSTRAINT pp_prov_loc_pp_prov_fk FOREIGN KEY (prov_id) REFERENCES portown.pp_prov(id),
 	CONSTRAINT pp_prov_loc_pp_prov_tin_loc_fk FOREIGN KEY (loc_id) REFERENCES portown.pp_prov_tin_loc(id)
 );

@@ -10,6 +10,7 @@ CREATE TABLE portown.pp_prov_tin_loc (
 	bus char(1) NULL,
 	transit_route varchar(100) NULL,
 	handicap varchar(100) NULL,
+    label_cluster_id numeric,
 	prov_tin_prc_cont_id numeric NULL,
 	CONSTRAINT pp_prov_tin_loc_pk PRIMARY KEY (id),
 	CONSTRAINT pp_prov_tin_loc_pp_addr_fk FOREIGN KEY (address_id) REFERENCES portown.pp_addr(id)

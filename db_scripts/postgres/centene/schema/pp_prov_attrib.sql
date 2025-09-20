@@ -9,7 +9,7 @@ create table portown.pp_prov_attrib
             references portown.pp_prov,
     attribute_id integer
         constraint pp_prov_attrib_fmg_attribute_types_id_fk
-            references portown.fmg_attribute_types
+            references portown.fmg_attrib_types
 );
 
 alter table portown.pp_prov_attrib

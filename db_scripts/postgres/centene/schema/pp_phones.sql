@@ -7,9 +7,9 @@ create table portown.pp_phones
     type      varchar not null,
     area_code varchar not null,
     exchange  varchar not null,
-    number    varchar not null
+    number    varchar not null,
+    "foreign"   varchar null,
+    country_code varchar null,
+    foreign_phone varchar null
 );
-
-alter table portown.pp_phones
-    owner to porticoadmin;
 

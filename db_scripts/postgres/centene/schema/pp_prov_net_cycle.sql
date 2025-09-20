@@ -5,6 +5,7 @@ CREATE TABLE portown.pp_prov_net_cycle (
 	status varchar NOT NULL,
 	start_date date NOT NULL,
 	end_date date NOT NULL,
+    label_cluster_id numeric NULL,
 	CONSTRAINT pp_prov_net_cycle_pk PRIMARY KEY (id),
 	CONSTRAINT pp_prov_net_cycle_pp_prov_fk FOREIGN KEY (prov_id) REFERENCES portown.pp_prov(id),
 	CONSTRAINT pp_prov_net_cycle_pp_net_fk FOREIGN KEY (net_id) REFERENCES portown.pp_net(id)
