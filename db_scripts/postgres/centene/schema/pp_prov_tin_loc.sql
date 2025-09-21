@@ -3,7 +3,7 @@ CREATE TABLE portown.pp_prov_tin_loc (
 	tin_id numeric NULL,
 	address_id integer NOT NULL,
 	"name" varchar(100) NOT NULL,
-	"primary" char(1) NULL,
+	"PRIMARY" char(1) NULL,
 	print_suppress char(1) NULL,
 	office_mgr varchar(100) NULL,
 	train char(1) NULL,
