@@ -3,6 +3,7 @@ import logging
 import models
 from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
+from models.aton.nodes.hours_of_operation import HoursOfOperation
 from models.aton.nodes.location import Location
 from models.aton.nodes.telecom import Telecom
 from models.aton.nodes.validation import Validation
@@ -11,9 +12,10 @@ from utils.location_util import get_hash_key_for_prov_tin_loc
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
-from models.portico import PPProv, PPProvLoc, PPProvTinLoc
+from models.portico import PPProv, PPProvLoc, PPProvTinLoc, PPProvLocOfHours
 from transform.transform_provider_net_cycle import transform_provider_net_cycle
 from transform.transform_attribute import get_prov_loc_attributes
+from utils.office_hours import format_office_hours
 
 log = logging.getLogger(__name__)
 
@@ -87,7 +89,9 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
         get_prov_loc_attributes(pp_prov, prov_tin_loc, role_location)
         role_location.set_location(location)
         role_location.add_contact(contact)
+        get_prov_loc_office_hours(pp_prov, prov_tin_loc, role_location)
         role_instance.add_pending_rl(role_location)
+        log_role_location_contacts(role_location=role_location)
 
 
 def set_location(hash_code, prov_tin_loc) -> Location:
@@ -152,6 +156,42 @@ def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:
                     telecom.afterHoursNumber = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
             contact.set_pending_telecom(telecom)
     return contact
+
+def get_prov_loc_office_hours(provider:PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
+    # converted_office_hours = format_office_hours(prov_loc_office_hours=provider.loc_ofhours)
+    # log.error(f"Converted office hours - {converted_office_hours}")
+    prov_loc_office_hours: list[PPProvLocOfHours] = []
+    for prov_loc_ofhours in provider.loc_ofhours:
+        location: PPProvTinLoc = prov_loc_ofhours.location
+        if location.id == pp_prov_tin_loc.id:
+            prov_loc_office_hours.append(prov_loc_ofhours)
+    converted_office_hours = format_office_hours(prov_loc_office_hours=prov_loc_office_hours)
+    log.debug(f"Converted office hours - {converted_office_hours}")
+    if not converted_office_hours:
+        return
+    is_office_hours_set = False
+    if role_location.get_pending_contacts():
+        for contact in role_location.get_pending_contacts():
+            if contact.use == "Directory":
+                hours_of_operation: HoursOfOperation = HoursOfOperation(hours=converted_office_hours)
+                contact.set_pending_hours_of_operation(hours_of_operation)
+                is_office_hours_set = True
+                break
+    if not is_office_hours_set:
+        contact: Contact = Contact()
+        contact.use = "Directory"
+        hours_of_operation: HoursOfOperation = HoursOfOperation(hours=converted_office_hours)
+        contact.set_pending_hours_of_operation(hours_of_operation)
+        role_location.add_contact(contact)
+
+def log_role_location_contacts(role_location: RoleLocation):
+    if role_location.get_pending_contacts():
+        for contact in role_location.get_pending_contacts():
+            log.error(f"Contact: {contact}")
+            log.error(f"Contact Use: {contact.use}")
+            log.error(f"Contact Hours of operation: {contact.get_pending_hours_of_operation()}")
+
+
 
 
 

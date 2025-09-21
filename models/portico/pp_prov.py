@@ -73,6 +73,10 @@ class PPProv(Base):
         back_populates="provider",
         cascade="all, delete-orphan"
     )
+    loc_ofhours: Mapped[List["PPProvLocOfHours"]] = relationship(
+        "PPProvLocOfHours",
+        back_populates="provider",
+    )
 
     # Association table mapping
     prov_locs: Mapped[List["PPProvLoc"]] = relationship("PPProvLoc", back_populates="provider")

@@ -23,6 +23,7 @@ from .pp_net_attrib import PPNetAttrib
 from .pp_net_attrib_values import PPNetAttribValues
 from .pp_prov_loc_attrib import PPProvLocAttrib
 from .pp_prov_loc_attrib_values import PPProvLocAttribValues
+from .pp_prov_loc_ofhours import PPProvLocOfHours
 
 __all__ = ["Person", "Base", "PPAddr","PPNet",
            "PPPhones", "PPAddrPhones", "PPProvTIN",
@@ -31,4 +32,5 @@ __all__ = ["Person", "Base", "PPAddr","PPNet",
            "FmgAttributeType", "FmgAttributeField", "FmgCities", "FmgCounties",
            "PPProvAttrib", "PPProvAttribValues",
            "PPNetAttrib", "PPNetAttribValues",
-           "PPProvLocAttrib", "PPProvLocAttribValues"]
+           "PPProvLocAttrib", "PPProvLocAttribValues",
+           "PPProvLocOfHours"]

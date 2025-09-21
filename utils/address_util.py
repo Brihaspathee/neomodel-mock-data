@@ -24,9 +24,9 @@ def portico_address_to_aton(pp_addr: PPAddr) -> Address:
     return address
 
 def get_state(county_fips: str) -> str:
-    log.error(f"Count fips: {county_fips}")
+    log.debug(f"Count fips: {county_fips}")
     state_number =  county_fips[:2]
-    log.error(f"State number: {state_number}")
+    log.debug(f"State number: {state_number}")
     state_code = COUNTY_STATE_MAPPING.get(state_number).get("code")
-    log.error(f"State code: {state_code}")
+    log.debug(f"State code: {state_code}")
     return state_code

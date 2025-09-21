@@ -22,6 +22,7 @@
 \i centene/schema/pp_prov_net_loc_cycle.sql
 \i centene/schema/pp_prov_attrib.sql
 \i centene/schema/pp_prov_attrib_values.sql
+\i centene/schema/pp_prov_loc_ofhours.sql
 \i centene/schema/pp_prov_loc_attrib.sql
 \i centene/schema/pp_prov_loc_attrib_values.sql
 -- Insert data common for all scenarios
@@ -51,4 +52,4 @@
 \i centene/scenarios/scenario_0/scenario-data.sql
 
 -- Insert data for Scenario - 1
-\i centene/scenarios/scenario_1/provider/parent/scenario-data.sql
+-- \i centene/scenarios/scenario_1/provider/parent/scenario-data.sql
