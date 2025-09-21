@@ -74,7 +74,7 @@ INSERT INTO portown.pp_prov_tin (id,name,tin) VALUES
 	 (1,'Kaptured Inc','43-5343234');
 
 -- Insert PP_PHONES
-INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+INSERT INTO portown.pp_phones (id,"type",areacode,exchange,"num") VALUES
 	 (1,'PHONE','813','357','9150'),
 	 (2,'PHONE','212','555','1234'),
 	 (3,'PHONE','305','789','4421'),
@@ -85,7 +85,7 @@ INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
 	 (8,'PHONE','808','733','5566'),
 	 (9,'PHONE','904','845','2389'),
 	 (10,'PHONE','202','476','1182');
-INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+INSERT INTO portown.pp_phones (id,"type",areacode,exchange,"num") VALUES
 	 (11,'PHONE','213','692','4507'),
 	 (12,'PHONE','312','547','8264'),
 	 (13,'PHONE','404','368','9123'),
@@ -96,7 +96,7 @@ INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
 	 (18,'PHONE','914','615','2780'),
 	 (19,'PHONE','971','448','1199'),
 	 (20,'PHONE','984','762','4001');
-INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+INSERT INTO portown.pp_phones (id,"type",areacode,exchange,"num") VALUES
 	 (21,'PHONE','229','814','6550'),
 	 (22,'PHONE','319','507','9908'),
 	 (23,'PHONE','406','283','1432'),
@@ -107,7 +107,7 @@ INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
 	 (28,'PHONE','909','683','2145'),
 	 (29,'PHONE','972','477','6980'),
 	 (30,'PHONE','217','392','8841');
-INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+INSERT INTO portown.pp_phones (id,"type",areacode,exchange,"num") VALUES
 	 (31,'PHONE','307','284','6321'),
 	 (32,'PHONE','408','715','9983'),
 	 (33,'PHONE','505','821','2374'),
@@ -118,7 +118,7 @@ INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
 	 (38,'PHONE','901','483','2056'),
 	 (39,'PHONE','937','624','8112'),
 	 (40,'PHONE','979','751','3309');
-INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+INSERT INTO portown.pp_phones (id,"type",areacode,exchange,"num") VALUES
 	 (41,'PHONE','234','673','1023'),
 	 (42,'PHONE','276','905','4810'),
 	 (43,'PHONE','325','448','7715'),
@@ -129,7 +129,7 @@ INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
 	 (48,'PHONE','765','312','1543'),
 	 (49,'PHONE','812','567','7099'),
 	 (50,'PHONE','859','429','8806');
-INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+INSERT INTO portown.pp_phones (id,"type",areacode,exchange,"num") VALUES
 	 (51,'PHONE','901','632','4147'),
 	 (52,'PHONE','918','508','2668'),
 	 (53,'PHONE','936','751','9452'),
@@ -140,7 +140,7 @@ INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
 	 (58,'PHONE','406','911','8390'),
 	 (59,'PHONE','512','702','1348'),
 	 (60,'PHONE','623','487','5003');
-INSERT INTO portown.pp_phones (id,"type",area_code,exchange,"number") VALUES
+INSERT INTO portown.pp_phones (id,"type",areacode,exchange,"num") VALUES
 	 (61,'PHONE','701','254','9427');
 
 -- Insert PP_PROV
