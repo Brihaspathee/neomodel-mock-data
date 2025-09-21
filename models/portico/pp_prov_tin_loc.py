@@ -12,7 +12,7 @@ class PPProvTinLoc(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    primary = Column(String, nullable=False)
+    PRIMARY = Column(String, nullable=False)
 
     address_id = Column(Integer, ForeignKey("portown.pp_addr.id"))
     address = relationship("PPAddr")
@@ -31,4 +31,4 @@ class PPProvTinLoc(Base):
         """
         return (f"<{self.__class__.__name__}(id={self.id}, "
                 f"name={self.name}, "
-                f"primary={self.primary})>")
+                f"primary={self.PRIMARY})>")

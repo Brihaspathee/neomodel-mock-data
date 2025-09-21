@@ -92,13 +92,13 @@ def get_provider_address(provider:PPProv) -> Contact:
                 log.info(f"Address phone is {addr_phone}")
                 log.info(f"Address phone is {addr_phone.phone}")
                 if addr_phone.phone.type == "PHONE":
-                    telecom.phone = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.phone = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "FAX":
-                    telecom.fax = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.fax = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "TTY":
-                    telecom.tty = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.tty = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "AFH":
-                    telecom.afterHoursNumber = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.afterHoursNumber = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 else:
                     log.warning(
                         f"Unknown phone type {addr_phone.phone.type} for provider {provider.name}"

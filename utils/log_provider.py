@@ -22,7 +22,7 @@ def log_provider(provider: PPProv):
         for phone in address.address.phones:
             log.info(phone)
             log.info(phone.phone.type)
-            log.info(phone.phone.number)
+            log.info(phone.phone.num)
     for attribute in provider.attributes:
         log.info(f"Provider Attribute:{attribute.attribute_type}")
         log.info(attribute)

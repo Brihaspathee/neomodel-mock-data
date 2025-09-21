@@ -143,13 +143,13 @@ def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:
                 log.info(f"Location phone is {addr_phone}")
                 log.info(f"Location phone is {addr_phone.phone}")
                 if addr_phone.phone.type == "PHONE":
-                    telecom.phone = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.phone = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "FAX":
-                    telecom.fax = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.fax = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "TTY":
-                    telecom.tty = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.tty = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "AFH":
-                    telecom.afterHoursNumber = addr_phone.phone.area_code + addr_phone.phone.exchange + addr_phone.phone.number
+                    telecom.afterHoursNumber = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
             contact.set_pending_telecom(telecom)
     return contact
 

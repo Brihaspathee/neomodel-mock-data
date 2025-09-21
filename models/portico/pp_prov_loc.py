@@ -14,12 +14,12 @@ class PPProvLoc(Base):
 
     prov_id = Column(Integer, ForeignKey("portown.pp_prov.id"), primary_key=True)
     loc_id = Column(Integer, ForeignKey("portown.pp_prov_tin_loc.id"), primary_key=True)
-    primary = Column(Boolean, default=False)
+    PRIMARY = Column(Boolean, default=False)
 
     provider = relationship("PPProv", back_populates="prov_locs")
     location = relationship("PPProvTinLoc", back_populates="prov_locs")
 
     def __repr__(self):
         return (
-            f"<PPProvLoc(prov_id={self.prov_id}, loc_id={self.loc_id}, primary={self.primary})>"
+            f"<PPProvLoc(prov_id={self.prov_id}, loc_id={self.loc_id}, primary={self.PRIMARY})>"
         )
