@@ -268,7 +268,7 @@ INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,v
 	 (24,9,105836,'MS0912',NULL,NULL);
 
 -- Insert PP_PROV_TIN_LOC
-INSERT INTO portown.pp_prov_tin_loc (id,tin_id,address_id,"name","primary",print_suppress,office_mgr,train,bus,transit_route,handicap,prov_tin_prc_cont_id) VALUES
+INSERT INTO portown.pp_prov_tin_loc (id,tin_id,address_id,"name","PRIMARY",print_suppress,office_mgr,train,bus,transit_route,handicap,prov_tin_prc_cont_id) VALUES
 	 (1,1,3,'Lone Star Family Health Center','N','N','Tim Miller','N',NULL,NULL,NULL,NULL),
 	 (2,1,4,'Bluebonnet Community Clinic','N','N','Sam Stein','N',NULL,NULL,NULL,NULL),
 	 (3,1,5,'North Texas Regional Medical Center','N','N','John Last','N',NULL,NULL,NULL,NULL),
@@ -276,7 +276,7 @@ INSERT INTO portown.pp_prov_tin_loc (id,tin_id,address_id,"name","primary",print
 	 (5,1,7,'Hill Country Wellness Center','N','N','Sarah Longwell','N',NULL,NULL,NULL,NULL);
 
 -- Insert PP_PROV_LOC
-INSERT INTO portown.pp_prov_loc (prov_id,loc_id,name_usage,"primary",start_date,end_date,print_supress) VALUES
+INSERT INTO portown.pp_prov_loc (prov_id,loc_id,name_usage,"PRIMARY",start_date,end_date,print_suppress) VALUES
 	 (1,1,NULL,'N',NULL,NULL,NULL),
 	 (1,2,NULL,'N',NULL,NULL,NULL),
 	 (1,3,NULL,'Y',NULL,NULL,NULL),
@@ -297,7 +297,7 @@ INSERT INTO portown.pp_prov_net_cycle (id,prov_id,net_id,status,start_date,end_d
 	 (5,2,14694,'PAR','2020-01-01','4000-01-01');
 
 -- Insert PP_PROV_NET_LOC_CYCLE
-INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,start_date,end_date,"primary") VALUES
+INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,start_date,end_date,"PRIMARY") VALUES
 	 (1,1,1,1,'2001-06-01','2010-10-31','N'),
 	 (2,1,1,1,'2011-07-01','4000-01-01','Y'),
 	 (3,1,1,2,'2015-08-01','4000-01-01','N'),
@@ -308,7 +308,7 @@ INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,s
 	 (8,5,2,1,'2020-01-01','4000-01-01','N'),
 	 (9,5,2,2,'2020-01-01','4000-01-01','N'),
 	 (10,5,2,3,'2020-01-01','4000-01-01','N');
-INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,start_date,end_date,"primary") VALUES
+INSERT INTO portown.pp_prov_net_loc_cycle (id,prov_net_cycle_id,prov_id,loc_id,start_date,end_date,"PRIMARY") VALUES
 	 (11,5,2,4,'2020-01-01','4000-01-01','N'),
 	 (12,5,2,5,'2020-01-01','4000-01-01','N');
 
