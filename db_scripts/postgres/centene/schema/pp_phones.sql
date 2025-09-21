@@ -5,11 +5,11 @@ create table portown.pp_phones
         constraint pp_phones_pk
             primary key,
     type      varchar not null,
-    area_code varchar not null,
+    areacode varchar not null,
     exchange  varchar not null,
-    number    varchar not null,
-    "foreign"   varchar null,
+    num    varchar not null,
+    extension    varchar null,
+    "FOREIGN"   varchar null,
     country_code varchar null,
     foreign_phone varchar null
 );
-
