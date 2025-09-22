@@ -5,6 +5,7 @@ class Qualification(StructuredNode):
     type = StringProperty(required=True)
     issuer = StringProperty(required=False)
     state = StringProperty(required=False)
+    status = StringProperty(required=False)
     value = StringProperty(required=False)
     start_date = DateProperty(required=False)
     end_date = DateProperty(required=False)

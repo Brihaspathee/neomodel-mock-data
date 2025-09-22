@@ -5,6 +5,7 @@ from neomodel import StructuredNode
 from config.attribute_settings import ATTRIBUTES_CONFIG
 from config.attributes_mapping import AttributeMapping
 from models.aton.nodes.identifier import NPI, Identifier, PPGID
+from models.aton.nodes.location import Location
 from models.aton.nodes.network import Network
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.qualification import Qualification
@@ -88,8 +89,8 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
 
 def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
     for prov_loc_attr in pprov.loc_attributes:
-        location: PPProvTinLoc = prov_loc_attr.location
-        if location.id == pp_prov_tin_loc.id:
+        portico_location: PPProvTinLoc = prov_loc_attr.location
+        if portico_location.id == pp_prov_tin_loc.id:
             attribute_id = prov_loc_attr.attribute_id
             attribute_fields: dict[str, Any] = {}
             for value in prov_loc_attr.values:
@@ -107,6 +108,15 @@ def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_lo
             log.info(f"Created Node for prov loc attribute: {node}")
             if isinstance(node, RoleSpecialty):
                 role_location.add_specialty(node)
+            if isinstance(node, Qualification):
+                qualification: Qualification = node
+                if qualification.type == "DHSSE Certification":
+                    if qualification.status == "P":
+                        qualification.status = "PASSED"
+                    elif qualification.status == "C":
+                        qualification.status = "CANCELLED"
+                aton_location:Location = role_location.location
+                aton_location.add_pending_qualification(qualification)
 
 
 

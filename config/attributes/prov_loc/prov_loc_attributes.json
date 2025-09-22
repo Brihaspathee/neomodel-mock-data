@@ -7,5 +7,23 @@
     "fields": {
       "111355": "specialty"
     }
+  },
+  "103797": {
+    "name": "PROV_DHS_SE",
+    "category": "Qualification",
+    "attr_type": "Certification",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "106797": "start_date",
+      "106798": "end_date",
+      "106675": "status",
+      "106796": "value"
+    },
+    "ignore": [],
+    "adornments": {
+      "type": "DHSSE Certification",
+      "issuer": "Department of Health Services Site Evaluation",
+      "secondary_label": "Certification"
+    }
   }
 }

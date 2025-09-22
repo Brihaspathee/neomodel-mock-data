@@ -1,6 +1,7 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom
 
 from models.aton.nodes.pp_prov_tin_loc import PPProvTINLoc
+from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.validation import Validation
 
 
@@ -26,6 +27,7 @@ class Location(StructuredNode):
         super().__init__(*args, **kwargs)
         self._pending_validation: Validation | None = None
         self._portico_source: PPProvTINLoc | None = None
+        self._pending_qualifications: list[Qualification] = []
 
     def __repr__(self):
         return f"{self.name} - {self.street_address} - {self.city} - {self.state} - {self.zip_code}"
@@ -41,3 +43,9 @@ class Location(StructuredNode):
 
     def get_portico_source(self) -> PPProvTINLoc:
         return self._portico_source
+
+    def add_pending_qualification(self, qualification: Qualification):
+        self._pending_qualifications.append(qualification)
+
+    def get_pending_qualifications(self) -> list[Qualification]:
+        return self._pending_qualifications
