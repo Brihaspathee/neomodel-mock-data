@@ -105,5 +105,97 @@
       "issuer": "American Association for Sleep Medicine",
       "secondary_label": "Accreditation"
     }
+  },
+  "103497": {
+    "name": "PROV_CIHQ_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "106177": "start_date",
+      "106178": "end_date"
+    },
+    "ignore": ["106175", "106175"],
+    "adornments": {
+      "type": "CIHQ Accreditation",
+      "issuer": "Centers for Improvement in Healthcare Quality",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "106175",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "101298": {
+    "name": "PROV_DNV_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "101978": "start_date",
+      "103130": "end_date"
+    },
+    "ignore": ["101977", "103129"],
+    "adornments": {
+      "type": "DNV Accreditation",
+      "issuer": "Det Norske Veritas",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "101977",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "101497": {
+    "name": "PROV_HFAP_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "102276": "start_date",
+      "103134": "end_date"
+    },
+    "ignore": ["102275", "103133"],
+    "adornments": {
+      "type": "HFAP Accreditation",
+      "issuer": "Healthcare Facilities Accreditation Program",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "102275",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "100088": {
+    "name": "PROV_JCAHO_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "100313": "start_date",
+      "103141": "end_date"
+    },
+    "ignore": ["100312", "104376", "103140"],
+    "adornments": {
+      "type": "TJC Accreditation",
+      "issuer": "The Joint Commission Accreditation",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "100312",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
   }
 }
