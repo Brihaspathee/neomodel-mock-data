@@ -80,6 +80,8 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
         # Add the role location to the role instance
         # ------------------------------------------------------------------------------
         role_location: RoleLocation = RoleLocation()
+        if prov_loc.PRIMARY == "Y":
+            role_location.set_is_primary(True)
         prov_tin_loc: PPProvTinLoc = prov_loc.location
         log.info(f"Location Address:{prov_tin_loc.address}")
         hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=prov_tin_loc)

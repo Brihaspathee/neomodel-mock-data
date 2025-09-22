@@ -10,6 +10,7 @@ class RoleInstance(StructuredNode):
     organization = RelationshipFrom("models.aton.nodes.organization.Organization", "HAS_ROLE")
     contracted_organization = RelationshipTo("models.aton.nodes.organization.Organization", "CONTRACTED_BY")
     role_locations = RelationshipTo("models.aton.nodes.role_location.RoleLocation", "PERFORMED_AT")
+    primary_location = RelationshipTo("models.aton.nodes.role_location.RoleLocation", "PRIMARY_LOCATION_IS")
     role_networks = RelationshipTo("models.aton.nodes.role_network.RoleNetwork", "SERVES")
     specialties = RelationshipTo("models.aton.nodes.role_specialty.RoleSpecialty", "SPECIALIZES")
 

@@ -12,6 +12,8 @@ def process_role_locations(role_instance:RoleInstance):
         location: Location = role_location.get_location()
         location = get_or_create_location(location)
         role_location.save()
+        if role_location.get_is_primary():
+            role_instance.primary_location.connect(role_location)
         create_contacts(role_location)
         for speciality in role_location.get_pending_specialties():
             speciality.save()
