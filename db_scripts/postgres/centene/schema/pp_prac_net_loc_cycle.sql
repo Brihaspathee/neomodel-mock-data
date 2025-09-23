@@ -1,0 +1,18 @@
+CREATE TABLE portown.pp_prac_net_loc_cycle (
+	id integer NOT NULL,
+	prac_id integer NOT NULL,
+	prov_id integer NOT NULL,
+	net_id integer NOT NULL,
+	loc_id integer NOT NULL,
+	prac_net_cycle_id integer NOT NULL,
+	start_date date NOT NULL,
+	end_date date NOT NULL,
+	"PRIMARY" char(1) NULL,
+	label_cluster_id numeric NULL,
+	CONSTRAINT pp_prac_net_loc_cycle_pk PRIMARY KEY (id),
+	CONSTRAINT pp_prac_net_loc_cycle_pp_prac_fk FOREIGN KEY (prac_id) REFERENCES portown.pp_prac(id),
+	CONSTRAINT pp_prac_net_loc_cycle_pp_prov_fk FOREIGN KEY (prov_id) REFERENCES portown.pp_prov(id),
+	CONSTRAINT pp_prac_net_loc_cycle_pp_net_fk FOREIGN KEY (net_id) REFERENCES portown.pp_net(id),
+	CONSTRAINT pp_prac_net_loc_cycle_pp_prov_tin_loc_fk FOREIGN KEY (loc_id) REFERENCES portown.pp_prov_tin_loc(id),
+	CONSTRAINT pp_prac_net_loc_cycle_pp_prac_net_cycle_fk FOREIGN KEY (prac_net_cycle_id) REFERENCES portown.pp_prac_net_cycle(id)
+);
