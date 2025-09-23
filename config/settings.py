@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 
 
 def fetch_secrets():
-    log.info("Fetching Secrets using log")
+    log.debug("Fetching Secrets using log")
     db_secrets = SecretsAPI(["ss.neo4j.url",
                              "ss.neo4j.username",
                              "ss.neo4j.password",

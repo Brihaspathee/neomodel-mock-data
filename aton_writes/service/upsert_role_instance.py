@@ -11,7 +11,7 @@ def process_role_instance(org: Organization,):
         if role_type == "has_role":
             for role_instance in role_instance_list:
                 role_instance.save()
-                log.info(f"Role instance saved to Aton its element id is: {role_instance.element_id}")
+                log.debug(f"Role instance saved to Aton its element id is: {role_instance.element_id}")
                 process_role_locations(role_instance)
                 process_role_networks(role_instance)
                 org.role.connect(role_instance)

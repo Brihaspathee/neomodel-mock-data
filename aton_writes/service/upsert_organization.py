@@ -31,26 +31,26 @@ def upsert_organizations(organizations: list[Organization]):
             create_organization(organization)
 
 def create_organization(org: Organization):
-    log.info(
+    log.debug(
         f"Writing organization {org.name} to Aton"
         f"Organization parent Id: {org.parent_ppg_id}"
     )
     try:
-        log.info(org.__properties__)
+        log.debug(org.__properties__)
         org.save()
         pp_prov: PPProv = org.get_portico_source().save()
         pp_prov.aton_org.connect(org)
         if org.parent_ppg_id is not None:
-            log.info(f"Organization has parent {org.parent_ppg_id}")
+            log.debug(f"Organization has parent {org.parent_ppg_id}")
             ppg = PPGID.nodes.get(value=org.parent_ppg_id)
-            log.info(f"Parent PPG is {ppg}")
+            log.debug(f"Parent PPG is {ppg}")
             parent_org = ppg.organization.single()
-            log.info(f"Parent org is {parent_org.name}")
+            log.debug(f"Parent org is {parent_org.name}")
             if parent_org is not None:
                 org.parent.connect(parent_org)
         log.debug(f"Organization written to Aton its id is: {org.element_id}")
         create_identifiers(org)
-        # log.info(f"Pending Role instances:{org.get_pending_role_instances()}")
+        # log.debug(f"Pending Role instances:{org.get_pending_role_instances()}")
         create_qualifications(org)
         create_contacts(org)
         process_role_instance(org)
@@ -67,12 +67,12 @@ def create_identifiers(org):
         for id_node in id_list:
             if not hasattr(id_node, "element_id") or id_node.element_id is None:
                 id_node.save()
-                log.info(f"Identifier saved to Aton its element id is: {id_node.element_id}")
+                log.debug(f"Identifier saved to Aton its element id is: {id_node.element_id}")
                 rel.connect(id_node)
 
 
 def create_qualifications(org: Organization):
-    log.info(
+    log.debug(
         f"Writing qualifications to Aton for organization {org.name}"
         f"Qualifications are: {org.get_pending_qualifications()}"
     )
@@ -80,13 +80,13 @@ def create_qualifications(org: Organization):
     for qual_node in org.get_pending_qualifications():
         if not hasattr(qual_node, "element_id") or qual_node.element_id is None:
             qual_node.save()
-            log.info(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
+            log.debug(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
             rel.connect(qual_node)
 
 def update_organization(existing_org: Organization,
                         updated_org: Organization,
                         relationships: List[str]):
-    log.info(
+    log.debug(
         f"Updating organization {existing_org.name} in Aton"
         f"Organization parent Id: {existing_org.parent_ppg_id}"
     )
@@ -119,13 +119,13 @@ def update_org_node_properties(existing_org: Organization,
                 # Convert raw nodes to Neomodel objects
                 existing_quals =  [Qualification.inflate(row[0]) for row in results]
                 existing_quals.sort(key=lambda q: q.type)
-                log.info(f"Existing quals: {existing_quals}")
-                log.info(f"New quals: {new_quals}")
+                log.debug(f"Existing quals: {existing_quals}")
+                log.debug(f"New quals: {new_quals}")
                 for new_qual in new_quals:
                     is_qual_updated(new_qual, existing_quals, existing_org)
                     # if is_new_qual:
                     #     new_qual.save()
-                    #     log.info(f"Qualification saved to Aton its element id is: {new_qual.element_id}")
+                    #     log.debug(f"Qualification saved to Aton its element id is: {new_qual.element_id}")
                     #     existing_org.qualifications.connect(new_qual)
                     # elif qual_updated:
                     #     new_qual.save()

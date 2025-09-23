@@ -6,7 +6,7 @@ import logging
 log = logging.getLogger(__name__)
 
 def create_contacts(contact_owner:Any):
-    log.info(
+    log.debug(
         f"Writing contacts"
         f"Contacts are: {contact_owner.get_pending_contacts()}"
     )
@@ -14,7 +14,7 @@ def create_contacts(contact_owner:Any):
     for contact in contact_owner.get_pending_contacts():
         if not hasattr(contact, "element_id") or contact.element_id is None:
             contact.save()
-            log.info(f"Contact saved to Aton its element id is: {contact.element_id}")
+            log.debug(f"Contact saved to Aton its element id is: {contact.element_id}")
             rel.connect(contact)
             create_address(contact)
             create_telecom(contact)
@@ -26,7 +26,7 @@ def create_address(contact: Contact):
         address = contact.get_pending_address()
         if not hasattr(address, "element_id") or address.element_id is None:
             address.save()
-            log.info(f"Address saved to Aton its element id is: {address.element_id}")
+            log.debug(f"Address saved to Aton its element id is: {address.element_id}")
             rel.connect(address)
 
 def create_telecom(contact: Contact):
@@ -35,7 +35,7 @@ def create_telecom(contact: Contact):
         telecom = contact.get_pending_telecom()
         if not hasattr(telecom, "element_id") or telecom.element_id is None:
             telecom.save()
-            log.info(f"Telecom saved to Aton its element id is: {telecom.element_id}")
+            log.debug(f"Telecom saved to Aton its element id is: {telecom.element_id}")
             rel.connect(telecom)
 
 def create_hours_of_operation(contact: Contact):
@@ -44,5 +44,5 @@ def create_hours_of_operation(contact: Contact):
         hours_of_operation = contact.get_pending_hours_of_operation()
         if not hasattr(hours_of_operation, "element_id") or hours_of_operation.element_id is None:
             hours_of_operation.save()
-            log.info(f"Hours of operation saved to Aton its element id is: {hours_of_operation.element_id}")
+            log.debug(f"Hours of operation saved to Aton its element id is: {hours_of_operation.element_id}")
             rel.connect(hours_of_operation)

@@ -21,6 +21,6 @@ def process_role_locations(role_instance:RoleInstance):
             speciality.role_locations.connect(role_location)
         role_location.location.connect(location)
         role_instance.role_locations.connect(role_location)
-        log.info(f"Role location saved to Aton its element id is: {role_location.element_id}")
+        log.debug(f"Role location saved to Aton its element id is: {role_location.element_id}")
 
 

@@ -19,7 +19,7 @@ class PorticoDB:
         # print(secrets)
         # self.db_url = secrets["ss.portico.url"]
         self.db_url = settings.POSTGRES["db_url"]
-        log.info(self.db_url)
+        log.debug(self.db_url)
         if not self.db_url:
             raise ValueError("Portico DB URL not defined")
 

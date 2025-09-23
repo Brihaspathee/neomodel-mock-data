@@ -53,7 +53,7 @@ def read_provider(session:Session) -> list[PPProv] | None:
     #     )
     # )
     providers: list[PPProv] = list(session.execute(stmt).unique().scalars().all())
-    log.info(f"Read providers successfully:{providers}")
+    log.debug(f"Read providers successfully:{providers}")
     return providers
 
 def get_provider_attributes(session:Session, prov_id:int) -> PPProv:

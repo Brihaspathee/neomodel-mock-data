@@ -5,7 +5,7 @@ import logging
 log = logging.getLogger(__name__)
 
 def init_db():
-    log.info("Initializing DB")
+    log.debug("Initializing DB")
     user: str = settings.NEO4J["username"]
     password: str = settings.NEO4J["password"]
     host: str = settings.NEO4J["host"]
@@ -18,7 +18,7 @@ def init_db():
     try:
         results, _ = db.cypher_query("RETURN 1 AS ok")
         if results[0][0] == 1:
-            log.info(f"✅ Connected to Neo4j database '{database}' at {host}:{port}")
+            log.debug(f"✅ Connected to Neo4j database '{database}' at {host}:{port}")
     except Exception as e:
-        log.info(f"❌ Could not connect to Neo4j: {e}")
+        log.debug(f"❌ Could not connect to Neo4j: {e}")
         raise

@@ -17,7 +17,7 @@ def find_location_by_key(key: str) -> tuple[Location, Validation] | tuple[None, 
         return None, None
 
 def create_validation(validation: Validation) -> Validation:
-    log.info(f"Creating validation for {validation}")
+    log.debug(f"Creating validation for {validation}")
     val = validation.save()
-    log.info(f"Saved Validation {validation}")
+    log.debug(f"Saved Validation {validation}")
     return val

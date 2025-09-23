@@ -35,7 +35,7 @@ def transform_provider_location(provider: PPProv, organization:Organization):
         # When there are any locations or networks directly associated with the provider,
         # then a RoleInstance node should be created with the role type "HAS_ROLE"
         # ------------------------------------------------------------------------------
-        log.info("Transforming Portico Provider Location")
+        log.debug("Transforming Portico Provider Location")
         role_instance: RoleInstance = RoleInstance()
         role_instance.set_role_type("has_role")
         if provider.prov_locs:
@@ -47,7 +47,7 @@ def transform_provider_location(provider: PPProv, organization:Organization):
             # ------------------------------------------------------------------------------
             # Process the provider networks
             # ------------------------------------------------------------------------------
-            log.info("Transforming Portico Provider Network")
+            log.debug("Transforming Portico Provider Network")
             transform_provider_net_cycle(provider.networks, role_instance)
         # ------------------------------------------------------------------------------
         # Add the role instance to the organization
@@ -83,9 +83,9 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
         if prov_loc.PRIMARY == "Y":
             role_location.set_is_primary(True)
         prov_tin_loc: PPProvTinLoc = prov_loc.location
-        log.info(f"Location Address:{prov_tin_loc.address}")
+        log.debug(f"Location Address:{prov_tin_loc.address}")
         hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=prov_tin_loc)
-        log.info(f"Hash Code:{hash_code}")
+        log.debug(f"Hash Code:{hash_code}")
         location = set_location(hash_code, prov_tin_loc)
         role_location.set_location(location)
         contact: Contact = get_location_phone(prov_tin_loc)
@@ -114,7 +114,7 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     :rtype: Location
     """
     location: Location = Location()
-    log.info(f"Location name:{prov_tin_loc.name}")
+    log.debug(f"Location name:{prov_tin_loc.name}")
     portico_location: models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc = models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc(loc_id=str(prov_tin_loc.id))
     location.set_portico_source(portico_location)
     location.name = prov_tin_loc.name
@@ -146,8 +146,8 @@ def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:
         if loc_address.phones:
             telecom: Telecom = Telecom()
             for addr_phone in loc_address.phones:
-                log.info(f"Location phone is {addr_phone}")
-                log.info(f"Location phone is {addr_phone.phone}")
+                log.debug(f"Location phone is {addr_phone}")
+                log.debug(f"Location phone is {addr_phone.phone}")
                 if addr_phone.phone.type == "PHONE":
                     telecom.phone = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "FAX":

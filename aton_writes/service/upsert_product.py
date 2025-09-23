@@ -12,7 +12,7 @@ def create_product(product: Product):
         product = find_or_create_product(product)
         for network in product.get_pending_networks():
             network = find_or_create_network(network)
-            # log.info(f"Product {product.code} is connected to {network.name}")
+            # log.debug(f"Product {product.code} is connected to {network.name}")
             network.product.connect(product)
         return product
     except Exception as e:
@@ -32,7 +32,7 @@ def find_or_create_product(product):
         return product
     else:
         # The product already exists with the same id and/or name
-        log.info(f"Product {product.code} already exists")
+        log.debug(f"Product {product.code} already exists")
         if is_prod_found_by_name:
             # This means the product node was found using the name of the product
             # so the portico had two products with the same name but different ids.
@@ -44,7 +44,7 @@ def find_or_create_product(product):
             pp_net: PPNet = find_pp_net_by_id(product.get_portico_source().net_id)
             if pp_net is None:
                 pp_net: PPNet = product.get_portico_source()
-                log.info(f"Product {product.code}'s portico source is: {pp_net}")
+                log.debug(f"Product {product.code}'s portico source is: {pp_net}")
                 pp_net.save()
                 pp_net.aton_prod.connect(existing_product)
         product = existing_product
@@ -57,10 +57,10 @@ def find_or_create_network(network):
         pp_net: PPNet = network.get_portico_source()
         pp_net.save()
         pp_net.aton_net.connect(network)
-        log.info(f"Created network  {network.name}")
+        log.debug(f"Created network  {network.name}")
     else:
         # The network already exists with the same id and/or name
-        log.info(f"Network {network.name} already exists")
+        log.debug(f"Network {network.name} already exists")
         if is_net_found_by_name:
             # This means the network node was found using the name of the network
             # so the portico had two networks with the same name but different ids.
@@ -70,7 +70,7 @@ def find_or_create_network(network):
             pp_net: PPNet = find_pp_net_by_id(network.get_portico_source().net_id)
             if pp_net is None:
                 pp_net: PPNet = network.get_portico_source()
-                log.info(f"Network {network.code}'s portico source is: {pp_net}")
+                log.debug(f"Network {network.code}'s portico source is: {pp_net}")
                 pp_net.save()
                 pp_net.aton_net.connect(existing_network)
         network = existing_network

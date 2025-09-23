@@ -31,5 +31,5 @@ loggers:
     propagate: no
 
 root:
-  level: ERROR
+  level: INFO
   handlers: [console, file]

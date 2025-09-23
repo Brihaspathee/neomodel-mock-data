@@ -19,10 +19,10 @@ from models.portico.pp_net import PPNetDict
 log = logging.getLogger(__name__)
 
 def get_net_attributes(pp_net:PPNetDict, network:Network):
-    log.info(f"Network type: {type(pp_net)}")
-    log.info(f"Network Attributes: {pp_net.get("attributes")}")
+    log.debug(f"Network type: {type(pp_net)}")
+    log.debug(f"Network Attributes: {pp_net.get("attributes")}")
     for attribute in pp_net.get("attributes", []):
-        log.info(f"Attribute: {attribute.get('attribute_id')}")
+        log.debug(f"Attribute: {attribute.get('attribute_id')}")
         try:
             attr_mapping = ATTRIBUTES_CONFIG["network"][attribute.get('attribute_id')]
             # Load the attribute only if a mapping is present
@@ -36,16 +36,16 @@ def get_net_attributes(pp_net:PPNetDict, network:Network):
                 elif attribute.get("attribute_type") == "NET_HEALTHNET" and value.get("value") == "Y":
                     network.isHNETNetwork = True
         except KeyError:
-            log.info(f"No mapping found for attribute {attribute.get('attribute_id')}, hence it will not be loaded")
+            log.debug(f"No mapping found for attribute {attribute.get('attribute_id')}, hence it will not be loaded")
 
 def get_provider_attributes(provider:PPProv, organization: Organization):
     for attribute in provider.attributes:
         attribute_fields: dict[str, Any] = {}
-        # log.info(f"Attribute Id: {attribute.attribute_id}")
+        # log.debug(f"Attribute Id: {attribute.attribute_id}")
         # attribute_id = attribute.attribute_id
         # if str(attribute_id) == "502" or str(attribute_id) == "101278":
         #     mapping = ATTRIBUTES_CONFIG["provider"][str(attribute.attribute_id)]
-        #     log.info(f"Mapping: {mapping}")
+        #     log.debug(f"Mapping: {mapping}")
         for value in attribute.values:
             field_id = str(value.field_id)
             if value.value_date:
@@ -54,22 +54,22 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                 attribute_fields[field_id] = value.value_number
             else:
                 attribute_fields[field_id] = value.value
-        log.info(f"Attribute Fields: {attribute_fields}")
+        log.debug(f"Attribute Fields: {attribute_fields}")
         attribute_id = attribute.attribute_id
         # if str(attribute_id) == "502" or str(attribute_id) == "101278" or str(attribute_id) == "103277":
         mapping = ATTRIBUTES_CONFIG["provider"][str(attribute.attribute_id)]
-        # log.info(f"Mapping: {mapping}")
+        # log.debug(f"Mapping: {mapping}")
         node = build_node_for_attribute(mapping, attribute_fields)
-        # log.info(f"Node: {node}")
-        # log.info(f"Node type: {type(node)}")
-        # log.info(f"Is this Type NPI: {isinstance(node, Identifier):}")
-        # log.info(f"Is this Type Qualification: {isinstance(node, Qualification):}")
+        # log.debug(f"Node: {node}")
+        # log.debug(f"Node type: {type(node)}")
+        # log.debug(f"Is this Type NPI: {isinstance(node, Identifier):}")
+        # log.debug(f"Is this Type Qualification: {isinstance(node, Qualification):}")
         if isinstance(node, Identifier):
             if isinstance(node, PPGID):
-                log.info(f"This is a PPG ID {node.value}")
-                log.info(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
-                log.info(f"This is a PPG ID - PCP required  {node.pcp_required}")
-                log.info(f"This is a PPG ID - Parent PPG ID  {node.parent_ppg_id}")
+                log.debug(f"This is a PPG ID {node.value}")
+                log.debug(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
+                log.debug(f"This is a PPG ID - PCP required  {node.pcp_required}")
+                log.debug(f"This is a PPG ID - Parent PPG ID  {node.parent_ppg_id}")
                 if node.capitated_ppg == "Y":
                     organization.capitated = True
                 else:
@@ -102,10 +102,10 @@ def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_lo
                 elif value.value:
                     attribute_fields[field_id] = value.value
             mapping = ATTRIBUTES_CONFIG["prov_loc"][str(attribute_id)]
-            log.info(f"Mapping: {mapping}")
-            log.info(f"Attribute Fields: {attribute_fields}")
+            log.debug(f"Mapping: {mapping}")
+            log.debug(f"Attribute Fields: {attribute_fields}")
             node = build_node_for_attribute(mapping, attribute_fields)
-            log.info(f"Created Node for prov loc attribute: {node}")
+            log.debug(f"Created Node for prov loc attribute: {node}")
             if isinstance(node, RoleSpecialty):
                 role_location.add_specialty(node)
             if isinstance(node, Qualification):
@@ -115,7 +115,7 @@ def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_lo
                         qualification.status = "PASSED"
                     elif qualification.status == "C":
                         qualification.status = "CANCELLED"
-                aton_location:Location = role_location.location
+                aton_location:Location = role_location.get_location()
                 aton_location.add_pending_qualification(qualification)
 
 
@@ -144,10 +144,10 @@ def build_node_for_attribute(mapping:AttributeMapping,
     :rtype: StructuredNode | None
     """
     if not evaluate_conditions(mapping, attribute_fields):
-        log.info("Conditions not met, skipping node creation")
+        log.debug("Conditions not met, skipping node creation")
         return None
     else:
-        log.info("Conditions met, creating node")
+        log.debug("Conditions met, creating node")
     props = {}
     for field_id, field_value in attribute_fields.items():
         if field_id in mapping.ignore:
@@ -157,8 +157,8 @@ def build_node_for_attribute(mapping:AttributeMapping,
             props[aton_prop] = field_value
 
     props.update(mapping.adornments)
-    log.info(f"Aton Properties: {props}")
-    log.info(f"Aton Node Class: {mapping.node_class}")
+    log.debug(f"Aton Properties: {props}")
+    log.debug(f"Aton Node Class: {mapping.node_class}")
     node_instance = mapping.node_class(**props)
     return node_instance
 
@@ -180,15 +180,15 @@ def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, A
         Returns ``True`` if all the conditions are met, or ``False`` otherwise.
     """
     conditions = getattr(mapping, "conditions", [])
-    log.info(f"Conditions: {conditions}")
+    log.debug(f"Conditions: {conditions}")
     for condition in conditions:
         field_id = condition["field_id"]
         operator = condition["operator"]
         expected_value = condition["value"]
         actual_value = attribute_fields.get(field_id)
-        log.info(f"Actual Value: {actual_value}")
-        log.info(f"Expected Value: {expected_value}")
-        log.info(f"Operator: {operator}")
+        log.debug(f"Actual Value: {actual_value}")
+        log.debug(f"Expected Value: {expected_value}")
+        log.debug(f"Operator: {operator}")
         if operator == "equals" and actual_value != expected_value:
             return False
         elif operator == "not_equals" and actual_value == expected_value:

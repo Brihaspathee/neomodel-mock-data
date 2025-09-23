@@ -16,14 +16,14 @@ from models.portico import PPNet, PPProv
 log = logging.getLogger(__name__)
 
 def main():
-    log.info("Starting...")
-    log.info(f"Running on {settings.ENVIRONMENT} environment")
-    log.info(f"POSTGRES info {settings.POSTGRES} environment")
-    log.info(f"NEO4J info {settings.NEO4J} environment")
-    log.info(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
-    log.info(f"Contact use mapping:{contact_settings.CONTACT_USE_MAPPING}")
-    log.info(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
-    log.info(f"County state mapping:{county_settings.COUNTY_STATE_MAPPING}")
+    log.debug("Starting...")
+    log.debug(f"Running on {settings.ENVIRONMENT} environment")
+    log.debug(f"POSTGRES info {settings.POSTGRES} environment")
+    log.debug(f"NEO4J info {settings.NEO4J} environment")
+    log.debug(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
+    log.debug(f"Contact use mapping:{contact_settings.CONTACT_USE_MAPPING}")
+    log.debug(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
+    log.debug(f"County state mapping:{county_settings.COUNTY_STATE_MAPPING}")
     logging.basicConfig(level=logging.DEBUG)
 
     # Read the providers from Portico
@@ -33,7 +33,7 @@ def main():
 
     user_input: str = input("Select an option: \n1. Load all data\n2. Load data for a single provider :")
     if user_input == "1":
-        log.info("Loading all data")
+        log.debug("Loading all data")
         with (portico_db.get_session() as session):
             pp_nets: list[PPNet] = network_read.get_networks(session)
             providers: list[PPProv] = provider_read.read_provider(session)
@@ -44,12 +44,12 @@ def main():
             organizations: list[Organization]=transformer(providers)
             write_to_aton(organizations)
     elif user_input == "2":
-        log.info("Loading data for a single provider")
+        log.debug("Loading data for a single provider")
         with (portico_db.get_session() as session):
             provider: PPProv = provider_read.get_provider_attributes(session, 1)
             orgs = transformer(list([provider]))
             for org in orgs:
-                log.info(f"Org:{org.name}")
+                log.debug(f"Org:{org.name}")
             write_to_aton(orgs)
 
 

@@ -1,4 +1,4 @@
-from neomodel import StructuredNode, StringProperty, RelationshipFrom
+from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
 from models.aton.nodes.pp_prov_tin_loc import PPProvTINLoc
 from models.aton.nodes.qualification import Qualification
@@ -22,6 +22,9 @@ class Location(StructuredNode):
     role_locations = RelationshipFrom("models.aton.nodes.role_location.RoleLocation", "LOCATION_IS")
 
     pp_prov_tin_loc = RelationshipFrom("models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc", "SOURCES")
+
+    qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
+                                    "HAS_QUALIFICATION")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

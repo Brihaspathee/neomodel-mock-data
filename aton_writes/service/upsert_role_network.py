@@ -13,7 +13,7 @@ def process_role_networks(role_instance:RoleInstance):
         role_instance.role_networks.connect(rn)
         for assoc_rl in rn.get_pending_assoc_rls():
             rl = assoc_rl.role_location
-            log.info(f"Role Location inside the network:{rl.element_id}")
+            log.debug(f"Role Location inside the network:{rl.element_id}")
             for rls in assoc_rl.rls_edges:
                 rl.role_network.connect(rn, {
                     "start_date": rls.start_date,
