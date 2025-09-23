@@ -115,7 +115,7 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     """
     location: Location = Location()
     log.debug(f"Location name:{prov_tin_loc.name}")
-    portico_location: models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc = models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc(loc_id=str(prov_tin_loc.id))
+    portico_location: models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC = models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC(loc_id=str(prov_tin_loc.id))
     location.set_portico_source(portico_location)
     location.name = prov_tin_loc.name
     location.street_address = prov_tin_loc.address.addr1
@@ -189,9 +189,9 @@ def get_prov_loc_office_hours(provider:PPProv, pp_prov_tin_loc:PPProvTinLoc, rol
 def log_role_location_contacts(role_location: RoleLocation):
     if role_location.get_pending_contacts():
         for contact in role_location.get_pending_contacts():
-            log.error(f"Contact: {contact}")
-            log.error(f"Contact Use: {contact.use}")
-            log.error(f"Contact Hours of operation: {contact.get_pending_hours_of_operation()}")
+            log.info(f"Contact: {contact}")
+            log.info(f"Contact Use: {contact.use}")
+            log.info(f"Contact Hours of operation: {contact.get_pending_hours_of_operation()}")
 
 
 

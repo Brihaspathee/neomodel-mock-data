@@ -1,10 +1,11 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom
 
+from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.network import Network
 from models.aton.nodes.pp_net import PPNet
 
 
-class Product(StructuredNode):
+class Product(MockDataTest):
     code = StringProperty(required=True)
     name = StringProperty(required=True)
 

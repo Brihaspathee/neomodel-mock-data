@@ -8,7 +8,7 @@ from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import PPGID
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
-from models.aton.nodes.pp_prov import PPProv
+from models.aton.nodes.pp_prov import PP_PROV
 from models.aton.nodes.qualification import Qualification
 from repository.contact_repo import create_contacts
 from repository.organization_repo import get_organization_by_prov_id
@@ -38,7 +38,7 @@ def create_organization(org: Organization):
     try:
         log.debug(org.__properties__)
         org.save()
-        pp_prov: PPProv = org.get_portico_source().save()
+        pp_prov: PP_PROV = org.get_portico_source().save()
         pp_prov.aton_org.connect(org)
         if org.parent_ppg_id is not None:
             log.debug(f"Organization has parent {org.parent_ppg_id}")

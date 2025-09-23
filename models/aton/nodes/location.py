@@ -1,11 +1,12 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
-from models.aton.nodes.pp_prov_tin_loc import PPProvTINLoc
+from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.pp_prov_tin_loc import PP_PROV_TIN_LOC
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.validation import Validation
 
 
-class Location(StructuredNode):
+class Location(MockDataTest):
 
     name: str = StringProperty(required=True)
     street_address: str = StringProperty(required=True)
@@ -21,7 +22,7 @@ class Location(StructuredNode):
     validation = RelationshipFrom("models.aton.nodes.validation.Validation", "VALIDATED")
     role_locations = RelationshipFrom("models.aton.nodes.role_location.RoleLocation", "LOCATION_IS")
 
-    pp_prov_tin_loc = RelationshipFrom("models.aton.nodes.pp_prov_tin_loc.PPProvTINLoc", "SOURCES")
+    pp_prov_tin_loc = RelationshipFrom("models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC", "SOURCES")
 
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
                                     "HAS_QUALIFICATION")
@@ -29,7 +30,7 @@ class Location(StructuredNode):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._pending_validation: Validation | None = None
-        self._portico_source: PPProvTINLoc | None = None
+        self._portico_source: PP_PROV_TIN_LOC | None = None
         self._pending_qualifications: list[Qualification] = []
 
     def __repr__(self):
@@ -41,10 +42,10 @@ class Location(StructuredNode):
     def get_pending_validation(self) -> Validation:
         return self._pending_validation
 
-    def set_portico_source(self, portico_source: PPProvTINLoc):
+    def set_portico_source(self, portico_source: PP_PROV_TIN_LOC):
         self._portico_source = portico_source
 
-    def get_portico_source(self) -> PPProvTINLoc:
+    def get_portico_source(self) -> PP_PROV_TIN_LOC:
         return self._portico_source
 
     def add_pending_qualification(self, qualification: Qualification):

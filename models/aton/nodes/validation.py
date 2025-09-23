@@ -1,7 +1,9 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo
 
+from models.aton.nodes.mock_data_test import MockDataTest
 
-class Validation(StructuredNode):
+
+class Validation(MockDataTest):
 
     type: str = StringProperty(required=True)
     source: str = StringProperty(required=True)

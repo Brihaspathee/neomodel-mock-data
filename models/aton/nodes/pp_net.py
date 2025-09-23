@@ -1,7 +1,9 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo
 
+from models.aton.nodes.mock_data_test import MockDataTest
 
-class PPNet(StructuredNode):
+
+class PPNet(MockDataTest):
     __label__ = "PP_Net"
     net_id = StringProperty(required=True)
 

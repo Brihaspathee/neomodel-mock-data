@@ -1,7 +1,9 @@
 from neomodel import StructuredNode, StringProperty, FloatProperty, RelationshipFrom
 
+from models.aton.nodes.mock_data_test import MockDataTest
 
-class Address(StructuredNode):
+
+class Address(MockDataTest):
     streetAddress = StringProperty(required=True)
     secondaryAddress = StringProperty(required=False)
     city = StringProperty(required=False)

@@ -21,7 +21,7 @@ def transformer(portico_entity_list) -> list | None:
         does not contain any valid entities
     :rtype: list | None
     """
-    log.info("Transformer")
+    log.debug("Transformer")
     organizations: list[Organization] = []
     products: list[Product] = []
     is_org: bool = False

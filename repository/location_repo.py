@@ -1,7 +1,7 @@
 from neomodel import db
 
 from models.aton.nodes.location import Location
-from models.aton.nodes.pp_prov_tin_loc import PPProvTINLoc
+from models.aton.nodes.pp_prov_tin_loc import PP_PROV_TIN_LOC
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.validation import Validation
 from repository.validation_repo import find_location_by_key, create_validation
@@ -24,7 +24,7 @@ def get_or_create_location(location:Location):
         location.save()
         saved_val = create_validation(validation)
         create_qualifications(location)
-        prov_tin_loc: PPProvTINLoc = location.get_portico_source().save()
+        prov_tin_loc: PP_PROV_TIN_LOC = location.get_portico_source().save()
         prov_tin_loc.aton_location.connect(location)
         log.debug(f"connecting location {location} to validation {saved_val}")
         saved_val.location.connect(location)

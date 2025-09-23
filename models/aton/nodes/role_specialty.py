@@ -1,7 +1,9 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
+from models.aton.nodes.mock_data_test import MockDataTest
 
-class RoleSpecialty(StructuredNode):
+
+class RoleSpecialty(MockDataTest):
     specialty: str = StringProperty(required=True)
 
     # Incoming relationships

@@ -2,10 +2,11 @@ from neomodel import StructuredNode, StringProperty, RelationshipFrom, Relations
 
 from models.aton.nodes.address import Address
 from models.aton.nodes.hours_of_operation import HoursOfOperation
+from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.telecom import Telecom
 
 
-class Contact(StructuredNode):
+class Contact(MockDataTest):
     use = StringProperty(required=True)
 
     role_location = RelationshipFrom(

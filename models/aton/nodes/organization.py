@@ -2,16 +2,14 @@ from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatPrope
 
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareID, MedicaidID
-from models.aton.nodes.pp_prov import PPProv
+from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.pp_prov import PP_PROV
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
-# class MockDataTest(StructuredNode):
-#     pass
 
-class Organization(StructuredNode):
+class Organization(MockDataTest):
 
-    _node_labels = ('MockDataTest', 'Organization')
     name: str = StringProperty(unique_index=True, required=True)
     alias: str = StringProperty(required=False)
     description: str = StringProperty(required=False)
@@ -42,7 +40,7 @@ class Organization(StructuredNode):
     role = RelationshipTo("RoleInstance", "HAS_ROLE")
     contracted_by = RelationshipFrom("RoleInstance", "CONTRACTED_BY")
 
-    pp_prov = RelationshipFrom("models.aton.nodes.pp_prov.PPProv", "SOURCES")
+    pp_prov = RelationshipFrom("models.aton.nodes.pp_prov.PP_PROV", "SOURCES")
 
 
 
@@ -67,7 +65,7 @@ class Organization(StructuredNode):
             "contracted_by": []
         }
 
-        self._pending_portico_source: PPProv | None = None
+        self._pending_portico_source: PP_PROV | None = None
 
     # --------------------------------
     # Associate Identifiers in Memory
@@ -112,7 +110,7 @@ class Organization(StructuredNode):
     def get_pending_role_instances(self):
         return self._pending_role_instances
 
-    def set_portico_source(self, portico_source: PPProv):
+    def set_portico_source(self, portico_source: PP_PROV):
         self._pending_portico_source = portico_source
 
     def get_portico_source(self):

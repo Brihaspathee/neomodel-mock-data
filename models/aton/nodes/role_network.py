@@ -1,5 +1,6 @@
 from neomodel import StructuredNode, BooleanProperty, RelationshipTo, RelationshipFrom
 
+from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.network import Network
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.relationships.exclude_from_directory import ExcludeFromDirectory
@@ -15,7 +16,7 @@ class AssociatedRL:
         else:
             self.rls_edges = rls_edges
 
-class RoleNetwork(StructuredNode):
+class RoleNetwork(MockDataTest):
     suppress_pcp_assignment: bool = BooleanProperty(default=False)
 
     # Relationships

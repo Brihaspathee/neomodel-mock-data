@@ -30,6 +30,11 @@ loggers:
     handlers: []
     propagate: no
 
+  neo4j.notifications:
+    level: WARNING   # hide INFO logs, only WARNING and above will show
+    handlers: [ ]
+    propagate: no
+
 root:
   level: INFO
   handlers: [console, file]

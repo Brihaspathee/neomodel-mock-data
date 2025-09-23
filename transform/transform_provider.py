@@ -26,14 +26,14 @@ def _(provider:PPProv) -> Organization:
     :return: A new Organization instance created from the provided PPProv data.
     :rtype: Organization
     """
-    log.info("Transforming Portico Provider")
+    log.debug("Transforming Portico Provider")
     # ------------------------------------------------------------------------------
     # Populate basic details of an Organization
     # ------------------------------------------------------------------------------
     # organization = get_organization_by_prov_id(str(provider.id))
     # if not organization:
     organization = Organization(name=provider.name)
-    pp_prov: models.aton.nodes.pp_prov.PPProv = models.aton.nodes.pp_prov.PPProv(prov_id=str(provider.id))
+    pp_prov: models.aton.nodes.pp_prov.PP_PROV = models.aton.nodes.pp_prov.PP_PROV(prov_id=str(provider.id))
     organization.set_portico_source(pp_prov)
     organization.alias = provider.name
     organization.description = provider.name
@@ -42,7 +42,7 @@ def _(provider:PPProv) -> Organization:
     organization.pcp_practitioner_required = False
     organization.atypical = False
     tax_id: TIN = get_tin(provider)
-    log.info(f"TIN is {tax_id}")
+    log.debug(f"TIN is {tax_id}")
     organization.add_identifier(tax_id)
     contact: Contact = get_provider_address(provider)
     organization.add_contact(contact)
@@ -52,7 +52,7 @@ def _(provider:PPProv) -> Organization:
     # ------------------------------------------------------------------------------
     transform_provider_location(provider, organization)
     # else:
-    #     log.info(f"Organization {organization.name} already exists")
+    #     log.debug(f"Organization {organization.name} already exists")
     #     compare_and_update_properties(provider, organization)
     return organization
 
@@ -75,8 +75,8 @@ def get_tin(provider:PPProv) -> TIN:
 def get_provider_address(provider:PPProv) -> Contact:
     contact: Contact = Contact()
     for pp_address in provider.addresses:
-        log.info(f"Provider Address is {pp_address}")
-        log.info(f"Provider Address is {pp_address.address}")
+        log.debug(f"Provider Address is {pp_address}")
+        log.debug(f"Provider Address is {pp_address.address}")
         address: Address = portico_address_to_aton(pp_address.address)
         contact_use = ADDRESS_USE_MAPPING.get(pp_address.address.type)
         if contact_use:
@@ -89,8 +89,8 @@ def get_provider_address(provider:PPProv) -> Contact:
         if pp_address.address.phones:
             telecom: Telecom = Telecom()
             for addr_phone in pp_address.address.phones:
-                log.info(f"Address phone is {addr_phone}")
-                log.info(f"Address phone is {addr_phone.phone}")
+                log.debug(f"Address phone is {addr_phone}")
+                log.debug(f"Address phone is {addr_phone.phone}")
                 if addr_phone.phone.type == "PHONE":
                     telecom.phone = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "FAX":
@@ -107,6 +107,6 @@ def get_provider_address(provider:PPProv) -> Contact:
     return contact
 
 # def compare_and_update_properties(provider:PPProv, organization:Organization):
-#     log.info(f"provider alais name in Portico is {provider.name}")
-#     log.info(f"organization type is {provider.prov_type.type}")
+#     log.debug(f"provider alais name in Portico is {provider.name}")
+#     log.debug(f"organization type is {provider.prov_type.type}")
 #     organization.name = provider.name
