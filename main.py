@@ -4,6 +4,7 @@ from models.aton.nodes.organization import Organization
 from models.aton.nodes.product import Product
 from portico_reads.service.provider import provider_read
 from portico_reads.service.network import network_read
+import portico_reads.service.fmg_codes.load_fmg_codes as fmg_codes
 from transform.transformers import transformer
 from utils.log_provider import log_providers, log_provider
 from aton_writes.service.aton_write import write_to_aton, write_products_networks
@@ -35,14 +36,16 @@ def main():
     if user_input == "1":
         log.debug("Loading all data")
         with (portico_db.get_session() as session):
-            pp_nets: list[PPNet] = network_read.get_networks(session)
-            providers: list[PPProv] = provider_read.read_provider(session)
-            # log_providers(providers)
-            products: list[Product] = transformer(pp_nets)
-            for product in products:
-                write_products_networks(product)
-            organizations: list[Organization]=transformer(providers)
-            write_to_aton(organizations)
+            fmg_codes.load_fmg_codes(session)
+            log.error(f"FMG_CODES: {fmg_codes.FMG_CODES}")
+            # pp_nets: list[PPNet] = network_read.get_networks(session)
+            # providers: list[PPProv] = provider_read.read_provider(session)
+            # # log_providers(providers)
+            # products: list[Product] = transformer(pp_nets)
+            # for product in products:
+            #     write_products_networks(product)
+            # organizations: list[Organization]=transformer(providers)
+            # write_to_aton(organizations)
     elif user_input == "2":
         log.debug("Loading data for a single provider")
         with (portico_db.get_session() as session):

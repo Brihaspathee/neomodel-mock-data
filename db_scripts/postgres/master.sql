@@ -8,6 +8,7 @@
 \i centene/schema/pp_net_attrib_values.sql
 \i centene/schema/fmg_cities.sql
 \i centene/schema/fmg_counties.sql
+\i centene/schema/fmg_codes.sql
 \i centene/schema/pp_prov_tin.sql
 \i centene/schema/pp_prov_type.sql
 \i centene/schema/pp_spec.sql
@@ -28,6 +29,7 @@
 -- Insert data common for all scenarios
 \i centene/data/fmg_attribute_types.sql
 \i centene/data/fmg_attribute_fields.sql
+\i centene/data/fmg_codes.sql
 \i centene/data/pp_net.sql
 \i centene/data/pp_net_attrib.sql
 \i centene/data/pp_net_attrib_values.sql
