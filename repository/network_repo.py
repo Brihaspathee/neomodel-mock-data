@@ -1,7 +1,7 @@
 from neomodel import DoesNotExist
 
 from models.aton.nodes.network import Network
-from models.aton.nodes.pp_net import PPNet
+from models.aton.nodes.pp_net import PP_NET
 
 
 def find_network_by_code(code: str):
@@ -11,7 +11,7 @@ def find_network_by_code(code: str):
         pass
 
     try:
-        return PPNet.nodes.get(net_id=code).sources.single()
+        return PP_NET.nodes.get(net_id=code).sources.single()
     except DoesNotExist:
         return None
 

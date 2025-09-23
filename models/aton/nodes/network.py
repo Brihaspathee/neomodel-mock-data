@@ -1,7 +1,7 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, BooleanProperty
 
 from models.aton.nodes.mock_data_test import MockDataTest
-from models.aton.nodes.pp_net import PPNet
+from models.aton.nodes.pp_net import PP_NET
 
 
 class Network(MockDataTest):
@@ -11,13 +11,13 @@ class Network(MockDataTest):
     isHNETNetwork = BooleanProperty(required=False)
 
     product = RelationshipTo("models.aton.nodes.product.Product", "PART_OF")
-    pp_net = RelationshipFrom("models.aton.nodes.pp_net.PPNet", "SOURCES")
+    pp_net = RelationshipFrom("models.aton.nodes.pp_net.PP_NET", "SOURCES")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._pending_portico_source: PPNet | None = None
+        self._pending_portico_source: PP_NET | None = None
 
-    def set_portico_source(self, source: PPNet):
+    def set_portico_source(self, source: PP_NET):
         self._pending_portico_source = source
 
     def get_portico_source(self):

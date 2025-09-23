@@ -29,6 +29,8 @@
 \i centene/data/fmg_attribute_types.sql
 \i centene/data/fmg_attribute_fields.sql
 \i centene/data/pp_net.sql
+\i centene/data/pp_net_attrib.sql
+\i centene/data/pp_net_attrib_values.sql
 \i centene/data/fmg_cities.sql
 \i centene/data/fmg_counties.sql
 \i centene/data/pp_prov_type.sql

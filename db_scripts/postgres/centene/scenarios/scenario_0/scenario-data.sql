@@ -435,7 +435,8 @@ INSERT INTO portown.pp_prov_loc_attrib (id,prov_id,loc_id,attribute_id) VALUES
 	 (7,2,2,106877),
 	 (8,2,3,106877),
 	 (9,2,4,106877),
-	 (10,2,5,106877);
+	 (10,2,5,106877),
+	 (11,2,1,103797);
 
 -- Insert PP_PROV_LOC_ATTRIB_VALUES
 INSERT INTO portown.pp_prov_loc_attrib_values (id,prov_loc_attribute_id,field_id,value,value_date,value_number) VALUES
@@ -448,4 +449,8 @@ INSERT INTO portown.pp_prov_loc_attrib_values (id,prov_loc_attribute_id,field_id
 	 ('7',7,111355,'Emergency',NULL,NULL),
 	 ('8',8,111355,'Emergency',NULL,NULL),
 	 ('9',9,111355,'Emergency',NULL,NULL),
-	 ('10',10,111355,'Emergency',NULL,NULL);
+	 ('10',10,111355,'Emergency',NULL,NULL),
+	 ('11',11,106675,'P',NULL,NULL),
+	 ('12',11,106796,'CERT-NUM-1',NULL,NULL),
+	 ('13',11,106797,NULL,'2018-09-06',NULL),
+	 ('14',11,106798,NULL,'4000-01-01',NULL);

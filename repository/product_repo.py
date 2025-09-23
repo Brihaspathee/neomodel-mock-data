@@ -1,6 +1,6 @@
 
 from neomodel import DoesNotExist
-from models.aton.nodes.pp_net import PPNet
+from models.aton.nodes.pp_net import PP_NET
 from models.aton.nodes.product import Product
 
 import logging
@@ -15,7 +15,7 @@ def find_product_by_code(code: str):
         pass
 
     try:
-        return PPNet.nodes.get(net_id=code).sources.single()
+        return PP_NET.nodes.get(net_id=code).sources.single()
     except DoesNotExist:
         return None
 
@@ -36,6 +36,6 @@ def find_product_by_code_or_name(code: str, name: str) -> tuple[Product | None, 
 
 def find_pp_net_by_id(code: str):
     try:
-        return PPNet.nodes.get(net_id=code)
+        return PP_NET.nodes.get(net_id=code)
     except DoesNotExist:
         return None
