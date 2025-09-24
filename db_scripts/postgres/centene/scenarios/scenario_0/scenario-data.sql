@@ -459,11 +459,14 @@ INSERT INTO portown.pp_prac (id,fname,mname,lname,xname,"degree",sex,dob,ssn,ema
 	 (1,'John',NULL,'Doe',NULL,'MD','M','2022-09-07','083-94-5235','john.doe@gmail.com',NULL,NULL,NULL,NULL);
 
 INSERT INTO portown.pp_prac_loc (prac_id,prov_id,loc_id,"PRIMARY",print_suppress,start_date,end_date,label_cluster_id) VALUES
-	 (1,1,1,'Y','N',NULL,NULL,NULL);
+	 (1,1,1,'Y','N',NULL,NULL,NULL),
+	 (1,2,1,'Y','N',NULL,NULL,NULL);
 
 INSERT INTO portown.pp_prac_net_cycle (id,prac_id,net_id,start_date,end_date,status,label_cluster_id) VALUES
 	 (1,1,3258,'2020-09-01','4000-01-01','PAR',NULL);
 
 INSERT INTO portown.pp_prac_net_loc_cycle (id,prac_id,prov_id,loc_id,prac_net_cycle_id,start_date,end_date,"PRIMARY",label_cluster_id) VALUES
-	 (1,1,1,1,1,'2020-09-01','4000-01-01','Y',NULL);
+	 (1,1,1,1,1,'2020-09-01','4000-01-01','Y',NULL),
+	 (2,1,2,1,1,'2020-09-01','4000-01-01','Y',NULL);
+
 

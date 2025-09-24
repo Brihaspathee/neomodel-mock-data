@@ -189,9 +189,9 @@ def get_prov_loc_office_hours(provider:PPProv, pp_prov_tin_loc:PPProvTinLoc, rol
 def log_role_location_contacts(role_location: RoleLocation):
     if role_location.get_pending_contacts():
         for contact in role_location.get_pending_contacts():
-            log.info(f"Contact: {contact}")
-            log.info(f"Contact Use: {contact.use}")
-            log.info(f"Contact Hours of operation: {contact.get_pending_hours_of_operation()}")
+            log.debug(f"Contact: {contact}")
+            log.debug(f"Contact Use: {contact.use}")
+            log.debug(f"Contact Hours of operation: {contact.get_pending_hours_of_operation()}")
 
 
 

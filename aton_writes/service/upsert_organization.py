@@ -8,6 +8,7 @@ from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import PPGID
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
+from aton_writes.service.upsert_practitioner import upsert_practitioner
 from models.aton.nodes.pp_prov import PP_PROV
 from models.aton.nodes.qualification import Qualification
 from repository.contact_repo import create_contacts
@@ -54,6 +55,7 @@ def create_organization(org: Organization):
         create_qualifications(org)
         create_contacts(org)
         process_role_instance(org)
+        upsert_practitioner(org)
         return True
     except Exception as e:
         log.error(f"Error writing organization to Aton: {e}")

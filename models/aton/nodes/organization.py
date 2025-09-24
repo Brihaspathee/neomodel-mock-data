@@ -4,6 +4,7 @@ from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareID, MedicaidID
 from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.pp_prov import PP_PROV
+from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
@@ -67,6 +68,8 @@ class Organization(MockDataTest):
 
         self._pending_portico_source: PP_PROV | None = None
 
+        self._pending_practitioners: list[Practitioner] = []
+
     # --------------------------------
     # Associate Identifiers in Memory
     # --------------------------------
@@ -98,6 +101,9 @@ class Organization(MockDataTest):
         else:
             ValueError(f"{role_instance} is not a valid role instance")
 
+    def add_practitioner(self, practitioner: Practitioner):
+        self._pending_practitioners.append(practitioner)
+
     def get_pending_identifiers(self):
         return self._pending_identifiers
 
@@ -109,6 +115,9 @@ class Organization(MockDataTest):
 
     def get_pending_role_instances(self):
         return self._pending_role_instances
+
+    def get_pending_practitioners(self):
+        return self._pending_practitioners
 
     def set_portico_source(self, portico_source: PP_PROV):
         self._pending_portico_source = portico_source

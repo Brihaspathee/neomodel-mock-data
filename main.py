@@ -45,6 +45,11 @@ def main():
             for product in products:
                 write_products_networks(product)
             organizations: list[Organization]=transformer(providers)
+            for org in organizations:
+                log.info(f"Organization: {org}")
+                for practitioner in org.get_pending_practitioners():
+                    log.info(f"Practitioner: {practitioner}")
+                    log.info(f"Practitioner Role Instance:{practitioner.get_pending_role_instance()}")
             write_to_aton(organizations)
     elif user_input == "2":
         log.debug("Loading data for a single provider")

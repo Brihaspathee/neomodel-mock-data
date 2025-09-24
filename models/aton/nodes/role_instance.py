@@ -10,6 +10,7 @@ class RoleInstance(MockDataTest):
     _role_type: str = None
     organization = RelationshipFrom("models.aton.nodes.organization.Organization", "HAS_ROLE")
     contracted_organization = RelationshipTo("models.aton.nodes.organization.Organization", "CONTRACTED_BY")
+    practitioner = RelationshipFrom("models.aton.nodes.practitioner.Practitioner", "HAS_ROLE")
     role_locations = RelationshipTo("models.aton.nodes.role_location.RoleLocation", "PERFORMED_AT")
     primary_location = RelationshipTo("models.aton.nodes.role_location.RoleLocation", "PRIMARY_LOCATION_IS")
     role_networks = RelationshipTo("models.aton.nodes.role_network.RoleNetwork", "SERVES")
@@ -38,5 +39,5 @@ class RoleInstance(MockDataTest):
     def get_pending_rns(self) -> list[RoleNetwork]:
         return self._pending_rns
 
-    def __str__(self):
-        return f"Role Instance Type: {self._role_type}"
+    # def __str__(self):
+    #     return f"Role Instance Type: {self._role_type}"

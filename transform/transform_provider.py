@@ -6,6 +6,7 @@ from models.aton.nodes.organization import Organization
 from models.aton.nodes.telecom import Telecom
 from transform.transformers import transform_to_aton
 from transform.transform_provider_location import transform_provider_location
+from transform.transform_practitioner import transform_practitioner
 from transform.transform_attribute import get_provider_attributes
 from repository.organization_repo import get_organization_by_prov_id
 import logging
@@ -51,9 +52,10 @@ def _(provider:PPProv) -> Organization:
     # Populate locations associated with the organization
     # ------------------------------------------------------------------------------
     transform_provider_location(provider, organization)
-    # else:
-    #     log.debug(f"Organization {organization.name} already exists")
-    #     compare_and_update_properties(provider, organization)
+    # ------------------------------------------------------------------------------
+    # Add the practitioners associated with the organization
+    # ------------------------------------------------------------------------------
+    transform_practitioner(provider, organization)
     return organization
 
 def get_tin(provider:PPProv) -> TIN:
