@@ -1,4 +1,3 @@
-from .person import Person
 from .base import Base
 from .pp_addr import PPAddr
 from .pp_net import PPNet
@@ -24,8 +23,12 @@ from .pp_net_attrib_values import PPNetAttribValues
 from .pp_prov_loc_attrib import PPProvLocAttrib
 from .pp_prov_loc_attrib_values import PPProvLocAttribValues
 from .pp_prov_loc_ofhours import PPProvLocOfHours
+from .pp_prac import PPPrac
+from .pp_prac_loc import PPPracLoc
+from .pp_prac_net_cycle import PPPracNetCycle
+from .pp_prac_net_loc_cycle import PPPracNetLocCycle
 
-__all__ = ["Person", "Base", "PPAddr","PPNet",
+__all__ = ["Base", "PPAddr","PPNet",
            "PPPhones", "PPAddrPhones", "PPProvTIN",
            "PPProvType", "PPSpec", "PPProv", "PPProvAddr", "PPProvLoc",
            "PPProvTinLoc",  "PPProvNetCycle", "PPProvNetLocCycle",
@@ -33,4 +36,5 @@ __all__ = ["Person", "Base", "PPAddr","PPNet",
            "PPProvAttrib", "PPProvAttribValues",
            "PPNetAttrib", "PPNetAttribValues",
            "PPProvLocAttrib", "PPProvLocAttribValues",
-           "PPProvLocOfHours"]
+           "PPProvLocOfHours",
+           "PPPrac", "PPPracLoc", "PPPracNetCycle", "PPPracNetLocCycle"]

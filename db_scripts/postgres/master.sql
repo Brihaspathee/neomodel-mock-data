@@ -37,19 +37,19 @@
 \i centene/schema/pp_prac_net_cycle.sql
 \i centene/schema/pp_prac_net_loc_cycle.sql
 -- Insert data common for all scenarios
--- \i centene/data/fmg_attribute_types.sql
--- \i centene/data/fmg_attribute_fields.sql
--- \i centene/data/fmg_codes.sql
--- \i centene/data/pp_net.sql
--- \i centene/data/pp_net_attrib.sql
--- \i centene/data/pp_net_attrib_values.sql
--- \i centene/data/fmg_cities.sql
--- \i centene/data/fmg_counties.sql
--- \i centene/data/pp_prov_type.sql
--- \i centene/data/pp_spec.sql
+\i centene/data/fmg_attribute_types.sql
+\i centene/data/fmg_attribute_fields.sql
+\i centene/data/fmg_codes.sql
+\i centene/data/pp_net.sql
+\i centene/data/pp_net_attrib.sql
+\i centene/data/pp_net_attrib_values.sql
+\i centene/data/fmg_cities.sql
+\i centene/data/fmg_counties.sql
+\i centene/data/pp_prov_type.sql
+\i centene/data/pp_spec.sql
 
 -- Insert data for Scenario - 0
--- \i centene/scenarios/scenario_0/scenario-data.sql
+\i centene/scenarios/scenario_0/scenario-data.sql
 
 -- Insert data for Scenario - 1
--- \i centene/scenarios/scenario_1/provider/parent/scenario-data.sql
+\i centene/scenarios/scenario_1/provider/parent/scenario-data.sql

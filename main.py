@@ -37,15 +37,15 @@ def main():
         log.debug("Loading all data")
         with (portico_db.get_session() as session):
             fmg_codes.load_fmg_codes(session)
-            log.error(f"FMG_CODES: {fmg_codes.FMG_CODES}")
-            # pp_nets: list[PPNet] = network_read.get_networks(session)
-            # providers: list[PPProv] = provider_read.read_provider(session)
-            # # log_providers(providers)
-            # products: list[Product] = transformer(pp_nets)
-            # for product in products:
-            #     write_products_networks(product)
-            # organizations: list[Organization]=transformer(providers)
-            # write_to_aton(organizations)
+            # log.debug(f"FMG_CODES: {fmg_codes.FMG_CODES}")
+            pp_nets: list[PPNet] = network_read.get_networks(session)
+            providers: list[PPProv] = provider_read.read_provider(session)
+            # log_providers(providers)
+            products: list[Product] = transformer(pp_nets)
+            for product in products:
+                write_products_networks(product)
+            organizations: list[Organization]=transformer(providers)
+            write_to_aton(organizations)
     elif user_input == "2":
         log.debug("Loading data for a single provider")
         with (portico_db.get_session() as session):

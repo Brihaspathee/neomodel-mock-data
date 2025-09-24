@@ -92,6 +92,11 @@ class PPProv(Base):
     networks = relationship("PPProvNetCycle",
                             back_populates="provider")
 
+    prac_net_loc_cycles = relationship("PPPracNetLocCycle",
+                                       back_populates="provider")
+    prac_locs = relationship("PPPracLoc",
+                             back_populates="provider")
+
     def __repr__(self):
 
         """

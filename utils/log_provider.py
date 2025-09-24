@@ -1,3 +1,4 @@
+from models.portico import PPPrac
 from models.portico.pp_prov import PPProv
 import logging
 
@@ -52,3 +53,14 @@ def log_provider(provider: PPProv):
         for loc_cycle in network.loc_cycles:
             log.debug(f"Network location cycle {loc_cycle}")
             log.debug(f"Location in the cycle - {loc_cycle.location}")
+    for prac_loc in provider.prac_locs:
+        log.error(f"Practitioner location - {prac_loc}")
+        log.error(f"Practitioner - {prac_loc.practitioner}")
+        log.error(f"Location - {prac_loc.location}")
+        practitioner: PPPrac = prac_loc.practitioner
+        for prac_net_cycle in practitioner.networks:
+            log.error(f"Practitioner network cycle - {prac_net_cycle}")
+            log.error(f"Practitioner network - {prac_net_cycle.network}")
+            for loc_cycle in prac_net_cycle.loc_cycles:
+                log.error(f"Practitioner location cycle - {loc_cycle}")
+                log.error(f"Practitioner location - {loc_cycle.location}")
