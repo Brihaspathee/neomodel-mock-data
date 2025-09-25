@@ -5,7 +5,7 @@ from neomodel import db
 from sqlalchemy.orm import relationship
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import PPGID
+from models.aton.nodes.identifier import PPGID, LegacySystemID
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
 from aton_writes.service.upsert_practitioner import upsert_practitioner
@@ -23,7 +23,7 @@ def upsert_organizations(organizations: list[Organization]):
         key=lambda org: (org.parent_ppg_id is not None, org.parent_ppg_id or "")
     )
     for organization in sorted_orgs:
-        prov_id = organization.get_portico_source().prov_id
+        prov_id = organization.get_portico_source().value
         existing_org = get_organization_by_prov_id(prov_id)
         if existing_org:
             # existing_org.name = organization.name
@@ -39,8 +39,8 @@ def create_organization(org: Organization):
     try:
         log.debug(org.__properties__)
         org.save()
-        pp_prov: PP_PROV = org.get_portico_source().save()
-        pp_prov.aton_org.connect(org)
+        pp_prov: LegacySystemID = org.get_portico_source().save()
+        pp_prov.organization.connect(org)
         if org.parent_ppg_id is not None:
             log.debug(f"Organization has parent {org.parent_ppg_id}")
             ppg = PPGID.nodes.get(value=org.parent_ppg_id)

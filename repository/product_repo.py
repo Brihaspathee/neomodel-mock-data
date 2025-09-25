@@ -1,5 +1,7 @@
 
 from neomodel import DoesNotExist
+
+from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.pp_net import PP_NET
 from models.aton.nodes.product import Product
 
@@ -36,6 +38,6 @@ def find_product_by_code_or_name(code: str, name: str) -> tuple[Product | None, 
 
 def find_pp_net_by_id(code: str):
     try:
-        return PP_NET.nodes.get(net_id=code)
+        return LegacySystemID.nodes.get(value=code, systemIdType="NET ID", system="PORTICO")
     except DoesNotExist:
         return None

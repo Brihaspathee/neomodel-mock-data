@@ -48,6 +48,18 @@ class MedicaidID(Identifier):
         "HAS_MEDICAID_ID"
     )
     state: str= StringProperty(required=False)
+class LegacySystemID(Identifier):
+    _node_labels = ('Identifier', 'LegacySystemID')
+
+    system: str= StringProperty(required=False)
+    systemIdType: str= StringProperty(required=False)
+
+    organization = RelationshipFrom("models.aton.nodes.organization.Organization","HAS_LEGACY_SYSTEM_ID")
+    network = RelationshipFrom("models.aton.nodes.network.Network","HAS_LEGACY_SYSTEM_ID")
+    product = RelationshipFrom("models.aton.nodes.product.Product","HAS_LEGACY_SYSTEM_ID")
+    location = RelationshipFrom("models.aton.nodes.location.Location","HAS_LEGACY_SYSTEM_ID")
+    practitioner = RelationshipFrom("models.aton.nodes.practitioner.Practitioner","HAS_LEGACY_SYSTEM_ID")
+
 
 class PPGID(Identifier):
     _node_labels = ('Identifier', 'PPGID'),

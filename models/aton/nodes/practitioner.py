@@ -1,6 +1,7 @@
 from neo4j.time import DateType
 from neomodel import StringProperty, DateProperty, RelationshipTo
 
+from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.pp_prac import PP_PRAC
 from models.aton.nodes.role_instance import RoleInstance
@@ -23,6 +24,7 @@ class Practitioner(MockDataTest):
 
     role = RelationshipTo("models.aton.nodes.role_instance.RoleInstance",
                           "HAS_ROLE")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier", "HAS_LEGACY_SYSTEM_ID")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -39,10 +41,10 @@ class Practitioner(MockDataTest):
 
         self._pending_role_instance: RoleInstance | None = None
 
-        self._pending_portico_source: PP_PRAC | None = None
+        self._pending_portico_source: LegacySystemID | None = None
 
 
-    def set_portico_source(self, source: PP_PRAC):
+    def set_portico_source(self, source: LegacySystemID):
         self._pending_portico_source = source
 
     def get_portico_source(self):

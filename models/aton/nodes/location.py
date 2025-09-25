@@ -1,5 +1,6 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
+from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.pp_prov_tin_loc import PP_PROV_TIN_LOC
 from models.aton.nodes.qualification import Qualification
@@ -26,11 +27,12 @@ class Location(MockDataTest):
 
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
                                     "HAS_QUALIFICATION")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier", "HAS_LEGACY_SYSTEM_ID")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._pending_validation: Validation | None = None
-        self._portico_source: PP_PROV_TIN_LOC | None = None
+        self._portico_source: LegacySystemID | None = None
         self._pending_qualifications: list[Qualification] = []
 
     def __repr__(self):
@@ -42,10 +44,10 @@ class Location(MockDataTest):
     def get_pending_validation(self) -> Validation:
         return self._pending_validation
 
-    def set_portico_source(self, portico_source: PP_PROV_TIN_LOC):
+    def set_portico_source(self, portico_source: LegacySystemID):
         self._portico_source = portico_source
 
-    def get_portico_source(self) -> PP_PROV_TIN_LOC:
+    def get_portico_source(self) -> LegacySystemID:
         return self._portico_source
 
     def add_pending_qualification(self, qualification: Qualification):

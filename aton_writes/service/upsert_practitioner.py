@@ -1,5 +1,6 @@
 from aton_writes.service.upsert_role_location import process_role_locations
 from aton_writes.service.upsert_role_network import process_role_networks
+from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.pp_prac import PP_PRAC
 from models.aton.nodes.practitioner import Practitioner
@@ -15,7 +16,7 @@ def upsert_practitioner(organization: Organization):
     log.info(f"About to upsert practitioners to organization {organization.name} with element id {organization.element_id}")
     for practitioner in organization.get_pending_practitioners():
         log.info(f"Practitioners is: {practitioner}")
-        existing_prac = get_practitioner_by_prac_id(practitioner.get_portico_source().prac_id)
+        existing_prac = get_practitioner_by_prac_id(practitioner.get_portico_source().value)
         if existing_prac:
             log.info(f"Practitioner already exists with element id {existing_prac.element_id}")
             role_instance = practitioner.get_pending_role_instance()
@@ -34,9 +35,9 @@ def upsert_practitioner(organization: Organization):
 def create_practitioner(practitioner: Practitioner, organization: Organization):
     log.info(f"About to create practitioner to organization {organization.name} with element id {organization.element_id}")
     practitioner.save()
-    aton_prac: PP_PRAC = practitioner.get_portico_source()
+    aton_prac: LegacySystemID = practitioner.get_portico_source()
     aton_prac.save()
-    aton_prac.aton_prac.connect(practitioner)
+    aton_prac.practitioner.connect(practitioner)
     role_instance: RoleInstance = practitioner.get_pending_role_instance()
     log.info(f"Role instance is: {type(role_instance)}")
     role_instance.save()

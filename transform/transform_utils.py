@@ -1,4 +1,5 @@
 import models
+from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.location import Location
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_network import AssociatedRL, RoleNetwork
@@ -31,7 +32,9 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     """
     location: Location = Location()
     log.debug(f"Location name:{prov_tin_loc.name}")
-    portico_location: models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC = models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC(loc_id=str(prov_tin_loc.id))
+    portico_location: LegacySystemID = LegacySystemID(value=str(prov_tin_loc.id),
+                                                      system="PORTICO",
+                                                      systemIdType="LOC ID")
     location.set_portico_source(portico_location)
     location.name = prov_tin_loc.name
     location.street_address = prov_tin_loc.address.addr1

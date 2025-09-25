@@ -1,7 +1,7 @@
 from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatProperty, RelationshipTo, RelationshipFrom
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareID, MedicaidID
+from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareID, MedicaidID, LegacySystemID
 from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.pp_prov import PP_PROV
 from models.aton.nodes.practitioner import Practitioner
@@ -42,6 +42,7 @@ class Organization(MockDataTest):
     contracted_by = RelationshipFrom("RoleInstance", "CONTRACTED_BY")
 
     pp_prov = RelationshipFrom("models.aton.nodes.pp_prov.PP_PROV", "SOURCES")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier","HAS_LEGACY_SYSTEM_ID")
 
 
 
@@ -66,7 +67,7 @@ class Organization(MockDataTest):
             "contracted_by": []
         }
 
-        self._pending_portico_source: PP_PROV | None = None
+        self._pending_portico_source: LegacySystemID | None = None
 
         self._pending_practitioners: list[Practitioner] = []
 
@@ -119,7 +120,7 @@ class Organization(MockDataTest):
     def get_pending_practitioners(self):
         return self._pending_practitioners
 
-    def set_portico_source(self, portico_source: PP_PROV):
+    def set_portico_source(self, portico_source: LegacySystemID):
         self._pending_portico_source = portico_source
 
     def get_portico_source(self):

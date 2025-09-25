@@ -1,4 +1,5 @@
 import models
+from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.network import Network
 from models.aton.nodes.product import Product
 from models.portico.pp_net import PPNetDict
@@ -16,7 +17,10 @@ def _(pp_net:PPNet) -> Product:
     product: Product = Product(
         code=net_dict["id"],
         name=net_dict["description"])
-    portico_prod: models.aton.nodes.network.PP_NET = models.aton.nodes.network.PP_NET(net_id= net_dict["id"])
+    portico_prod: LegacySystemID = LegacySystemID(value= net_dict["id"],
+                                                  system="PORTICO",
+                                                  systemIdType="NET ID"
+                                                  )
     product.set_portico_source(portico_prod)
     networks: list[PPNetDict] = net_dict["children"]
     # log.debug(f"Product {product.code}, it has {len(networks)} networks")
@@ -28,7 +32,9 @@ def _(pp_net:PPNet) -> Product:
         get_net_attributes(network, net)
         log.debug(f"Is this a vendor network: {net.isVendorNetwork}")
         log.debug(f"Is this a health network: {net.isHNETNetwork}")
-        portico_net: models.aton.nodes.network.PP_NET = models.aton.nodes.network.PP_NET(net_id=network["id"])
+        portico_net: LegacySystemID = LegacySystemID(value=network["id"],
+                                                     system="PORTICO",
+                                                     systemIdType="NET ID")
         net.set_portico_source(portico_net)
         product.add_network(net)
     return product
