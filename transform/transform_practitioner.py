@@ -2,16 +2,16 @@ import models
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.role_instance import RoleInstance
-from models.portico import PPProv, PPPrac
+from models.portico import PPProv, PPPrac, PPPracLoc
 import logging
+
+from transform.transform_practitioner_location import transform_practitioner_location
+
 log = logging.getLogger(__name__)
 
 def transform_practitioner(pp_prov:PPProv, organization: Organization):
-    for prac_loc in pp_prov.prac_locs:
-        log.info(f"Practitioner location - {prac_loc}")
-        log.info(f"Practitioner - {prac_loc.practitioner}")
-        log.info(f"Location - {prac_loc.location}")
-        pp_prac: PPPrac = prac_loc.practitioner
+    pp_pracs: list[PPPrac] = get_distinct_pracs(pp_prov.prac_locs)
+    for pp_prac in pp_pracs:
         practitioner: Practitioner = Practitioner(first_name=pp_prac.fname,
                                                   last_name=pp_prac.lname,
                                                   middle_name=pp_prac.mname,
@@ -24,9 +24,13 @@ def transform_practitioner(pp_prov:PPProv, organization: Organization):
         aton_pp_prac: models.aton.nodes.pp_prac.PP_PRAC = models.aton.nodes.pp_prac.PP_PRAC(prac_id=pp_prac.id)
         practitioner.set_portico_source(aton_pp_prac)
         organization.add_practitioner(practitioner)
-        for prac_net_cycle in pp_prac.networks:
-            log.info(f"Practitioner network cycle - {prac_net_cycle}")
-            log.info(f"Practitioner network - {prac_net_cycle.network}")
-            for loc_cycle in prac_net_cycle.loc_cycles:
-                log.info(f"Practitioner location cycle - {loc_cycle}")
-                log.info(f"Practitioner location - {loc_cycle.location}")
+        transform_practitioner_location(pp_prac, role_instance, pp_prov.id)
+
+
+def get_distinct_pracs(pp_prac_locs:list[PPPracLoc]) -> list[PPPrac]:
+    pracs: list[PPPrac] = []
+    for pp_prac_loc in pp_prac_locs:
+        pp_prac: PPPrac = pp_prac_loc.practitioner
+        if pp_prac not in pracs:
+            pracs.append(pp_prac)
+    return pracs

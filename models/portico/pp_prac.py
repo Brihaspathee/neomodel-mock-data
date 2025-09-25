@@ -24,6 +24,10 @@ class PPPrac(Base):
     networks = relationship("PPPracNetCycle", back_populates="practitioner")
     locations = relationship("PPPracLoc", back_populates="practitioner")
 
+
+    def __eq__(self, other):
+        return self.id == other.id
+
     def __repr__(self):
         return (f"<PPPrac(id={self.id}, "
                 f"fname={self.fname}, "

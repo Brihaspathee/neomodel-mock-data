@@ -7,6 +7,7 @@ from models.aton.nodes.hours_of_operation import HoursOfOperation
 from models.aton.nodes.location import Location
 from models.aton.nodes.telecom import Telecom
 from models.aton.nodes.validation import Validation
+from transform.transform_utils import set_location
 from utils.address_util import portico_address_to_aton, get_state
 from utils.location_util import get_hash_key_for_prov_tin_loc
 from models.aton.nodes.organization import Organization
@@ -94,48 +95,6 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
         get_prov_loc_office_hours(pp_prov, prov_tin_loc, role_location)
         role_instance.add_pending_rl(role_location)
         log_role_location_contacts(role_location=role_location)
-
-
-def set_location(hash_code, prov_tin_loc) -> Location:
-    """
-    Sets the location details for a given hash code and provider location information
-    and initializes a Location object with the specified attributes.
-
-    :param hash_code: A unique string identifier used for address validation.
-        This is used as the validation key while setting the pending validation
-        for the created `Location` object.
-    :type hash_code: str
-    :param prov_tin_loc: A provider location object containing the details
-        of the location such as name, address, city, state, ZIP code, county,
-        FIPS code, latitude, and longitude.
-    :type prov_tin_loc: ProviderLocation
-    :return: A `Location` object populated with the details from the given
-        `prov_tin_loc` and validated using the `hash_code`.
-    :rtype: Location
-    """
-    location: Location = Location()
-    log.debug(f"Location name:{prov_tin_loc.name}")
-    portico_location: models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC = models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC(loc_id=str(prov_tin_loc.id))
-    location.set_portico_source(portico_location)
-    location.name = prov_tin_loc.name
-    location.street_address = prov_tin_loc.address.addr1
-    location.secondary_address = prov_tin_loc.address.addr2
-    location.city = prov_tin_loc.address.city.ds
-    if prov_tin_loc.address.county_fips:
-        location.state = get_state(prov_tin_loc.address.county_fips)
-    else:
-        location.state = "COUNTY NOT AVAILABLE"
-    location.zip_code = prov_tin_loc.address.zip
-    location.county = prov_tin_loc.address.county.ds
-    location.county_fips = prov_tin_loc.address.county_fips
-    location.latitude = prov_tin_loc.address.latitude
-    location.longitude = prov_tin_loc.address.longitude
-    # ------------------------------------------------------------------------------
-    # Set pending validation for the location
-    # ------------------------------------------------------------------------------
-    validation: Validation = Validation(type="address", source="smartystreets", validation_key=hash_code)
-    location.set_pending_validation(validation)
-    return location
 
 
 def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:

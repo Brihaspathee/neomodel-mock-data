@@ -1,3 +1,5 @@
+from aton_writes.service.upsert_role_location import process_role_locations
+from aton_writes.service.upsert_role_network import process_role_networks
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.pp_prac import PP_PRAC
 from models.aton.nodes.practitioner import Practitioner
@@ -22,6 +24,8 @@ def upsert_practitioner(organization: Organization):
                 role_instance.save()
                 existing_prac.role.connect(role_instance)
                 role_instance.contracted_organization.connect(organization)
+                process_role_locations(role_instance)
+                process_role_networks(role_instance)
         else:
             log.info(f"Practitioner does not exist")
             create_practitioner(practitioner, organization)
@@ -38,3 +42,6 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     role_instance.save()
     practitioner.role.connect(role_instance)
     role_instance.contracted_organization.connect(organization)
+    process_role_locations(role_instance)
+    process_role_networks(role_instance)
+    log.info(f"Practitioner created with element id {practitioner.element_id}")

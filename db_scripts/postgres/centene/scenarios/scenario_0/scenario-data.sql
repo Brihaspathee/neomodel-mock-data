@@ -456,17 +456,62 @@ INSERT INTO portown.pp_prov_loc_attrib_values (id,prov_loc_attribute_id,field_id
 	 ('14',11,106798,NULL,'4000-01-01',NULL);
 
 INSERT INTO portown.pp_prac (id,fname,mname,lname,xname,"degree",sex,dob,ssn,email,salutation,label_cluster_id,prac_type_id,narrative) VALUES
-	 (1,'John',NULL,'Doe',NULL,'MD','M','2022-09-07','083-94-5235','john.doe@gmail.com',NULL,NULL,NULL,NULL);
+	 (1,'John',NULL,'Doe',NULL,'MD','M','1974-09-07','083-94-5235','john.doe@gmail.com',NULL,NULL,NULL,NULL),
+	 (2,'Jamie',NULL,'Smith',NULL,'MBBS','F','1986-05-23','353-63-2456',NULL,NULL,NULL,NULL,NULL);
+
 
 INSERT INTO portown.pp_prac_loc (prac_id,prov_id,loc_id,"PRIMARY",print_suppress,start_date,end_date,label_cluster_id) VALUES
 	 (1,1,1,'Y','N',NULL,NULL,NULL),
-	 (1,2,1,'Y','N',NULL,NULL,NULL);
+	 (1,2,1,'Y','N',NULL,NULL,NULL),
+	 (1,1,2,'N','N',NULL,NULL,NULL),
+	 (1,1,3,'N','N',NULL,NULL,NULL),
+	 (1,2,4,'N','N',NULL,NULL,NULL),
+	 (1,2,5,'N','N',NULL,NULL,NULL),
+	 (2,1,3,'Y','N',NULL,NULL,NULL),
+	 (2,1,4,'N','N',NULL,NULL,NULL),
+	 (2,1,5,'N','N',NULL,NULL,NULL),
+	 (2,2,2,'N','N',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc (prac_id,prov_id,loc_id,"PRIMARY",print_suppress,start_date,end_date,label_cluster_id) VALUES
+	 (2,2,3,'Y','N',NULL,NULL,NULL),
+	 (2,2,4,'N','N',NULL,NULL,NULL);
+
+
 
 INSERT INTO portown.pp_prac_net_cycle (id,prac_id,net_id,start_date,end_date,status,label_cluster_id) VALUES
-	 (1,1,3258,'2020-09-01','4000-01-01','PAR',NULL);
+	 (1,1,3258,'2020-09-01','4000-01-01','PAR',NULL),
+	 (2,1,7723,'2022-01-01','4000-01-01','PAR',NULL),
+	 (3,2,3258,'2020-01-01','4000-01-01','PAR',NULL),
+	 (4,2,7723,'2021-01-01','4000-01-01','PAR',NULL);
+
 
 INSERT INTO portown.pp_prac_net_loc_cycle (id,prac_id,prov_id,loc_id,prac_net_cycle_id,start_date,end_date,"PRIMARY",label_cluster_id) VALUES
 	 (1,1,1,1,1,'2020-09-01','4000-01-01','Y',NULL),
-	 (2,1,2,1,1,'2020-09-01','4000-01-01','Y',NULL);
+	 (2,1,2,1,1,'2020-09-01','4000-01-01','Y',NULL),
+	 (3,1,1,2,1,'2020-09-01','4000-01-01','N',NULL),
+	 (4,1,1,3,1,'2020-09-01','4000-01-01','N',NULL),
+	 (5,1,2,4,1,'2020-09-01','4000-01-01','N',NULL),
+	 (6,1,2,5,1,'2020-09-01','4000-01-01','N',NULL),
+	 (7,1,1,1,2,'2022-01-01','4000-01-01','N',NULL),
+	 (8,1,1,2,2,'2022-01-01','4000-01-01','N',NULL),
+	 (9,1,1,3,2,'2022-01-01','4000-01-01','N',NULL),
+	 (10,1,2,1,2,'2022-01-01','4000-01-01','N',NULL);
+INSERT INTO portown.pp_prac_net_loc_cycle (id,prac_id,prov_id,loc_id,prac_net_cycle_id,start_date,end_date,"PRIMARY",label_cluster_id) VALUES
+	 (11,1,2,4,2,'2022-01-01','4000-01-01','N',NULL),
+	 (12,1,2,5,2,'2022-01-01','4000-01-01','N',NULL),
+	 (13,2,1,3,3,'2020-01-01','4000-01-01','N',NULL),
+	 (14,2,1,4,3,'2020-01-01','4000-01-01','N',NULL),
+	 (15,2,1,5,3,'2020-01-01','4000-01-01','N',NULL),
+	 (16,2,2,2,3,'2020-01-01','4000-01-01','N',NULL),
+	 (17,2,2,3,3,'2020-01-01','4000-01-01','N',NULL),
+	 (18,2,2,4,3,'2020-01-01','4000-01-01','N',NULL),
+	 (19,2,1,3,4,'2021-01-01','4000-01-01','N',NULL),
+	 (20,2,1,4,4,'2021-01-01','4000-01-01','N',NULL);
+INSERT INTO portown.pp_prac_net_loc_cycle (id,prac_id,prov_id,loc_id,prac_net_cycle_id,start_date,end_date,"PRIMARY",label_cluster_id) VALUES
+	 (21,2,1,5,4,'2021-01-01','4000-01-01','N',NULL),
+	 (22,2,2,2,4,'2021-01-01','4000-01-01','N',NULL),
+	 (23,2,2,3,4,'2021-01-01','4000-01-01','N',NULL),
+	 (24,2,2,4,4,'2021-01-01','4000-01-01','N',NULL);
+
+
 
 
