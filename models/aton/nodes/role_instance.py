@@ -1,11 +1,11 @@
 from neomodel import RelationshipFrom, RelationshipTo, StructuredNode
 
-from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.base_node import BaseNode
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.nodes.role_network import RoleNetwork
 
 
-class RoleInstance(MockDataTest):
+class RoleInstance(BaseNode):
 
     _role_type: str = None
     organization = RelationshipFrom("models.aton.nodes.organization.Organization", "HAS_ROLE")

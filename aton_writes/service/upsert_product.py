@@ -1,7 +1,6 @@
 import logging
 
 from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.pp_net import PP_NET
 from models.aton.nodes.product import Product
 from repository.product_repo import find_product_by_code_or_name, find_pp_net_by_id
 from repository.network_repo import find_network_by_code_or_name

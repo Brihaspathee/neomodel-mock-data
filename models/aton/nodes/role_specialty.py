@@ -1,10 +1,11 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
-from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.base_node import BaseNode
 
 
-class RoleSpecialty(MockDataTest):
+class RoleSpecialty(BaseNode):
     specialty: str = StringProperty(required=True)
+    taxonomy: str = StringProperty(required=False)
 
     # Incoming relationships
     role_instance = RelationshipFrom("models.aton.nodes.role_instance.RoleInstance",

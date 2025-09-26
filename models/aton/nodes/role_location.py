@@ -1,15 +1,15 @@
 from neomodel import StructuredNode, RelationshipFrom, RelationshipTo
 
+from models.aton.nodes.base_node import BaseNode
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.location import Location
-from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.role_specialty import RoleSpecialty
 from models.aton.relationships.exclude_from_directory import ExcludeFromDirectory
 from models.aton.relationships.has_panel import HasPanel
 from models.aton.relationships.role_location_serves import RoleLocationServes
 
 
-class RoleLocation(MockDataTest):
+class RoleLocation(BaseNode):
     # Relationships
     role_instance = RelationshipFrom("models.aton.nodes.role_instance.RoleInstance", "PERFORMED_AT")
     location = RelationshipTo("models.aton.nodes.location.Location", "LOCATION_IS")

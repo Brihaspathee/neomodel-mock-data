@@ -1,12 +1,11 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
+from models.aton.nodes.base_node import BaseNode
 from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.mock_data_test import MockDataTest
 from models.aton.nodes.network import Network
-from models.aton.nodes.pp_net import PP_NET
 
 
-class Product(MockDataTest):
+class Product(BaseNode):
     code = StringProperty(required=True)
     name = StringProperty(required=True)
 

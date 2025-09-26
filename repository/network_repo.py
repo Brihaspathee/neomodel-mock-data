@@ -2,7 +2,6 @@ from neomodel import DoesNotExist
 
 from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.network import Network
-from models.aton.nodes.pp_net import PP_NET
 
 
 def find_network_by_code(code: str):

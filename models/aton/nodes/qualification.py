@@ -1,9 +1,9 @@
 from neomodel import StructuredNode, StringProperty, DateProperty, RelationshipFrom
 
-from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.base_node import BaseNode
 
 
-class Qualification(MockDataTest):
+class Qualification(BaseNode):
     type = StringProperty(required=True)
     issuer = StringProperty(required=False)
     state = StringProperty(required=False)

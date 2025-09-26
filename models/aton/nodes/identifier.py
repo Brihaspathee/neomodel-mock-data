@@ -1,10 +1,10 @@
 from neo4j.time import DateType
 from neomodel import StringProperty, DateProperty, StructuredNode, RelationshipFrom
 
-from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.base_node import BaseNode
 
 
-class Identifier(MockDataTest):
+class Identifier(BaseNode):
 
     value: str= StringProperty(required=True)
     start_date: DateType= DateProperty(required=False)

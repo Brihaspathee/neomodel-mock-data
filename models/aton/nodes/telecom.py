@@ -1,9 +1,9 @@
 from neomodel import RelationshipFrom, StringProperty, StructuredNode
 
-from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.base_node import BaseNode
 
 
-class Telecom(MockDataTest):
+class Telecom(BaseNode):
 
     phone: str = StringProperty(required=False)
     fax: str = StringProperty(required=False)

@@ -1,13 +1,12 @@
 from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
+from models.aton.nodes.base_node import BaseNode
 from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.mock_data_test import MockDataTest
-from models.aton.nodes.pp_prov_tin_loc import PP_PROV_TIN_LOC
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.validation import Validation
 
 
-class Location(MockDataTest):
+class Location(BaseNode):
 
     name: str = StringProperty(required=True)
     street_address: str = StringProperty(required=True)
@@ -22,8 +21,6 @@ class Location(MockDataTest):
 
     validation = RelationshipFrom("models.aton.nodes.validation.Validation", "VALIDATED")
     role_locations = RelationshipFrom("models.aton.nodes.role_location.RoleLocation", "LOCATION_IS")
-
-    pp_prov_tin_loc = RelationshipFrom("models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC", "SOURCES")
 
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
                                     "HAS_QUALIFICATION")

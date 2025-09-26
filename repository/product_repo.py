@@ -2,7 +2,6 @@
 from neomodel import DoesNotExist
 
 from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.pp_net import PP_NET
 from models.aton.nodes.product import Product
 
 import logging
@@ -17,7 +16,9 @@ def find_product_by_code(code: str):
         pass
 
     try:
-        return PP_NET.nodes.get(net_id=code).sources.single()
+        return (LegacySystemID.nodes.
+                get(value=code, systemIdType="NET ID", system="PORTICO").
+                sources.single())
     except DoesNotExist:
         return None
 

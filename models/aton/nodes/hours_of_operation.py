@@ -1,9 +1,9 @@
 from neomodel import StructuredNode, RelationshipFrom, JSONProperty
 
-from models.aton.nodes.mock_data_test import MockDataTest
+from models.aton.nodes.base_node import BaseNode
 
 
-class HoursOfOperation(MockDataTest):
+class HoursOfOperation(BaseNode):
     hours = JSONProperty(required=True)
 
     contact = RelationshipFrom("models.aton.nodes.contact.Contact",

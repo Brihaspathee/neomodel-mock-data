@@ -2,7 +2,6 @@ from neomodel import db
 
 from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.location import Location
-from models.aton.nodes.pp_prov_tin_loc import PP_PROV_TIN_LOC
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.validation import Validation
 from repository.validation_repo import find_location_by_key, create_validation

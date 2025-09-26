@@ -1,13 +1,12 @@
 from neo4j.time import DateType
 from neomodel import StringProperty, DateProperty, RelationshipTo
 
+from models.aton.nodes.base_node import BaseNode
 from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.mock_data_test import MockDataTest
-from models.aton.nodes.pp_prac import PP_PRAC
 from models.aton.nodes.role_instance import RoleInstance
 
 
-class Practitioner(MockDataTest):
+class Practitioner(BaseNode):
     first_name: str = StringProperty(required=True)
     last_name: str = StringProperty(required=True)
     middle_name: str = StringProperty(required=False)

@@ -10,6 +10,7 @@ from utils.log_provider import log_providers, log_provider
 from aton_writes.service.aton_write import write_to_aton, write_products_networks
 from transform import transform_network
 from transform import transform_provider
+from models.aton.nodes.mock_context import enable_mock
 import logging
 
 from models.portico import PPNet, PPProv
@@ -31,25 +32,19 @@ def main():
     portico_db: PorticoDB = PorticoDB()
     portico_db.connect()
     init_db()
+    enable_mock()
 
     user_input: str = input("Select an option: \n1. Load all data\n2. Load data for a single provider :")
     if user_input == "1":
         log.debug("Loading all data")
         with (portico_db.get_session() as session):
             fmg_codes.load_fmg_codes(session)
-            # log.debug(f"FMG_CODES: {fmg_codes.FMG_CODES}")
             pp_nets: list[PPNet] = network_read.get_networks(session)
             providers: list[PPProv] = provider_read.read_provider(session)
-            # log_providers(providers)
             products: list[Product] = transformer(pp_nets)
             for product in products:
                 write_products_networks(product)
             organizations: list[Organization]=transformer(providers)
-            # for org in organizations:
-            #     log.info(f"Organization: {org}")
-            #     for practitioner in org.get_pending_practitioners():
-            #         log.info(f"Practitioner: {practitioner}")
-            #         log.info(f"Practitioner Role Instance:{practitioner.get_pending_role_instance()}")
             write_to_aton(organizations)
     elif user_input == "2":
         log.debug("Loading data for a single provider")
@@ -63,6 +58,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # driver = get_driver()
     main()
-    # close_driver()

@@ -9,7 +9,6 @@ from models.aton.nodes.identifier import PPGID, LegacySystemID
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
 from aton_writes.service.upsert_practitioner import upsert_practitioner
-from models.aton.nodes.pp_prov import PP_PROV
 from models.aton.nodes.qualification import Qualification
 from repository.contact_repo import create_contacts
 from repository.organization_repo import get_organization_by_prov_id

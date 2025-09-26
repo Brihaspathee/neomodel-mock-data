@@ -22,7 +22,7 @@ def transform_practitioner_location(pp_prac:PPPrac, role_instance:RoleInstance, 
             location = set_location(hash_code, pp_prov_tin_loc)
             role_location.set_location(location)
             role_instance.add_pending_rl(role_location)
-    log.info(f"Provider Id:{prov_id}")
-    log.info(f"Added {len(role_instance.get_pending_rls())} role locations to role instance")
+    log.debug(f"Provider Id:{prov_id}")
+    log.debug(f"Added {len(role_instance.get_pending_rls())} role locations to role instance")
     if pp_prac.networks:
         transform_practitioner_net_cycle(prac_net_cycles=pp_prac.networks, role_instance=role_instance, prov_id=prov_id)

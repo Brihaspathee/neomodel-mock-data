@@ -1,5 +1,4 @@
 from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.pp_prov import PP_PROV
 
 
 def get_organization_by_prov_id(prov_id:str):

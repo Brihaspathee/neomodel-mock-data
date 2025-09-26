@@ -1,5 +1,4 @@
 from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.pp_prac import PP_PRAC
 
 
 def get_practitioner_by_prac_id(prac_id:str):
