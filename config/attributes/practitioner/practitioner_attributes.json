@@ -1,0 +1,229 @@
+{
+  "501": {
+    "name": "PRAC_NPI",
+    "category": "Identifier",
+    "attr_type": "NPI",
+    "class": "models.aton.nodes.identifier.NPI",
+    "fields": {
+      "701": "value",
+      "703": "start_date",
+      "704": "end_date"
+    },
+    "ignore": ["702", "705"]
+  },
+  "100085": {
+    "name": "PRAC_MEDICAID_ID",
+    "category": "Identifier",
+    "attr_type": "MedicaidID",
+    "class": "models.aton.nodes.identifier.MedicaidID",
+    "fields": {
+      "100302": "value",
+      "100303": "state",
+      "104755": "start_date",
+      "100934": "end_date"
+    },
+    "ignore": ["18956"]
+  },
+  "100084": {
+    "name": "PRAC_MEDICARE",
+    "category": "Identifier",
+    "attr_type": "MedicareID",
+    "class": "models.aton.nodes.identifier.MedicareID",
+    "fields": {
+      "100301": "value"
+    }
+  },
+  "103279": {
+    "name": "PRAC_HN_LEG_PRAC_ID",
+    "category": "Identifier",
+    "attr_type": "PPG_ID",
+    "class": "models.aton.nodes.identifier.LegacySystemID",
+    "fields": {
+      "105838": "value"
+    },
+    "adornments": {
+      "system": "HNET",
+      "systemIdType": "PHY ID"
+    }
+  },
+  "100051": {
+    "name": "PRAC_DEA",
+    "category": "Identifier",
+    "attr_type": "DEA",
+    "class": "models.aton.nodes.identifier.DEA_Number",
+    "fields": {
+      "100260": "value",
+      "100697": "state",
+      "100259": "end_date"
+    }
+  },
+  "101619": {
+    "name": "PRAC_CCS",
+    "category": "Qualification",
+    "attr_type": "Certification",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "102450": "start_date",
+      "102451": "end_date"
+    },
+    "ignore": ["102449"],
+    "adornments": {
+      "type": "California Children Services",
+      "issuer": "California Children Services",
+      "secondary_label": "Certification"
+    },
+    "conditions": [
+      {
+        "field_id": "102449",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "100043": {
+    "name": "PRAC_EPSDT",
+    "category": "Qualification",
+    "attr_type": "Qualification",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "111315": "state",
+      "101085": "type"
+    },
+    "ignore": ["100242", "111575"],
+    "adornments": {
+      "issuer": "Early and Periodic Screening, Diagnostic and Treatment"
+    },
+    "conditions": [
+      {
+        "field_id": "100242",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "100640": {
+    "name": "PROV_ACR_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "101141": "start_date",
+      "102915": "end_date",
+      "104380": "level"
+    },
+    "ignore": ["101143"],
+    "adornments": {
+      "type": "ACR Accreditation",
+      "issuer": "American College of Radiology",
+      "secondary_label": "Accreditation"
+    }
+  },
+  "101278": {
+    "name": "PROV_AASM_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "101958": "start_date",
+      "102856": "end_date"
+    },
+    "ignore": ["101957"],
+    "adornments": {
+      "type": "AASM Accreditation",
+      "issuer": "American Association for Sleep Medicine",
+      "secondary_label": "Accreditation"
+    }
+  },
+  "103497": {
+    "name": "PROV_CIHQ_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "106177": "start_date",
+      "106178": "end_date"
+    },
+    "ignore": ["106175", "106175"],
+    "adornments": {
+      "type": "CIHQ Accreditation",
+      "issuer": "Centers for Improvement in Healthcare Quality",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "106175",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "101298": {
+    "name": "PROV_DNV_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "101978": "start_date",
+      "103130": "end_date"
+    },
+    "ignore": ["101977", "103129"],
+    "adornments": {
+      "type": "DNV Accreditation",
+      "issuer": "Det Norske Veritas",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "101977",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "101497": {
+    "name": "PROV_HFAP_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "102276": "start_date",
+      "103134": "end_date"
+    },
+    "ignore": ["102275", "103133"],
+    "adornments": {
+      "type": "HFAP Accreditation",
+      "issuer": "Healthcare Facilities Accreditation Program",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "102275",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "100088": {
+    "name": "PROV_JCAHO_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "100313": "start_date",
+      "103141": "end_date"
+    },
+    "ignore": ["100312", "104376", "103140"],
+    "adornments": {
+      "type": "TJC Accreditation",
+      "issuer": "The Joint Commission Accreditation",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "100312",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  }
+}
