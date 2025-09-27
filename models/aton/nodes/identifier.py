@@ -1,5 +1,8 @@
+from typing import Type
+
 from neo4j.time import DateType
 from neomodel import StringProperty, DateProperty, StructuredNode, RelationshipFrom
+from neomodel.exceptions import DoesNotExist, MultipleNodesReturned
 
 from models.aton.nodes.base_node import BaseNode
 
@@ -32,6 +35,20 @@ class TIN(Identifier):
     )
     def __repr__(self):
         return f"{self.value} - {self.legal_name}"
+
+    @classmethod
+    def get_or_create(cls: Type["TIN"], lookup_props: dict, other_props: dict) -> tuple["TIN", bool]:
+        try:
+            node = cls.nodes.get(**lookup_props)
+            created = False
+        except DoesNotExist:
+            node = cls(**lookup_props, **other_props).save()
+            created = True
+        except MultipleNodesReturned as e:
+            raise MultipleNodesReturned(
+                f"Multiple nodes returned for {cls.__name__} with lookup props {lookup_props}"
+            ) from e
+        return node, created
 
 class MedicareID(Identifier):
     _node_labels = ('Identifier', 'MedicareID')

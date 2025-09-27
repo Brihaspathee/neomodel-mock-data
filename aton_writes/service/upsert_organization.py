@@ -5,7 +5,7 @@ from neomodel import db
 from sqlalchemy.orm import relationship
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import PPGID, LegacySystemID
+from models.aton.nodes.identifier import PPGID, LegacySystemID, TIN
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
 from aton_writes.service.upsert_practitioner import upsert_practitioner
@@ -67,7 +67,13 @@ def create_identifiers(org):
         rel = getattr(org, rel_name)
         for id_node in id_list:
             if not hasattr(id_node, "element_id") or id_node.element_id is None:
-                id_node.save()
+                if isinstance(id_node, TIN):
+                    id_node, _ = id_node.get_or_create(
+                        {"value": id_node.value},
+                        {"legalName": id_node.legal_name},
+                    )
+                else:
+                    id_node.save()
                 log.debug(f"Identifier saved to Aton its element id is: {id_node.element_id}")
                 rel.connect(id_node)
 
