@@ -3,7 +3,7 @@ from typing import Any
 from neomodel import StructuredNode, StringProperty, RelationshipTo
 from neomodel.exceptions import DoesNotExist
 
-from models.aton.nodes.specialty_group import SpecialtyGroup
+from models.aton.nodes.data_dictionary.specialty_group import SpecialtyGroup
 
 
 class Specialty(StructuredNode):

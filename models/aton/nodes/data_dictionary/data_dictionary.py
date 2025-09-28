@@ -1,6 +1,6 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo
 
-from models.aton.nodes.specialty import Specialty
+from models.aton.nodes.data_dictionary.specialty import Specialty
 
 
 class DataDictionary(StructuredNode):

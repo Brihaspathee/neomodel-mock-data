@@ -1,8 +1,7 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo
 from neomodel.exceptions import DoesNotExist
 
-from models.aton.nodes.dd_specialty import DD_Specialty
-from models.data_classes.specialtytype import Specialization
+from models.aton.nodes.data_dictionary.dd_specialty import DD_Specialty
 
 
 class SpecialtyClassification(StructuredNode):
