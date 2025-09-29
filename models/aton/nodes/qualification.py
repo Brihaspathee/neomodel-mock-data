@@ -16,6 +16,8 @@ class Qualification(BaseNode):
     organization = RelationshipFrom("models.aton.nodes.organization.Organization", "HAS_QUALIFICATION")
     location = RelationshipFrom("models.aton.nodes.location.Location", "HAS_QUALIFICATION")
 
+    practitioner = RelationshipFrom("models.aton.nodes.practitioner.Practitioner", "HAS_QUALIFICATION")
+
     def _add_secondary_label(self):
         if self.secondary_label:
             query = f"""
