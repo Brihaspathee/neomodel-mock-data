@@ -8,10 +8,11 @@ from models.aton.nodes.identifier import NPI, Identifier, PPGID
 from models.aton.nodes.location import Location
 from models.aton.nodes.network import Network
 from models.aton.nodes.organization import Organization
+from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.nodes.role_specialty import RoleSpecialty
-from models.portico import PPProv, PPProvTinLoc, PPNet
+from models.portico import PPProv, PPProvTinLoc, PPNet, PPPrac
 import logging
 
 from models.portico.pp_net import PPNetDict
@@ -86,6 +87,27 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}")
 
+
+def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
+    for attribute in pp_prac.attributes:
+        attribute_fields: dict[str, Any] = {}
+        for value in attribute.values:
+            field_id = str(value.field_id)
+            if value.value_date:
+                attribute_fields[field_id] = value.value_date
+            elif value.value_number:
+                attribute_fields[field_id] = value.value_number
+            else:
+                attribute_fields[field_id] = value.value
+        attribute_id = attribute.attribute_id
+        mapping = ATTRIBUTES_CONFIG["practitioner"][str(attribute.attribute_id)]
+        node = build_node_for_attribute(mapping, attribute_fields)
+        if isinstance(node, Identifier):
+            practitioner.add_identifier(node)
+        elif isinstance(node, Qualification):
+            practitioner.add_qualification(node)
+        else:
+            log.error(f"Unable to determine node type for attribute {attribute_id}")
 
 def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
     for prov_loc_attr in pprov.loc_attributes:

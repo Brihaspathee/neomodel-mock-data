@@ -1,6 +1,6 @@
 from aton_writes.service.upsert_role_location import process_role_locations
 from aton_writes.service.upsert_role_network import process_role_networks
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemID, TIN
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.role_instance import RoleInstance
@@ -37,6 +37,8 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     aton_prac: LegacySystemID = practitioner.get_portico_source()
     aton_prac.save()
     aton_prac.practitioner.connect(practitioner)
+    create_identifiers(prac=practitioner)
+    create_qualifications(prac=practitioner)
     role_instance: RoleInstance = practitioner.get_pending_role_instance()
     log.debug(f"Role instance is: {type(role_instance)}")
     role_instance.save()
@@ -45,3 +47,25 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     process_role_locations(role_instance)
     process_role_networks(role_instance)
     log.debug(f"Practitioner created with element id {practitioner.element_id}")
+
+def create_identifiers(prac: Practitioner):
+    log.info(f"About to create identifiers for practitioner {prac.first_name}")
+    for rel_name, id_list in prac.get_pending_identifiers().items():
+        rel = getattr(prac, rel_name)
+        for id_node in id_list:
+            if not hasattr(id_node, "element_id") or id_node.element_id is None:
+                id_node.save()
+            log.info(f"Identifier saved to Aton its element id is: {id_node.element_id}")
+            rel.connect(id_node)
+
+def create_qualifications(prac: Practitioner):
+    log.debug(
+        f"Writing qualifications to Aton for Practitioner {prac.first_name} {prac.last_name}"
+        f"Qualifications are: {prac.get_pending_qualifications()}"
+    )
+    rel = getattr(prac, "qualifications")
+    for qual_node in prac.get_pending_qualifications():
+        if not hasattr(qual_node, "element_id") or qual_node.element_id is None:
+            qual_node.save()
+            log.debug(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
+            rel.connect(qual_node)

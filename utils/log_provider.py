@@ -58,6 +58,12 @@ def log_provider(provider: PPProv):
         log.debug(f"Practitioner - {prac_loc.practitioner}")
         log.debug(f"Location - {prac_loc.location}")
         practitioner: PPPrac = prac_loc.practitioner
+        for attribute in practitioner.attributes:
+            log.info(f"Practitioner Attribute - {attribute}")
+            log.info(f"Practitioner Attribute Type - {attribute.attribute_type}")
+            for value in attribute.values:
+                log.info(f"Practitioner Attribute Value - {value}")
+                log.info(f"Practitioner Attribute Value Field - {value.field}")
         for prac_net_cycle in practitioner.networks:
             log.debug(f"Practitioner network cycle - {prac_net_cycle}")
             log.debug(f"Practitioner network - {prac_net_cycle.network}")

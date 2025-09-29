@@ -52,4 +52,4 @@
 \i centene/scenarios/scenario_0/scenario-data.sql
 
 -- Insert data for Scenario - 1
-\i centene/scenarios/scenario_1/provider/parent/scenario-data.sql
+-- \i centene/scenarios/scenario_1/provider/parent/scenario-data.sql

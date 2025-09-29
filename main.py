@@ -41,6 +41,7 @@ def main():
             fmg_codes.load_fmg_codes(session)
             pp_nets: list[PPNet] = network_read.get_networks(session)
             providers: list[PPProv] = provider_read.read_provider(session)
+            # log_providers(providers)
             products: list[Product] = transformer(pp_nets)
             for product in products:
                 write_products_networks(product)

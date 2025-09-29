@@ -25,6 +25,10 @@ class NPI(Identifier):
         "models.aton.nodes.organization.Organization",
         "HAS_NPI"
     )
+    practitioner = RelationshipFrom(
+        "models.aton.nodes.practitioner.Practitioner",
+        "HAS_NPI"
+    )
 
 class TIN(Identifier):
     _node_labels = ('Identifier', 'TIN' )
@@ -56,12 +60,19 @@ class MedicareID(Identifier):
         "models.aton.nodes.organization.Organization",
         "HAS_MEDICARE_ID"
     )
-    pass
+    practitioner = RelationshipFrom(
+        "models.aton.nodes.practitioner.Practitioner",
+        "HAS_MEDICARE_ID"
+    )
 
 class MedicaidID(Identifier):
     _node_labels = ('Identifier', 'MedicaidID')
     organization = RelationshipFrom(
         "models.aton.nodes.organization.Organization",
+        "HAS_MEDICAID_ID"
+    )
+    practitioner = RelationshipFrom(
+        "models.aton.nodes.practitioner.Practitioner",
         "HAS_MEDICAID_ID"
     )
     state: str= StringProperty(required=False)

@@ -512,6 +512,67 @@ INSERT INTO portown.pp_prac_net_loc_cycle (id,prac_id,prov_id,loc_id,prac_net_cy
 	 (23,2,2,3,4,'2021-01-01','4000-01-01','N',NULL),
 	 (24,2,2,4,4,'2021-01-01','4000-01-01','N',NULL);
 
+-- Insert data for PP_PRAC_ATTRIB
+INSERT INTO portown.pp_prac_attrib (id,prac_id,attribute_id) VALUES
+	 (1,1,501),
+	 (6,1,101619),
+	 (2,1,100085),
+	 (3,1,100084),
+	 (4,1,103279),
+	 (5,1,100051),
+	 (7,1,100043),
+	 (8,2,501),
+	 (9,2,101619),
+	 (10,2,100085);
+INSERT INTO portown.pp_prac_attrib (id,prac_id,attribute_id) VALUES
+	 (11,2,100084),
+	 (12,2,103279),
+	 (13,2,100051),
+	 (14,2,100043);
+
+-- Insert data for PP_PRAC_ATTRIB_VALUES
+INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (1,1,701,'942534632',NULL,NULL,NULL),
+	 (2,1,703,NULL,'2015-01-01',NULL,NULL),
+	 (3,1,704,NULL,'4000-01-01',NULL,NULL),
+	 (4,2,100302,'52453723',NULL,NULL,NULL),
+	 (5,2,100303,'CA',NULL,NULL,NULL),
+	 (6,2,104755,NULL,'2015-01-01',NULL,NULL),
+	 (7,2,100934,NULL,'4000-01-01',NULL,NULL),
+	 (8,3,100301,'92353635',NULL,NULL,NULL),
+	 (9,4,105838,'66484672',NULL,NULL,NULL),
+	 (10,5,100260,'97336356',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (11,5,100697,NULL,'2015-01-01',NULL,NULL),
+	 (12,5,100259,NULL,'4000-01-01',NULL,NULL),
+	 (13,6,102450,NULL,'2015-01-01',NULL,NULL),
+	 (14,6,102451,NULL,'4000-01-01',NULL,NULL),
+	 (15,6,102449,'Y',NULL,NULL,NULL),
+	 (16,7,111315,'TX',NULL,NULL,NULL),
+	 (17,7,101085,'TYPE-1',NULL,NULL,NULL),
+	 (18,7,100242,'Y',NULL,NULL,NULL),
+	 (19,8,701,'842534633',NULL,NULL,NULL),
+	 (20,8,703,NULL,'2016-01-01',NULL,NULL);
+INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (21,8,704,NULL,'4000-01-01',NULL,NULL),
+	 (22,10,100302,'62453724',NULL,NULL,NULL),
+	 (23,10,100303,'CA',NULL,NULL,NULL),
+	 (24,10,104755,NULL,'2016-01-01',NULL,NULL),
+	 (25,10,100934,NULL,'4000-01-01',NULL,NULL),
+	 (26,11,100301,'82353636',NULL,NULL,NULL),
+	 (27,12,105838,'66484674',NULL,NULL,NULL),
+	 (28,9,102450,NULL,'2016-01-01',NULL,NULL),
+	 (29,9,102451,NULL,'4000-01-01',NULL,NULL),
+	 (30,9,102449,'Y',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (31,13,100260,'77336357',NULL,NULL,NULL),
+	 (32,13,100697,NULL,'2016-01-01',NULL,NULL),
+	 (33,13,100259,NULL,'4000-01-01',NULL,NULL),
+	 (34,14,111315,'TX',NULL,NULL,NULL),
+	 (35,14,101085,'EPSDT TYPE-3',NULL,NULL,NULL),
+	 (36,14,100242,'Y',NULL,NULL,NULL);
+
+
 
 
 
