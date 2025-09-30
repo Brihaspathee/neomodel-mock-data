@@ -1,4 +1,3 @@
-import models
 from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import TIN, LegacySystemID
@@ -7,13 +6,12 @@ from models.aton.nodes.telecom import Telecom
 from transform.transformers import transform_to_aton
 from transform.transform_provider_location import transform_provider_location
 from transform.transform_practitioner import transform_practitioner
-from transform.transform_attribute import get_provider_attributes
-from repository.organization_repo import get_organization_by_prov_id
+from transform.attributes.transform_attribute import get_provider_attributes
 import logging
 
 from models.portico import PPProv
 from utils.address_util import portico_address_to_aton
-from config.contact_settings import CONTACT_USE_MAPPING, ADDRESS_USE_MAPPING
+from config.contact_settings import ADDRESS_USE_MAPPING
 
 log = logging.getLogger(__name__)
 

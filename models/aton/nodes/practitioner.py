@@ -1,5 +1,5 @@
 from neo4j.time import DateType
-from neomodel import StringProperty, DateProperty, RelationshipTo
+from neomodel import StringProperty, DateProperty, RelationshipTo, ArrayProperty
 
 from models.aton.nodes.base_node import BaseNode
 from models.aton.nodes.identifier import LegacySystemID, Identifier, NPI, DEA_Number, MedicareID, MedicaidID
@@ -19,8 +19,8 @@ class Practitioner(BaseNode):
     altFirstName: str = StringProperty(required=False)
     altLastName: str = StringProperty(required=False)
     altMiddleName: str = StringProperty(required=False)
-    race: str = StringProperty(required=False)
-    ethnicity: str = StringProperty(required=False)
+    race: str = ArrayProperty(required=False)
+    ethnicity: str = ArrayProperty(required=False)
 
     role = RelationshipTo("models.aton.nodes.role_instance.RoleInstance",
                           "HAS_ROLE")

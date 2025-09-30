@@ -16,13 +16,14 @@ from models.portico import PPProv, PPProvTinLoc, PPNet, PPPrac
 import logging
 
 from models.portico.pp_net import PPNetDict
+from transform.attributes.practitioner.transform_prac_attributes import transform_prac_node
 
 log = logging.getLogger(__name__)
 
 def get_net_attributes(pp_net:PPNetDict, network:Network):
     log.debug(f"Network type: {type(pp_net)}")
-    log.debug(f"Network Attributes: {pp_net.get("attributes")}")
-    for attribute in pp_net.get("attributes", []):
+    log.debug(f"Network Attributes: {pp_net.get("")}")
+    for attribute in pp_net.get("", []):
         log.debug(f"Attribute: {attribute.get('attribute_id')}")
         try:
             attr_mapping = ATTRIBUTES_CONFIG["network"][attribute.get('attribute_id')]
@@ -106,6 +107,8 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
             practitioner.add_identifier(node)
         elif isinstance(node, Qualification):
             practitioner.add_qualification(node)
+        elif isinstance(node, Practitioner):
+            transform_prac_node(attribute_id, practitioner, node)
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}")
 

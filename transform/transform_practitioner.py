@@ -1,4 +1,3 @@
-import models
 from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
@@ -6,7 +5,7 @@ from models.aton.nodes.role_instance import RoleInstance
 from models.portico import PPProv, PPPrac, PPPracLoc
 import logging
 
-from transform.transform_attribute import get_prac_attributes
+from transform.attributes.transform_attribute import get_prac_attributes
 from transform.transform_practitioner_location import transform_practitioner_location
 
 log = logging.getLogger(__name__)

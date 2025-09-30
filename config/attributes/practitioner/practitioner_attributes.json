@@ -100,5 +100,27 @@
         "value": "Y"
       }
     ]
+  },
+  "103877": {
+    "name": "PRAC_ALTERNATE_NAME",
+    "category": "Practitioner",
+    "attr_type": "Practitioner",
+    "class": "models.aton.nodes.practitioner.Practitioner",
+    "fields": {
+      "106896": "altFirstName",
+      "107055": "altMiddleName",
+      "107056": "altLastName"
+    }
+  },
+  "100039": {
+    "name": "PRAC_DEMOGRAPHICS",
+    "category": "Practitioner",
+    "attr_type": "Practitioner",
+    "class": "models.aton.nodes.practitioner.Practitioner",
+    "fields": {
+      "100233": "ethnicity",
+      "110355": "race"
+    },
+    "ignore": ["100232"]
   }
 }

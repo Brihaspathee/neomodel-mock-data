@@ -1,21 +1,16 @@
 import logging
 
-import models
-from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.hours_of_operation import HoursOfOperation
-from models.aton.nodes.location import Location
 from models.aton.nodes.telecom import Telecom
-from models.aton.nodes.validation import Validation
 from transform.transform_utils import set_location
-from utils.address_util import portico_address_to_aton, get_state
 from utils.location_util import get_hash_key_for_prov_tin_loc
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
-from models.portico import PPProv, PPProvLoc, PPProvTinLoc, PPProvLocOfHours
+from models.portico import PPProv, PPProvTinLoc, PPProvLocOfHours
 from transform.transform_provider_net_cycle import transform_provider_net_cycle
-from transform.transform_attribute import get_prov_loc_attributes
+from transform.attributes.transform_attribute import get_prov_loc_attributes
 from utils.office_hours import format_office_hours
 
 log = logging.getLogger(__name__)
