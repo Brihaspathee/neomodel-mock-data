@@ -108,7 +108,8 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
         elif isinstance(node, Qualification):
             practitioner.add_qualification(node)
         elif isinstance(node, Practitioner):
-            transform_prac_node(attribute_id, practitioner, node)
+            log.debug(f"This is a Practitioner {node}")
+            transform_prac_node(attribute_id, node, practitioner )
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}")
 

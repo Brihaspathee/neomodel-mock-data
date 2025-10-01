@@ -528,7 +528,13 @@ INSERT INTO portown.pp_prac_attrib (id,prac_id,attribute_id) VALUES
 	 (11,2,100084),
 	 (12,2,103279),
 	 (13,2,100051),
-	 (14,2,100043);
+	 (14,2,100043),
+	 (15,1,103877),
+	 (16,2,103877),
+	 (17,1,100039),
+	 (18,1,100039),
+	 (19,2,100039);
+
 
 -- Insert data for PP_PRAC_ATTRIB_VALUES
 INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
@@ -570,7 +576,18 @@ INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,v
 	 (33,13,100259,NULL,'4000-01-01',NULL,NULL),
 	 (34,14,111315,'TX',NULL,NULL,NULL),
 	 (35,14,101085,'EPSDT TYPE-3',NULL,NULL,NULL),
-	 (36,14,100242,'Y',NULL,NULL,NULL);
+	 (36,14,100242,'Y',NULL,NULL,NULL),
+	 (37,15,106896,'Alt-John',NULL,NULL,NULL),
+	 (38,15,107056,'Alt-Doe',NULL,NULL,NULL),
+	 (39,16,106896,'Alt-Jamie',NULL,NULL,NULL),
+	 (40,16,107056,'Alt-Smith',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (41,17,100233,'2186-5',NULL,NULL,NULL),
+	 (42,17,110355,'2028-9',NULL,NULL,NULL),
+	 (43,18,100233,'2148-5',NULL,NULL,NULL),
+	 (44,18,110355,'2106-3',NULL,NULL,NULL),
+	 (45,19,100233,'2155-0',NULL,NULL,NULL),
+	 (46,19,110355,'2106-3',NULL,NULL,NULL);
 
 
 

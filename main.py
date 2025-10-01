@@ -19,9 +19,9 @@ log = logging.getLogger(__name__)
 
 def main():
     log.debug("Starting...")
-    log.debug(f"Running on {settings.ENVIRONMENT} environment")
-    log.debug(f"POSTGRES info {settings.POSTGRES} environment")
-    log.debug(f"NEO4J info {settings.NEO4J} environment")
+    log.info(f"Running on {settings.ENVIRONMENT} environment")
+    log.info(f"POSTGRES info {settings.POSTGRES} environment")
+    log.info(f"NEO4J info {settings.NEO4J} environment")
     log.debug(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
     log.debug(f"Contact use mapping:{contact_settings.CONTACT_USE_MAPPING}")
     log.debug(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
@@ -47,14 +47,14 @@ def main():
                 write_products_networks(product)
             organizations: list[Organization]=transformer(providers)
             write_to_aton(organizations)
-    elif user_input == "2":
-        log.debug("Loading data for a single provider")
-        with (portico_db.get_session() as session):
-            provider: PPProv = provider_read.get_provider_attributes(session, 1)
-            orgs = transformer(list([provider]))
-            for org in orgs:
-                log.debug(f"Org:{org.name}")
-            write_to_aton(orgs)
+    # elif user_input == "2":
+    #     log.debug("Loading data for a single provider")
+    #     with (portico_db.get_session() as session):
+    #         provider: PPProv = provider_read.get_provider_attributes(session, 1)
+    #         orgs = transformer(list([provider]))
+    #         for org in orgs:
+    #             log.debug(f"Org:{org.name}")
+    #         write_to_aton(orgs)
 
 
 

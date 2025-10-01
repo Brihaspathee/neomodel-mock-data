@@ -19,8 +19,8 @@ class Practitioner(BaseNode):
     altFirstName: str = StringProperty(required=False)
     altLastName: str = StringProperty(required=False)
     altMiddleName: str = StringProperty(required=False)
-    race: str = ArrayProperty(required=False)
-    ethnicity: str = ArrayProperty(required=False)
+    race: list[str] = ArrayProperty(required=False)
+    ethnicity: list[str] = ArrayProperty(required=False)
 
     role = RelationshipTo("models.aton.nodes.role_instance.RoleInstance",
                           "HAS_ROLE")
