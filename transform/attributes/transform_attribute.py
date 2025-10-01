@@ -22,8 +22,8 @@ log = logging.getLogger(__name__)
 
 def get_net_attributes(pp_net:PPNetDict, network:Network):
     log.debug(f"Network type: {type(pp_net)}")
-    log.debug(f"Network Attributes: {pp_net.get("")}")
-    for attribute in pp_net.get("", []):
+    log.debug(f"Network Attributes: {pp_net.get('attributes')}")
+    for attribute in pp_net.get('attributes', []):
         log.debug(f"Attribute: {attribute.get('attribute_id')}")
         try:
             attr_mapping = ATTRIBUTES_CONFIG["network"][attribute.get('attribute_id')]
