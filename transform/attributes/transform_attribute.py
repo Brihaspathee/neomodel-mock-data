@@ -10,6 +10,7 @@ from models.aton.nodes.network import Network
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
+from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.nodes.role_specialty import RoleSpecialty
 from models.portico import PPProv, PPProvTinLoc, PPNet, PPPrac
@@ -112,6 +113,9 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
             transform_prac_node(attribute_id, node, practitioner )
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}")
+
+def get_prac_loc_attributes(pp_prac: PPPrac, pp_prov_tin_loc:PPProvTinLoc, role_instance:RoleInstance):
+    pass
 
 def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
     for prov_loc_attr in pprov.loc_attributes:

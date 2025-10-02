@@ -14,3 +14,7 @@ class RoleSpecialty(BaseNode):
     # Outgoing relationships
     role_locations = RelationshipTo("models.aton.nodes.role_location.RoleLocation",
                                          "PRACTICED_AT")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.isPrimary: str = "N"  # transient attribute
