@@ -46,7 +46,7 @@ def main():
             for product in products:
                 write_products_networks(product)
             organizations: list[Organization]=transformer(providers)
-            write_to_aton(organizations)
+            # write_to_aton(organizations)
     # elif user_input == "2":
     #     log.debug("Loading data for a single provider")
     #     with (portico_db.get_session() as session):

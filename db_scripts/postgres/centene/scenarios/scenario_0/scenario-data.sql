@@ -589,6 +589,16 @@ INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,v
 	 (45,19,100233,'2155-0',NULL,NULL,NULL),
 	 (46,19,110355,'2106-3',NULL,NULL,NULL);
 
+-- Insert data for Prac Loc Attrib
+INSERT INTO portown.pp_prac_loc_attrib (id,prac_id,prov_id,loc_id,attribute_id) VALUES
+	 (1,1,1,1,107097);
+
+-- Insert data for Prac loc attrib values
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (1,1,111636,'Pedorthist',NULL,NULL,NULL),
+	 (2,1,111635,'Y',NULL,NULL,NULL);
+
+
 
 
 

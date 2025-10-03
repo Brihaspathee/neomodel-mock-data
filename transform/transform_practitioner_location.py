@@ -1,6 +1,7 @@
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.portico import PPPrac, PPProv, PPProvTinLoc
+from transform.attributes.transform_attribute import get_prac_loc_attributes
 from transform.transform_practitioner_net_cycle import transform_practitioner_net_cycle
 from utils.location_util import get_hash_key_for_prov_tin_loc
 from transform.transform_utils import set_location
@@ -21,6 +22,7 @@ def transform_practitioner_location(pp_prac:PPPrac, role_instance:RoleInstance, 
             hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=pp_prov_tin_loc)
             location = set_location(hash_code, pp_prov_tin_loc)
             role_location.set_location(location)
+            get_prac_loc_attributes(pp_prac, role_instance)
             role_instance.add_pending_rl(role_location)
     log.debug(f"Provider Id:{prov_id}")
     log.debug(f"Added {len(role_instance.get_pending_rls())} role locations to role instance")

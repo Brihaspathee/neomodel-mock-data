@@ -27,6 +27,8 @@ from .pp_prac import PPPrac
 from .pp_prac_attrib import PPPracAttrib
 from .pp_prac_attrib_values import PPPracAttribValues
 from .pp_prac_loc import PPPracLoc
+from .pp_prac_loc_attrib import PPPracLocAttrib
+from .pp_prac_loc_attrib_values import PPPracLocAttribValues
 from .pp_prac_net_cycle import PPPracNetCycle
 from .pp_prac_net_loc_cycle import PPPracNetLocCycle
 
@@ -39,4 +41,5 @@ __all__ = ["Base", "PPAddr","PPNet",
            "PPNetAttrib", "PPNetAttribValues",
            "PPProvLocAttrib", "PPProvLocAttribValues",
            "PPProvLocOfHours",  "PPPracAttrib", "PPPracAttribValues",
-           "PPPrac", "PPPracLoc", "PPPracNetCycle", "PPPracNetLocCycle"]
+           "PPPrac", "PPPracLoc", "PPPracNetCycle", "PPPracNetLocCycle",
+           "PPPracLocAttrib", "PPPracLocAttribValues"]

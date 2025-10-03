@@ -62,7 +62,7 @@ class PPProvLocAttribValues(Base):
             including values of its main attributes.
         :rtype: str
         """
-        return (f"<PPProvAttribValues(id={self.id}, "
+        return (f"<PPProvLocAttribValues(id={self.id}, "
                 f"prov_loc_attribute_id={self.prov_loc_attribute_id}, "
                 f"field_id={self.field_id}, "
                 f"value={self.value}, "

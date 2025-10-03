@@ -7,6 +7,7 @@ from models.portico import Base
 
 if TYPE_CHECKING:
     from models.portico.pp_prac_attrib import PPPracAttrib
+    from models.portico.pp_prac_loc_attrib import PPPracLocAttrib
 
 class PPPrac(Base):
     __tablename__ = "pp_prac"
@@ -28,6 +29,11 @@ class PPPrac(Base):
     networks = relationship("PPPracNetCycle", back_populates="practitioner")
     locations = relationship("PPPracLoc", back_populates="practitioner")
     attributes: Mapped[List["PPPracAttrib"]] = relationship("PPPracAttrib", back_populates="practitioner")
+    loc_attributes: Mapped[List["PPPracLocAttrib"]] = relationship(
+        "PPPracLocAttrib",
+        back_populates="practitioner",
+        cascade="all, delete-orphan"
+    )
 
 
     def __eq__(self, other):

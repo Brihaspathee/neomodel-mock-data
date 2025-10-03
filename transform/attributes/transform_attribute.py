@@ -114,8 +114,15 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}")
 
-def get_prac_loc_attributes(pp_prac: PPPrac, pp_prov_tin_loc:PPProvTinLoc, role_instance:RoleInstance):
-    pass
+def get_prac_loc_attributes(pp_prac: PPPrac,
+                            role_instance:RoleInstance):
+    for prac_loc_attr in pp_prac.loc_attributes:
+        portico_location: PPProvTinLoc = prac_loc_attr.location
+        prov_id: int = prac_loc_attr.prov_id
+        log.info(f"Transforming attribute {prac_loc_attr}")
+        log.info(f"Transforming attribute {prac_loc_attr.attribute_id}")
+        log.info(f"Location for specialty:{portico_location}")
+        log.info(f"Provider ID:{prov_id}")
 
 def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
     for prov_loc_attr in pprov.loc_attributes:

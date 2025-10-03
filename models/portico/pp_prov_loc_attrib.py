@@ -56,6 +56,7 @@ class PPProvLocAttrib(Base):
             provider ID, and attribute ID.
         :rtype: str
         """
-        return (f"<PPProvAttrib(id={self.id}, "
+        return (f"<PPProvLocAttrib(id={self.id}, "
                 f"prov_id={self.prov_id}, "
+                f"loc_id={self.loc_id}, "
                 f"attribute_id={self.attribute_id})>")

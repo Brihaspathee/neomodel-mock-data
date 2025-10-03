@@ -34,6 +34,8 @@
 \i centene/schema/pp_prac_attrib.sql
 \i centene/schema/pp_prac_attrib_values.sql
 \i centene/schema/pp_prac_loc.sql
+\i centene/schema/pp_prac_loc_attrib.sql
+\i centene/schema/pp_prac_loc_attrib_values.sql
 \i centene/schema/pp_prac_net_cycle.sql
 \i centene/schema/pp_prac_net_loc_cycle.sql
 -- Insert data common for all scenarios
