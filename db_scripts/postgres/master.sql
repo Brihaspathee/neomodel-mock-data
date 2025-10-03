@@ -54,7 +54,7 @@
 \i centene/scenarios/scenario_0/scenario-data.sql
 
 -- Insert data for Scenario - 1
-\i centene/scenarios/scenario_1/provider/parent/scenario-data.sql
-\i centene/scenarios/scenario_1/provider/child_ppg_1/scenario-data.sql
-\i centene/scenarios/scenario_1/provider/child_ppg_2/scenario-data.sql
-\i centene/scenarios/scenario_1/provider/child_ppg_3/scenario-data.sql
+-- \i centene/scenarios/scenario_1/provider/parent/scenario-data.sql
+-- \i centene/scenarios/scenario_1/provider/child_ppg_1/scenario-data.sql
+-- \i centene/scenarios/scenario_1/provider/child_ppg_2/scenario-data.sql
+-- \i centene/scenarios/scenario_1/provider/child_ppg_3/scenario-data.sql

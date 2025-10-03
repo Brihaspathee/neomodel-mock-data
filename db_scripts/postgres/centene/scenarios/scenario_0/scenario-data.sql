@@ -440,16 +440,16 @@ INSERT INTO portown.pp_prov_loc_attrib (id,prov_id,loc_id,attribute_id) VALUES
 
 -- Insert PP_PROV_LOC_ATTRIB_VALUES
 INSERT INTO portown.pp_prov_loc_attrib_values (id,prov_loc_attribute_id,field_id,value,value_date,value_number) VALUES
-	 ('1',1,111355,'Mutispecialty',NULL,NULL),
-	 ('2',2,111355,'Mutispecialty',NULL,NULL),
-	 ('3',3,111355,'Mutispecialty',NULL,NULL),
-	 ('4',4,111355,'Mutispecialty',NULL,NULL),
-	 ('5',5,111355,'Mutispecialty',NULL,NULL),
-	 ('6',6,111355,'Emergency',NULL,NULL),
-	 ('7',7,111355,'Emergency',NULL,NULL),
-	 ('8',8,111355,'Emergency',NULL,NULL),
-	 ('9',9,111355,'Emergency',NULL,NULL),
-	 ('10',10,111355,'Emergency',NULL,NULL),
+	 ('1',1,111355,'Multi-Specialty',NULL,NULL),
+	 ('2',2,111355,'Multi-Specialty',NULL,NULL),
+	 ('3',3,111355,'Multi-Specialty',NULL,NULL),
+	 ('4',4,111355,'Multi-Specialty',NULL,NULL),
+	 ('5',5,111355,'Multi-Specialty',NULL,NULL),
+	 ('6',6,111355,'Clinical Nurse Specialist: Emergency',NULL,NULL),
+	 ('7',7,111355,'Clinical Nurse Specialist: Emergency',NULL,NULL),
+	 ('8',8,111355,'Clinical Nurse Specialist: Emergency',NULL,NULL),
+	 ('9',9,111355,'Clinical Nurse Specialist: Emergency',NULL,NULL),
+	 ('10',10,111355,'Clinical Nurse Specialist: Emergency',NULL,NULL),
 	 ('11',11,106675,'P',NULL,NULL),
 	 ('12',11,106796,'CERT-NUM-1',NULL,NULL),
 	 ('13',11,106797,NULL,'2018-09-06',NULL),
@@ -591,12 +591,90 @@ INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,v
 
 -- Insert data for Prac Loc Attrib
 INSERT INTO portown.pp_prac_loc_attrib (id,prac_id,prov_id,loc_id,attribute_id) VALUES
-	 (1,1,1,1,107097);
+	 (1,1,1,1,107097),
+	 (2,1,1,1,107097),
+	 (3,1,1,2,107097),
+	 (4,1,1,2,107097),
+	 (5,1,1,3,107097),
+	 (6,1,1,3,107097),
+	 (11,1,2,1,107097),
+	 (12,1,2,1,107097),
+	 (13,1,2,2,107097),
+	 (14,1,2,2,107097),
+	 (15,1,2,3,107097),
+	 (16,1,2,3,107097),
+	 (25,2,1,3,107097),
+	 (26,2,1,3,107097),
+	 (27,2,1,4,107097),
+	 (28,2,1,4,107097),
+	 (29,2,1,5,107097),
+	 (30,2,1,5,107097),
+	 (35,2,2,3,107097),
+	 (36,2,2,3,107097),
+	 (37,2,2,4,107097),
+	 (38,2,2,4,107097),
+	 (39,2,2,5,107097),
+	 (40,2,2,5,107097);
+
 
 -- Insert data for Prac loc attrib values
 INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
 	 (1,1,111636,'Pedorthist',NULL,NULL,NULL),
-	 (2,1,111635,'Y',NULL,NULL,NULL);
+	 (2,1,111635,'Y',NULL,NULL,NULL),
+	 (3,2,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (4,2,111635,'N',NULL,NULL,NULL),
+	 (5,3,111636,'Pedorthist',NULL,NULL,NULL),
+	 (6,3,111635,'N',NULL,NULL,NULL),
+	 (7,4,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (8,4,111635,'N',NULL,NULL,NULL),
+	 (9,5,111636,'Pedorthist',NULL,NULL,NULL),
+	 (10,5,111635,'N',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (11,6,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (12,6,111635,'N',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (21,11,111636,'Pedorthist',NULL,NULL,NULL),
+	 (22,11,111635,'Y',NULL,NULL,NULL),
+	 (23,12,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (24,12,111635,'N',NULL,NULL,NULL),
+	 (25,13,111636,'Pedorthist',NULL,NULL,NULL),
+	 (26,13,111635,'N',NULL,NULL,NULL),
+	 (27,14,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (28,14,111635,'N',NULL,NULL,NULL),
+	 (29,15,111636,'Pedorthist',NULL,NULL,NULL),
+	 (30,15,111635,'N',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (31,16,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (32,16,111635,'N',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (49,25,111636,'Pedorthist',NULL,NULL,NULL),
+	 (50,25,111635,'Y',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (51,26,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (52,26,111635,'N',NULL,NULL,NULL),
+	 (53,27,111636,'Pedorthist',NULL,NULL,NULL),
+	 (54,27,111635,'N',NULL,NULL,NULL),
+	 (55,28,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (56,28,111635,'N',NULL,NULL,NULL),
+	 (57,29,111636,'Pedorthist',NULL,NULL,NULL),
+	 (58,29,111635,'N',NULL,NULL,NULL),
+	 (59,30,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (60,30,111635,'N',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (69,35,111636,'Pedorthist',NULL,NULL,NULL),
+	 (70,35,111635,'N',NULL,NULL,NULL);
+INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (71,36,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (72,36,111635,'N',NULL,NULL,NULL),
+	 (73,37,111636,'Pedorthist',NULL,NULL,NULL),
+	 (74,37,111635,'N',NULL,NULL,NULL),
+	 (75,38,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (76,38,111635,'N',NULL,NULL,NULL),
+	 (77,39,111636,'Pedorthist',NULL,NULL,NULL),
+	 (78,39,111635,'N',NULL,NULL,NULL),
+	 (79,40,111636,'Allergy & Immunology',NULL,NULL,NULL),
+	 (80,40,111635,'N',NULL,NULL,NULL);
+
 
 
 

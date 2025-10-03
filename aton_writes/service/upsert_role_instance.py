@@ -3,6 +3,8 @@ from aton_writes.service.upsert_role_location import process_role_locations
 from aton_writes.service.upsert_role_network import process_role_networks
 import logging
 
+from models.aton.nodes.role_instance import RoleInstance
+
 log = logging.getLogger(__name__)
 
 
@@ -15,3 +17,5 @@ def process_role_instance(org: Organization,):
                 process_role_locations(role_instance)
                 process_role_networks(role_instance)
                 org.role.connect(role_instance)
+
+
