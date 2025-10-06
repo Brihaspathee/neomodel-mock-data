@@ -122,5 +122,23 @@
       "110355": "race"
     },
     "ignore": ["100232"]
+  },
+  "100052": {
+    "name": "PRAC_LICENSE",
+    "category": "Qualification",
+    "attr_type": "License",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "106595": "startDate",
+      "100677": "endDate",
+      "100261": "state",
+      "100262": "value",
+      "104028": "status",
+      "106855": "type"
+    },
+    "field_transformers": {
+      "104028": "code|LIC_CERT_STATUS",
+      "106855": "code|LIC_TYPE:literal| - Medical License Certificate"
+    }
   }
 }

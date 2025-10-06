@@ -14,6 +14,7 @@ from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.nodes.role_specialty import RoleSpecialty
 from models.portico import PPProv, PPProvTinLoc, PPNet, PPPrac
+import portico_reads.service.fmg_codes.load_fmg_codes as fmg_loader
 import logging
 
 from models.portico.pp_net import PPNetDict
@@ -120,7 +121,7 @@ def get_prac_loc_attributes(pp_prac: PPPrac,
                             prov_id: int,
                             role_instance:RoleInstance):
     for prac_loc_attr in pp_prac.loc_attributes:
-        log.info(f"Prac Loc attribute id: {prac_loc_attr.id}")
+        log.debug(f"Prac Loc attribute id: {prac_loc_attr.id}")
         portico_location: PPProvTinLoc = prac_loc_attr.location
         prac_loc_prov_id: int = prac_loc_attr.prov_id
         log.debug(f"Portico Location Id {portico_location.id}")
@@ -213,6 +214,8 @@ def build_node_for_attribute(mapping:AttributeMapping,
         if field_id in mapping.ignore:
             continue
         if field_id in mapping.fields:
+            if field_id in mapping.field_transformers:
+                field_value = transform_field(field_value, mapping.field_transformers[field_id])
             aton_prop = mapping.fields[field_id]
             props[aton_prop] = field_value
 
@@ -255,3 +258,36 @@ def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, A
         elif operator == "not_equals" and actual_value == expected_value:
             return False
     return True
+
+
+def transform_field(data: str, transformer: str) -> str:
+    """
+    Transforms a field value using a specified transformer.
+    """
+    log.info("Field Id to be transformed: " + data)
+    log.info("Transformer: " + transformer)
+    transformed_data = ""
+    split_transformers = split_string(transformer, ":")
+    for split_transformer in split_transformers:
+        split_data = ""
+        individual_parts = split_string(split_transformer, "|")
+        if individual_parts[0] == "code":
+            # look up data from FMG_CODES
+            fmg_type = individual_parts[1]
+            log.debug(f"FMG Type:{fmg_type}")
+            log.debug(f"Looking up code from FMG_CODES:{fmg_loader.FMG_CODES[fmg_type][data]}")
+            split_data = fmg_loader.FMG_CODES[fmg_type][data]
+        if individual_parts[0] == "literal":
+            log.debug(f"Literal value:{individual_parts[1]}")
+            split_data = individual_parts[1]
+        transformed_data = transformed_data + split_data
+    log.info("Transformed Data: " + transformed_data)
+    return transformed_data
+
+def split_string(data: str, separator: str) -> list[str]:
+    """
+    Splits a string into a list of strings based on a specified separator.
+    """
+    log.debug("Data to be split: " + data)
+    log.debug("Separator: " + separator)
+    return data.split(separator)

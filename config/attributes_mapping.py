@@ -20,4 +20,5 @@ class AttributeMapping:
     ignore: List[str] = field(default_factory=list)
     adornments: Dict[str, Any] = field(default_factory=dict)
     conditions: Dict[str, Any] = field(default_factory=dict)
+    field_transformers : Dict[str, Any] = field(default_factory=dict)
 
