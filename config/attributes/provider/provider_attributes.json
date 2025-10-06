@@ -197,5 +197,23 @@
         "value": "Y"
       }
     ]
+  },
+  "101617": {
+    "name": "PROV_CCS",
+    "category": "Qualification",
+    "attr_type": "Certification",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "102444": "start_date",
+      "102445": "end_date",
+      "102735": "type"
+    },
+    "field_transformers": {
+      "102735": "literal|CCS - :code|PROV_CCS"
+    },
+    "adornments": {
+      "issuer": "California Children Services",
+      "secondary_label": "Certification"
+    }
   }
 }
