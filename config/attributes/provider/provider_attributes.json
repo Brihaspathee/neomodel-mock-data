@@ -206,10 +206,32 @@
     "fields": {
       "102444": "start_date",
       "102445": "end_date",
-      "102735": "type"
+      "102735": "type",
+      "102443": "status"
     },
     "field_transformers": {
-      "102735": "literal|CCS - :code|PROV_CCS"
+      "102735": [
+        {
+          "transform_type": "literal",
+          "value": "CCS - "
+        },
+        {
+          "transform_type": "code",
+          "value": "PROV_CCS"
+        }
+      ],
+      "102443": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "PASSED",
+              "N": "CANCELED"
+            }
+          }
+        }
+      ]
     },
     "adornments": {
       "issuer": "California Children Services",

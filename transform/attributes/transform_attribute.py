@@ -214,6 +214,7 @@ def build_node_for_attribute(mapping:AttributeMapping,
         if field_id in mapping.ignore:
             continue
         if field_id in mapping.fields:
+            # Check if the field has a transformer
             if field_id in mapping.field_transformers:
                 field_value = transform_field(field_value, mapping.field_transformers[field_id])
             aton_prop = mapping.fields[field_id]
@@ -259,35 +260,34 @@ def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, A
             return False
     return True
 
-
-def transform_field(data: str, transformer: str) -> str:
-    """
-    Transforms a field value using a specified transformer.
-    """
+def transform_field(data: str, transformer_list: list[Any]) -> str:
     log.info("Field Id to be transformed: " + data)
-    log.info("Transformer: " + transformer)
+    log.info(f"Transformers: {transformer_list}" )
     transformed_data = ""
-    split_transformers = split_string(transformer, ":")
-    for split_transformer in split_transformers:
+    for transformer in transformer_list:
+        log.info(f"Transformer: {transformer}")
         split_data = ""
-        individual_parts = split_string(split_transformer, "|")
-        if individual_parts[0] == "code":
-            # look up data from FMG_CODES
-            fmg_type = individual_parts[1]
-            log.debug(f"FMG Type:{fmg_type}")
-            log.debug(f"Looking up code from FMG_CODES:{fmg_loader.FMG_CODES[fmg_type][data]}")
+        transform_type = transformer["transform_type"]
+        value = transformer["value"]
+        if transform_type == "code":
+            fmg_type = value
+            log.info(f"FMG Type:{fmg_type}")
+            log.info(f"Looking up code from FMG_CODES:{fmg_loader.FMG_CODES[fmg_type][data]}")
             split_data = fmg_loader.FMG_CODES[fmg_type][data]
-        if individual_parts[0] == "literal":
-            log.debug(f"Literal value:{individual_parts[1]}")
-            split_data = individual_parts[1]
+        if transform_type == "literal":
+            log.info(f"Literal value:{value}")
+            split_data = value
+        if transform_type == "mapping":
+            log.info(f"Mapping value:{value}")
+            mapping_type = value["mapping_type"]
+            mappings = value["mappings"]
+            if mapping_type == "literal":
+                split_data = mappings[data]
+            if mapping_type == "code":
+                fmg_type = value["code_type"]
+                split_data = mappings[fmg_loader.FMG_CODES[fmg_type][data]]
         transformed_data = transformed_data + split_data
     log.info("Transformed Data: " + transformed_data)
     return transformed_data
 
-def split_string(data: str, separator: str) -> list[str]:
-    """
-    Splits a string into a list of strings based on a specified separator.
-    """
-    log.debug("Data to be split: " + data)
-    log.debug("Separator: " + separator)
-    return data.split(separator)
+

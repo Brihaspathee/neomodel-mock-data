@@ -137,8 +137,22 @@
       "106855": "type"
     },
     "field_transformers": {
-      "104028": "code|LIC_CERT_STATUS",
-      "106855": "code|LIC_TYPE:literal| - Medical License Certificate"
+      "104028": [
+        {
+          "transform_type": "code",
+          "value": "LIC_CERT_STATUS"
+        }
+      ],
+      "106855": [
+        {
+          "transform_type": "code",
+          "value": "LIC_TYPE"
+        },
+        {
+          "transform_type": "literal",
+          "value": " - Medical License Certificate"
+        }
+      ]
     }
   }
 }
