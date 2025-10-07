@@ -236,7 +236,8 @@ INSERT INTO portown.pp_prov_attrib (id,prov_id,attribute_id) VALUES
 	 (3,1,100073),
 	 (7,1,103277),
 	 (8,2,502),
-	 (9,2,103277);
+	 (9,2,103277),
+	 (10,1,101617);
 
 -- Insert PP_PROV_ATTRIB_VALUES
 INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,value_date,value_number) VALUES
@@ -265,7 +266,11 @@ INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,v
 	 (21,9,106275,'Y',NULL,NULL),
 	 (22,9,106276,'N',NULL,NULL),
 	 (23,9,105835,'MS0913',NULL,NULL),
-	 (24,9,105836,'MS0912',NULL,NULL);
+	 (24,9,105836,'MS0912',NULL,NULL),
+     (25,10,102735,'SPCL',NULL,NULL,NULL),
+	 (26,10,102443,'Y',NULL,NULL,NULL),
+	 (27,10,102444,NULL,'2020-05-07',NULL,NULL),
+	 (28,10,102445,NULL,'4000-01-01',NULL,NULL);
 
 -- Insert PP_PROV_TIN_LOC
 INSERT INTO portown.pp_prov_tin_loc (id,tin_id,address_id,"name","PRIMARY",print_suppress,office_mgr,train,bus,transit_route,handicap,prov_tin_prc_cont_id) VALUES
@@ -533,7 +538,10 @@ INSERT INTO portown.pp_prac_attrib (id,prac_id,attribute_id) VALUES
 	 (16,2,103877),
 	 (17,1,100039),
 	 (18,1,100039),
-	 (19,2,100039);
+	 (19,2,100039),
+	 (20,1,100052);
+
+
 
 
 -- Insert data for PP_PRAC_ATTRIB_VALUES
@@ -587,7 +595,13 @@ INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,v
 	 (43,18,100233,'2148-5',NULL,NULL,NULL),
 	 (44,18,110355,'2106-3',NULL,NULL,NULL),
 	 (45,19,100233,'2155-0',NULL,NULL,NULL),
-	 (46,19,110355,'2106-3',NULL,NULL,NULL);
+	 (46,19,110355,'2106-3',NULL,NULL,NULL),
+	 (47,20,106595,NULL,'1995-05-31',NULL,NULL),
+	 (48,20,100677,NULL,'4000-01-01',NULL,NULL),
+	 (49,20,100262,'42235352',NULL,NULL,NULL),
+	 (50,20,104028,'AC',NULL,NULL,NULL),
+	 (51,20,106855,'A',NULL,NULL,NULL);
+
 
 -- Insert data for Prac Loc Attrib
 INSERT INTO portown.pp_prac_loc_attrib (id,prac_id,prov_id,loc_id,attribute_id) VALUES
