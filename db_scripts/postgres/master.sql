@@ -59,3 +59,14 @@
 \i centene/scenarios/scenario_1/provider/child_ppg_2/scenario-data.sql
 \i centene/scenarios/scenario_1/provider/child_ppg_3/scenario-data.sql
 \i centene/scenarios/scenario_1/practitioner/prac-1/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-2/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-3/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-4/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-5/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-6/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-7/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-8/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-9/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-10/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-11/scenario-data.sql
+\i centene/scenarios/scenario_1/practitioner/prac-12/scenario-data.sql

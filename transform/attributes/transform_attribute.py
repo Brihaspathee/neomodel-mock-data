@@ -106,6 +106,10 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
         attribute_id = attribute.attribute_id
         mapping = ATTRIBUTES_CONFIG["practitioner"][str(attribute.attribute_id)]
         node = build_node_for_attribute(mapping, attribute_fields)
+        if not node:
+            log.debug(f"For Practitioner {pp_prac.fname}, a node for the attribute {attribute_id} could not be built")
+            log.debug(f"Conditions for creating the node may not have been met")
+            continue
         if isinstance(node, Identifier):
             practitioner.add_identifier(node)
         elif isinstance(node, Qualification):
@@ -114,7 +118,8 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
             log.debug(f"This is a Practitioner {node}")
             transform_prac_node(attribute_id, node, practitioner )
         else:
-            log.error(f"Unable to determine node type for attribute {attribute_id}")
+            log.error(f"Unable to determine node type for attribute {attribute_id}"
+                      f"for practitioner {pp_prac.id} name is {pp_prac.fname}")
 
 def get_prac_loc_attributes(pp_prac: PPPrac,
                             pp_prov_tin_loc: PPProvTinLoc,
@@ -261,24 +266,24 @@ def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, A
     return True
 
 def transform_field(data: str, transformer_list: list[Any]) -> str:
-    log.info("Field Id to be transformed: " + data)
-    log.info(f"Transformers: {transformer_list}" )
+    log.debug("Field Id to be transformed: " + data)
+    log.debug(f"Transformers: {transformer_list}" )
     transformed_data = ""
     for transformer in transformer_list:
-        log.info(f"Transformer: {transformer}")
+        log.debug(f"Transformer: {transformer}")
         split_data = ""
         transform_type = transformer["transform_type"]
         value = transformer["value"]
         if transform_type == "code":
             fmg_type = value
-            log.info(f"FMG Type:{fmg_type}")
-            log.info(f"Looking up code from FMG_CODES:{fmg_loader.FMG_CODES[fmg_type][data]}")
+            log.debug(f"FMG Type:{fmg_type}")
+            log.debug(f"Looking up code from FMG_CODES:{fmg_loader.FMG_CODES[fmg_type][data]}")
             split_data = fmg_loader.FMG_CODES[fmg_type][data]
         if transform_type == "literal":
-            log.info(f"Literal value:{value}")
+            log.debug(f"Literal value:{value}")
             split_data = value
         if transform_type == "mapping":
-            log.info(f"Mapping value:{value}")
+            log.debug(f"Mapping value:{value}")
             mapping_type = value["mapping_type"]
             mappings = value["mappings"]
             if mapping_type == "literal":
@@ -287,7 +292,7 @@ def transform_field(data: str, transformer_list: list[Any]) -> str:
                 fmg_type = value["code_type"]
                 split_data = mappings[fmg_loader.FMG_CODES[fmg_type][data]]
         transformed_data = transformed_data + split_data
-    log.info("Transformed Data: " + transformed_data)
+    log.debug("Transformed Data: " + transformed_data)
     return transformed_data
 
 

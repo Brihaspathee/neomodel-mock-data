@@ -267,10 +267,10 @@ INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,v
 	 (22,9,106276,'N',NULL,NULL),
 	 (23,9,105835,'MS0913',NULL,NULL),
 	 (24,9,105836,'MS0912',NULL,NULL),
-     (25,10,102735,'SPCL',NULL,NULL,NULL),
-	 (26,10,102443,'Y',NULL,NULL,NULL),
-	 (27,10,102444,NULL,'2020-05-07',NULL,NULL),
-	 (28,10,102445,NULL,'4000-01-01',NULL,NULL);
+     (25,10,102735,'SPCL',NULL,NULL),
+	 (26,10,102443,'Y',NULL,NULL),
+	 (27,10,102444,NULL,'2020-05-07',NULL),
+	 (28,10,102445,NULL,'4000-01-01',NULL);
 
 -- Insert PP_PROV_TIN_LOC
 INSERT INTO portown.pp_prov_tin_loc (id,tin_id,address_id,"name","PRIMARY",print_suppress,office_mgr,train,bus,transit_route,handicap,prov_tin_prc_cont_id) VALUES

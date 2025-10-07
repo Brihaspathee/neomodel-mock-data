@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 def upsert_practitioner(organization: Organization):
     log.debug(f"About to upsert practitioners to organization {organization.name} with element id {organization.element_id}")
     for practitioner in organization.get_pending_practitioners():
-        log.info(f"Practitioners is: {practitioner}")
+        log.debug(f"Practitioners is: {practitioner}")
         existing_prac = get_practitioner_by_prac_id(practitioner.get_portico_source().value)
         if existing_prac:
             log.debug(f"Practitioner already exists with element id {existing_prac.element_id}")
@@ -45,7 +45,7 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     create_identifiers(prac=practitioner)
     create_qualifications(prac=practitioner)
     role_instance: RoleInstance = practitioner.get_pending_role_instance()
-    log.info(f"Pending Role Specialties: {role_instance.get_pending_prac_rs()}")
+    log.debug(f"Pending Role Specialties: {role_instance.get_pending_prac_rs()}")
     log.debug(f"Role instance is: {type(role_instance)}")
     role_instance.save()
     practitioner.role.connect(role_instance)
@@ -78,11 +78,11 @@ def create_qualifications(prac: Practitioner):
             rel.connect(qual_node)
 
 def process_prac_role_specialties(role_instance: RoleInstance):
-    log.info(f"Processing specialties for the Practitioner:{role_instance.get_pending_prac_rs()}")
+    log.debug(f"Processing specialties for the Practitioner:{role_instance.get_pending_prac_rs()}")
     for specialty in role_instance.get_pending_prac_rs():
         if not is_specialty_present(specialty.specialty, role_instance):
-            log.info(f"Specialty to be saved for the practitioner is {specialty.specialty}")
-            log.info(f"Primary specialty {specialty.isPrimary}")
+            log.debug(f"Specialty to be saved for the practitioner is {specialty.specialty}")
+            log.debug(f"Primary specialty {specialty.isPrimary}")
             create_role_specialty(specialty, role_instance)
             if specialty.isPrimary == 'Y':
                 role_instance.prac_primary_specialty.connect(specialty)
