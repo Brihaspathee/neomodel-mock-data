@@ -25,6 +25,7 @@ class Organization(BaseNode):
     parent = RelationshipTo("Organization", "PART_OF")
     children = RelationshipFrom("Organization", "PART_OF")
 
+    pp_prov = RelationshipFrom("models.aton.nodes.pp_prov.PP_PROV", "SOURCES")
     npi = RelationshipTo("NPI", "HAS_NPI")
     tin = RelationshipTo("TIN", "HAS_TIN")
     medicare_id = RelationshipTo("MedicareID", "HAS_MEDICARE_ID")

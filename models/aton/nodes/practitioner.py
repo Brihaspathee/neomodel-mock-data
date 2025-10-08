@@ -1,5 +1,5 @@
 from neo4j.time import DateType
-from neomodel import StringProperty, DateProperty, RelationshipTo, ArrayProperty
+from neomodel import StringProperty, DateProperty, RelationshipTo, ArrayProperty, RelationshipFrom
 
 from models.aton.nodes.base_node import BaseNode
 from models.aton.nodes.identifier import LegacySystemID, Identifier, NPI, DEA_Number, MedicareID, MedicaidID
@@ -34,6 +34,8 @@ class Practitioner(BaseNode):
     # Qualifications
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
                                     "HAS_QUALIFICATION")
+
+    pp_prac = RelationshipFrom("models.aton.nodes.pp_prac.PP_PRAC", "SOURCES")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

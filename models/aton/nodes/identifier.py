@@ -10,8 +10,8 @@ from models.aton.nodes.base_node import BaseNode
 class Identifier(BaseNode):
 
     value: str= StringProperty(required=True)
-    start_date: DateType= DateProperty(required=False)
-    end_date: DateType= DateProperty(required=False)
+    start_date: DateType= DateProperty(required=False, db_property='startDate')
+    end_date: DateType= DateProperty(required=False, db_property='endDate')
     # @property
     # def uid(self):
     #     if hasattr(self, '_node') and self._node is not None:

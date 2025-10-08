@@ -7,7 +7,22 @@ from repository.network_repo import find_network_by_code_or_name
 
 log = logging.getLogger(__name__)
 
+
 def create_product(product: Product):
+    """
+    Creates or retrieves a product and establishes connections with its pending networks.
+
+    The function first attempts to find an existing product or create a new one if it does
+    not already exist. After ensuring the product is created, it processes its pending
+    networks by either finding or creating each network. For each network associated with
+    the product, the necessary connection between the product and the network is established.
+    If the operation fails at any point, an error is logged and the function returns None.
+
+    :param product: The product to be created or retrieved and connected to its pending networks.
+    :type product: Product
+    :return: The created or retrieved product with established network connections, or None if an error occurs.
+    :rtype: Product or None
+    """
     try:
         product = find_or_create_product(product)
         for network in product.get_pending_networks():
@@ -22,6 +37,21 @@ def create_product(product: Product):
 
 
 def find_or_create_product(product):
+    """
+    Finds an existing product by its code or name, or creates a new one if it does not exist.
+    This function handles relationships between the product and its associated legacy
+    system identification (PP_NET). If the product is created or found by name and there
+    are potential pre-existing associations (PP_NET), those are resolved and linked
+    appropriately.
+
+    The function logs detailed information about the actions, such as creating a new product,
+    associating legacy system IDs, or determining that a product already exists.
+
+    :param product: The product instance to locate or create.
+    :type product: Product
+    :return: The existing or newly created product.
+    :rtype: Product
+    """
     existing_product, is_prod_found_by_name = find_product_by_code_or_name(product.code, product.name)
     if not existing_product:
         product.save()
@@ -50,7 +80,23 @@ def find_or_create_product(product):
         product = existing_product
     return product
 
+
 def find_or_create_network(network):
+    """
+    Finds an existing network by its code or name or creates a new network if one does not already exist.
+
+    If the network already exists and is found using its name, it ensures that the portico
+    source for this network is connected to the existing network, avoiding the creation of
+    multiple nodes with the same name in ATON. If a network node does not exist, a new one
+    will be created along with its corresponding portico source, ensuring proper linkage
+    between the network and its portico representation.
+
+    :param network: The network object to be checked against existing networks or created
+        if a matching network does not already exist.
+    :type network: Network
+    :return: A reference to the existing or newly created network.
+    :rtype: Network
+    """
     existing_network, is_net_found_by_name = find_network_by_code_or_name(network.code, network.name)
     if not existing_network:
         network.save()

@@ -25,6 +25,7 @@ class Location(BaseNode):
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
                                     "HAS_QUALIFICATION")
     legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier", "HAS_LEGACY_SYSTEM_ID")
+    pp_prov_tin_loc = RelationshipTo("models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC", "SOURCES")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

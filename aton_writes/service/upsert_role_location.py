@@ -11,6 +11,21 @@ log = logging.getLogger(__name__)
 
 
 def process_role_locations(role_instance:RoleInstance):
+    """
+    Processes and associates pending role locations for the given `RoleInstance`.
+
+    This function iterates over all pending role locations of the provided `RoleInstance`.
+    It performs operations such as retrieving or creating `Location` instances,
+    saving role locations, associating primary locations, creating contacts, and connecting
+    specialties to their respective locations. Additionally, connections between role
+    locations, locations, and the `RoleInstance` are established. The function also logs
+    details of each processed role location.
+
+    :param role_instance: A `RoleInstance` object containing pending role locations
+                          to be processed and connected.
+    :type role_instance: RoleInstance
+    :return: None
+    """
     for role_location in role_instance.get_pending_rls():
         location: Location = role_location.get_location()
         location = get_or_create_location(location)

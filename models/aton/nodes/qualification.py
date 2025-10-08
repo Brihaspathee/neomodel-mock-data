@@ -9,8 +9,8 @@ class Qualification(BaseNode):
     state = StringProperty(required=False)
     status = StringProperty(required=False)
     value = StringProperty(required=False)
-    start_date = DateProperty(required=False)
-    end_date = DateProperty(required=False)
+    start_date = DateProperty(required=False, db_property="startDate")
+    end_date = DateProperty(required=False, db_property="endDate")
     secondary_label: str = ""
 
     organization = RelationshipFrom("models.aton.nodes.organization.Organization", "HAS_QUALIFICATION")

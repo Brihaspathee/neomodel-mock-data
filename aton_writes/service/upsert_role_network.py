@@ -6,6 +6,17 @@ log = logging.getLogger(__name__)
 
 
 def process_role_networks(role_instance:RoleInstance):
+    """
+    Processes the pending role networks and their associated role locations for the
+    specified role instance. This includes saving pending role networks, connecting
+    them to the appropriate network and role networks, and processing their
+    associated role locations by connecting them with the relevant role network.
+
+    :param role_instance: The role instance object whose pending role networks and
+        associated role locations are to be processed.
+    :type role_instance: RoleInstance
+    :return: None
+    """
     for rn in role_instance.get_pending_rns():
         rn.save()
         network: Network = rn.get_network()

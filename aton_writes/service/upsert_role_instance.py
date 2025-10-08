@@ -9,6 +9,15 @@ log = logging.getLogger(__name__)
 
 
 def process_role_instance(org: Organization,):
+    """
+    Processes pending role instances for an organization. This function iterates through all pending role instances
+    grouped by their type within the organization, performs necessary actions such as saving them, processing their
+    locations and networks, and connecting them to the organization's role relationships.
+
+    :param org: The organization instance whose pending role instances need to be processed.
+    :type org: Organization
+    :return: None
+    """
     for role_type, role_instance_list in org.get_pending_role_instances().items():
         if role_type == "has_role":
             for role_instance in role_instance_list:
