@@ -10,7 +10,7 @@ from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.portico import PPProv, PPProvTinLoc, PPProvLocOfHours
 from transform.transform_provider_net_cycle import transform_provider_net_cycle
-from transform.attributes.transform_attribute import get_prov_loc_attributes
+from transform.attributes.transform_attribute import transform_attributes
 from utils.office_hours import format_office_hours
 
 log = logging.getLogger(__name__)
@@ -85,7 +85,7 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
         location = set_location(hash_code, prov_tin_loc)
         role_location.set_location(location)
         contact: Contact = get_location_phone(prov_tin_loc)
-        get_prov_loc_attributes(pp_prov, prov_tin_loc, role_location)
+        transform_attributes("PROV_LOC", pp_prov, prov_tin_loc, role_location)
         role_location.add_contact(contact)
         get_prov_loc_office_hours(pp_prov, prov_tin_loc, role_location)
         role_instance.add_pending_rl(role_location)

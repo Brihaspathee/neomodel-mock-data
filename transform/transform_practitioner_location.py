@@ -1,7 +1,7 @@
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.portico import PPPrac, PPProv, PPProvTinLoc
-from transform.attributes.transform_attribute import get_prac_loc_attributes
+from transform.attributes.transform_attribute import transform_attributes
 from transform.transform_practitioner_net_cycle import transform_practitioner_net_cycle
 from utils.location_util import get_hash_key_for_prov_tin_loc
 from transform.transform_utils import set_location
@@ -22,7 +22,7 @@ def transform_practitioner_location(pp_prac:PPPrac, role_instance:RoleInstance, 
             hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=pp_prov_tin_loc)
             location = set_location(hash_code, pp_prov_tin_loc)
             role_location.set_location(location)
-            get_prac_loc_attributes(pp_prac, pp_prov_tin_loc, prov_id, role_instance)
+            transform_attributes("PRAC_LOC",pp_prac, pp_prov_tin_loc, prov_id, role_instance)
             log.debug(f"Practitioner: {pp_prac.fname}")
             log.debug(f"Provider: {prov_id}")
             log.debug(f"Location {pp_prov_tin_loc.name} id is {pp_prov_tin_loc.id}")

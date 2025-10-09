@@ -5,7 +5,7 @@ from models.aton.nodes.role_instance import RoleInstance
 from models.portico import PPProv, PPPrac, PPPracLoc
 import logging
 
-from transform.attributes.transform_attribute import get_prac_attributes
+from transform.attributes.transform_attribute import transform_attributes
 from transform.transform_practitioner_location import transform_practitioner_location
 
 log = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ def transform_practitioner(pp_prov:PPProv, organization: Organization):
                                                       system="PORTICO",
                                                       systemIdType="PRAC ID")
         practitioner.set_portico_source(aton_pp_prac)
-        get_prac_attributes(pp_prac, practitioner)
+        transform_attributes("PRACTITIONER", pp_prac, practitioner)
         organization.add_practitioner(practitioner)
         transform_practitioner_location(pp_prac, role_instance, pp_prov.id)
 

@@ -7,7 +7,7 @@ from models.aton.nodes.telecom import Telecom
 from transform.transformers import transform_to_aton
 from transform.transform_provider_location import transform_provider_location
 from transform.transform_practitioner import transform_practitioner
-from transform.attributes.transform_attribute import get_provider_attributes
+from transform.attributes.transform_attribute import transform_attributes
 import logging
 
 from models.portico import PPProv
@@ -54,7 +54,8 @@ def _(provider:PPProv) -> Organization:
     # Populate locations associated with the organization
     # ------------------------------------------------------------------------------
     transform_provider_location(provider, organization)
-    get_provider_attributes(provider, organization)
+    # get_provider_attributes(provider, organization)
+    transform_attributes("PROVIDER", provider, organization)
     # ------------------------------------------------------------------------------
     # Add the practitioners associated with the organization
     # ------------------------------------------------------------------------------

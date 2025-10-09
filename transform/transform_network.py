@@ -3,7 +3,7 @@ from models.aton.nodes.network import Network
 from models.aton.nodes.product import Product
 from models.portico.pp_net import PPNetDict
 from transform.transformers import transform_to_aton
-from transform.attributes.transform_attribute import get_net_attributes
+from transform.attributes.transform_attribute import transform_attributes
 import logging
 
 from models.portico import PPNet
@@ -28,7 +28,7 @@ def _(pp_net:PPNet) -> Product:
             code=network["id"],
             name=network["description"]
         )
-        get_net_attributes(network, net)
+        transform_attributes("NETWORK", network, net)
         log.debug(f"Is this a vendor network: {net.isVendorNetwork}")
         log.debug(f"Is this a health network: {net.isHNETNetwork}")
         portico_net: LegacySystemID = LegacySystemID(value=network["id"],

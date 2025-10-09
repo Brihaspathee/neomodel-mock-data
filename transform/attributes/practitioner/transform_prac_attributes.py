@@ -1,17 +1,47 @@
 from typing import Any
 
 from config.attribute_settings import ATTRIBUTES_CONFIG
+from models.aton.nodes.identifier import Identifier
 from models.aton.nodes.practitioner import Practitioner
+from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 from models.portico import PPPrac, PPProvTinLoc
 
 import logging
 
+from transform.attributes.transform_attribute_util import build_node_for_attribute
+
 log = logging.getLogger(__name__)
 
 
-def transform_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
-    pass
+def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
+    for attribute in pp_prac.attributes:
+        attribute_fields: dict[str, Any] = {}
+        for value in attribute.values:
+            field_id = str(value.field_id)
+            if value.value_date:
+                attribute_fields[field_id] = value.value_date
+            elif value.value_number:
+                attribute_fields[field_id] = value.value_number
+            else:
+                attribute_fields[field_id] = value.value
+        attribute_id = attribute.attribute_id
+        mapping = ATTRIBUTES_CONFIG["practitioner"][str(attribute.attribute_id)]
+        node = build_node_for_attribute(mapping, attribute_fields)
+        if not node:
+            log.debug(f"For Practitioner {pp_prac.fname}, a node for the attribute {attribute_id} could not be built")
+            log.debug(f"Conditions for creating the node may not have been met")
+            continue
+        if isinstance(node, Identifier):
+            practitioner.add_identifier(node)
+        elif isinstance(node, Qualification):
+            practitioner.add_qualification(node)
+        elif isinstance(node, Practitioner):
+            log.debug(f"This is a Practitioner {node}")
+            transform_prac_node(attribute_id, node, practitioner )
+        else:
+            log.error(f"Unable to determine node type for attribute {attribute_id}"
+                      f"for practitioner {pp_prac.id} name is {pp_prac.fname}")
 
 def transform_prac_loc_attributes(pp_prac: PPPrac,
                                   pp_prov_tin_loc: PPProvTinLoc,
