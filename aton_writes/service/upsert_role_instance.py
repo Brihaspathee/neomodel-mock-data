@@ -18,7 +18,7 @@ def process_role_instance(org: Organization):
     :type org: Organization
     :return: None
     """
-    for role_type, role_instance_list in org.get_pending_role_instances().items():
+    for role_type, role_instance_list in org.context.get_role_instances().items():
         if role_type == "has_role":
             for role_instance in role_instance_list:
                 role_instance.save()

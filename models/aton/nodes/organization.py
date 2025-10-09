@@ -50,80 +50,23 @@ class Organization(BaseNode):
         super().__init__(*args, **kwargs)
         self.parent_ppg_id = None
         self.context: Any = None
-        # Temporary storage for identifiers
-        self._pending_identifiers = {
-            "npi": [],
-            "tin": [],
-            "medicare_id": [],
-            "medicaid_id": [],
-            "ppg_id": []
-        }
 
         self._pending_contacts: list[Contact] = []
 
-        self._pending_qualifications: list[Qualification] = []
-
-        self._pending_role_instances: dict[str, list[RoleInstance]] = {
-            "has_role": [],
-            "contracted_by": []
-        }
-
-        self._pending_portico_source: LegacySystemID | None = None
-
         self._pending_practitioners: list[Practitioner] = []
 
-    # --------------------------------
-    # Associate Identifiers in Memory
-    # --------------------------------
-    def add_identifier(self, identifier:Identifier):
-        if isinstance(identifier, NPI):
-            self._pending_identifiers["npi"].append(identifier)
-        elif isinstance(identifier, TIN):
-            self._pending_identifiers["tin"].append(identifier)
-        elif isinstance(identifier, PPGID):
-            self._pending_identifiers["ppg_id"].append(identifier)
-        elif isinstance(identifier, MedicareID):
-            self._pending_identifiers["medicare_id"].append(identifier)
-        elif isinstance(identifier, MedicaidID):
-            self._pending_identifiers["medicaid_id"].append(identifier)
-        else:
-            ValueError(f"{identifier} is not a valid identifier")
 
     def add_contact(self, contact:Contact):
         self._pending_contacts.append(contact)
 
-    def add_qualification(self, qualification:Qualification):
-        self._pending_qualifications.append(qualification)
-
-    def add_role_instance(self, role_instance: RoleInstance):
-        if role_instance.get_role_type() == "has_role":
-            self._pending_role_instances["has_role"].append(role_instance)
-        elif role_instance.get_role_type() == "contracted_by":
-            self._pending_role_instances["contracted_by"].append(role_instance)
-        else:
-            ValueError(f"{role_instance} is not a valid role instance")
-
     def add_practitioner(self, practitioner: Practitioner):
         self._pending_practitioners.append(practitioner)
-
-    def get_pending_identifiers(self):
-        return self._pending_identifiers
 
     def get_pending_contacts(self):
         return self._pending_contacts
 
-    def get_pending_qualifications(self):
-        return self._pending_qualifications
-
-    def get_pending_role_instances(self):
-        return self._pending_role_instances
 
     def get_pending_practitioners(self):
         return self._pending_practitioners
 
-    def set_portico_source(self, portico_source: LegacySystemID):
-        self._pending_portico_source = portico_source
-
-    def get_portico_source(self):
-        return self._pending_portico_source
 

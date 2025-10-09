@@ -8,8 +8,8 @@ def transform_hat_code_attr(**kwargs):
     for value in prov_attrib.values:
         log.debug(f"Value: {value}")
         log.debug(f"Value: {value.value}")
-        log.debug(f"Role Instances: {type(org.get_pending_role_instances())}")
-        for role, role_instances in org.get_pending_role_instances().items():
+        log.debug(f"Role Instances: {type(org.context.get_role_instances())}")
+        for role, role_instances in org.context.get_role_instances().items():
             log.debug(f"Role: {role}")
             if role == "has_role":
                 for role_instance in role_instances:

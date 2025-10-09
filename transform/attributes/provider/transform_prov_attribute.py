@@ -52,8 +52,8 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                     organization.pcp_practitioner_required = False
                 if node.parent_ppg_id:
                     organization.parent_ppg_id = node.parent_ppg_id
-            organization.add_identifier(node)
+            organization.context.add_identifier(node)
         elif isinstance(node, Qualification):
-            organization.add_qualification(node)
+            organization.context.add_qualification(node)
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}")

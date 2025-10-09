@@ -48,7 +48,7 @@ def transform_provider_location(provider: PPProv, organization:Organization):
         # ------------------------------------------------------------------------------
         # Add the role instance to the organization
         # ------------------------------------------------------------------------------
-        organization.add_role_instance(role_instance)
+        organization.context.add_role_instance(role_instance)
 
 def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
     """

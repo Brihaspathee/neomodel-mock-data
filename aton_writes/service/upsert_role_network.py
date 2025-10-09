@@ -1,5 +1,5 @@
 from models.aton.nodes.network import Network
-from models.aton.nodes.organization_context import OrganizationContext
+from models.aton.context.organization_context import OrganizationContext
 from models.aton.nodes.role_instance import RoleInstance
 import logging
 

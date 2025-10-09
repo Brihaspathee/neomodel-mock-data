@@ -35,7 +35,7 @@ def upsert_organizations(organizations: list[Organization]):
         key=lambda org: (org.parent_ppg_id is not None, org.parent_ppg_id or "")
     )
     for organization in sorted_orgs:
-        prov_id = organization.get_portico_source().value
+        prov_id = organization.context.get_portico_source().value
         existing_org = get_organization_by_prov_id(prov_id)
         if existing_org:
             # existing_org.name = organization.name
@@ -66,7 +66,7 @@ def create_organization(org: Organization):
     try:
         log.debug(org.__properties__)
         org.save()
-        legacySystemId: LegacySystemID = org.get_portico_source().save()
+        legacySystemId: LegacySystemID = org.context.get_portico_source().save()
         legacySystemId.organization.connect(org)
         pp_prov:PP_PROV = PP_PROV(prov_id=int(legacySystemId.value))
         pp_prov.save()
@@ -105,7 +105,7 @@ def create_identifiers(org):
     :type org: Organization
     :return: None
     """
-    for rel_name, id_list in org.get_pending_identifiers().items():
+    for rel_name, id_list in org.context.get_identifiers().items():
         rel = getattr(org, rel_name)
         for id_node in id_list:
             if not hasattr(id_node, "element_id") or id_node.element_id is None:
@@ -136,10 +136,10 @@ def create_qualifications(org: Organization):
     """
     log.debug(
         f"Writing qualifications to Aton for organization {org.name}"
-        f"Qualifications are: {org.get_pending_qualifications()}"
+        f"Qualifications are: {org.context.get_qualifications()}"
     )
     rel = getattr(org, "qualifications")
-    for qual_node in org.get_pending_qualifications():
+    for qual_node in org.context.get_qualifications():
         if not hasattr(qual_node, "element_id") or qual_node.element_id is None:
             qual_node.save()
             log.debug(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
@@ -210,7 +210,7 @@ def update_org_node_properties(existing_org: Organization,
         for rel in relationships:
             # Special case for qualifications
             if rel == "qualifications":
-                new_quals = updated_org.get_pending_qualifications()
+                new_quals = updated_org.context.get_qualifications()
                 new_quals.sort(key=lambda q: q.type)
                 query = """
                         MATCH (org:Organization)-[:HAS_QUALIFICATION]->(q)
