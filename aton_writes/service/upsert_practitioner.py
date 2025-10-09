@@ -46,7 +46,7 @@ def upsert_practitioner(organization: Organization):
                 existing_prac.role.connect(role_instance)
                 role_instance.contracted_organization.connect(organization)
                 process_role_locations(role_instance)
-                process_role_networks(role_instance)
+                process_role_networks(role_instance, organization.context)
                 process_prac_role_specialties(role_instance)
         else:
             log.debug(f"Practitioner does not exist")
@@ -81,7 +81,7 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     practitioner.role.connect(role_instance)
     role_instance.contracted_organization.connect(organization)
     process_role_locations(role_instance)
-    process_role_networks(role_instance)
+    process_role_networks(role_instance, organization.context)
     process_prac_role_specialties(role_instance)
     log.debug(f"Practitioner created with element id {practitioner.element_id}")
 

@@ -5,6 +5,12 @@ from typing import Dict, List, Any
 from config.attributes_mapping import AttributeMapping
 
 ATTRIBUTES_CONFIG:Dict[str, Dict[str, AttributeMapping]] = {}
+SPECIAL_ATTRIBUTES:Dict[str, Dict[str, Any]] = {
+    "100114":{
+        "func_name": "transform.attributes.transform_attribute.transform_hat_code_attr",
+        "arguments": ["prov_attrib", "organization"]
+    }
+}
 
 # -----------------------------------------------------------------------------------------
 # Helper: import class from string

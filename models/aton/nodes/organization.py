@@ -1,3 +1,5 @@
+from typing import Any
+
 from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatProperty, RelationshipTo, RelationshipFrom
 
 from models.aton.nodes.base_node import BaseNode
@@ -47,6 +49,7 @@ class Organization(BaseNode):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.parent_ppg_id = None
+        self.context: Any = None
         # Temporary storage for identifiers
         self._pending_identifiers = {
             "npi": [],

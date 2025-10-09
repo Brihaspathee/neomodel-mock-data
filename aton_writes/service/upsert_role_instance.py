@@ -8,7 +8,7 @@ from models.aton.nodes.role_instance import RoleInstance
 log = logging.getLogger(__name__)
 
 
-def process_role_instance(org: Organization,):
+def process_role_instance(org: Organization):
     """
     Processes pending role instances for an organization. This function iterates through all pending role instances
     grouped by their type within the organization, performs necessary actions such as saving them, processing their
@@ -22,9 +22,11 @@ def process_role_instance(org: Organization,):
         if role_type == "has_role":
             for role_instance in role_instance_list:
                 role_instance.save()
+                org.role.connect(role_instance)
+                log.debug(f"Organization {org.name}")
                 log.debug(f"Role instance saved to Aton its element id is: {role_instance.element_id}")
                 process_role_locations(role_instance)
-                process_role_networks(role_instance)
-                org.role.connect(role_instance)
+                process_role_networks(role_instance, org.context)
+
 
 

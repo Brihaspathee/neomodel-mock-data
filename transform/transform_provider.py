@@ -2,6 +2,7 @@ from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import TIN, LegacySystemID
 from models.aton.nodes.organization import Organization
+from models.aton.nodes.organization_context import OrganizationContext
 from models.aton.nodes.telecom import Telecom
 from transform.transformers import transform_to_aton
 from transform.transform_provider_location import transform_provider_location
@@ -32,6 +33,7 @@ def _(provider:PPProv) -> Organization:
     # organization = get_organization_by_prov_id(str(provider.id))
     # if not organization:
     organization = Organization(name=provider.name)
+    organization.context = OrganizationContext()
     pp_prov: LegacySystemID = LegacySystemID(value=str(provider.id),
                                              system="PORTICO",
                                              systemIdType="PROV ID")
@@ -47,11 +49,12 @@ def _(provider:PPProv) -> Organization:
     organization.add_identifier(tax_id)
     contact: Contact = get_provider_address(provider)
     organization.add_contact(contact)
-    get_provider_attributes(provider, organization)
+    # get_provider_attributes(provider, organization)
     # ------------------------------------------------------------------------------
     # Populate locations associated with the organization
     # ------------------------------------------------------------------------------
     transform_provider_location(provider, organization)
+    get_provider_attributes(provider, organization)
     # ------------------------------------------------------------------------------
     # Add the practitioners associated with the organization
     # ------------------------------------------------------------------------------

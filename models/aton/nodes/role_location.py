@@ -18,14 +18,15 @@ class RoleLocation(BaseNode):
     role_network = RelationshipTo("models.aton.nodes.role_network.RoleNetwork",
                                   "ROLE_LOCATION_SERVES",
                                   model=RoleLocationServes)
-    rn_behavior_health = RelationshipFrom("models.aton.nodes.role_network.RoleNetwork",
-                                          "BEHAVIOR_HEALTH")
-    rn_pcp = RelationshipFrom("models.aton.nodes.role_network.RoleNetwork",
-                              "PCP")
-    rn_exclude_from_directory = RelationshipFrom("models.aton.nodes.role_network.RoleNetwork",
+    rn_behavior_health = RelationshipTo("models.aton.nodes.role_network.RoleNetwork",
+                                          "IS_BEHAVIOR_HEALTH")
+    rn_pcp = RelationshipTo("models.aton.nodes.role_network.RoleNetwork",
+                              "IS_PCP")
+    rn_specialist = RelationshipTo("models.aton.nodes.role_network.RoleNetwork","IS_SPECIALIST")
+    rn_exclude_from_directory = RelationshipTo("models.aton.nodes.role_network.RoleNetwork",
                                                  "EXCLUDE_FROM_DIRECTORY",
                                                  model=ExcludeFromDirectory)
-    rn_has_panel = RelationshipFrom("models.aton.nodes.role_network.RoleNetwork",
+    rn_has_panel = RelationshipTo("models.aton.nodes.role_network.RoleNetwork",
                                     "HAS_PANEL",
                                     model=HasPanel)
     specialties = RelationshipTo("models.aton.nodes.role_specialty.RoleSpecialty", "PRACTICED_AT")

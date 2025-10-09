@@ -26,12 +26,13 @@ class RoleNetwork(BaseNode):
                                             "ROLE_LOCATION_SERVES",
                                             model=RoleLocationServes)
     rl_behavior_health = RelationshipFrom("models.aton.nodes.role_location.RoleLocation",
-                                          "BEHAVIOR_HEALTH")
+                                          "IS_BEHAVIOR_HEALTH")
     rl_pcp = RelationshipFrom("models.aton.nodes.role_location.RoleLocation",
-                              "PCP")
+                              "IS_PCP")
     rl_exclude_from_directory = RelationshipFrom("models.aton.nodes.role_location.RoleLocation",
                                                 "EXCLUDE_FROM_DIRECTORY",
                                                  model=ExcludeFromDirectory)
+    rl_specialist = RelationshipFrom("models.aton.nodes.role_location.RoleLocation","IS_SPECIALIST")
     rl_has_panel = RelationshipFrom("models.aton.nodes.role_location.RoleLocation",
                                    "HAS_PANEL",
                                     model=HasPanel)
@@ -40,6 +41,9 @@ class RoleNetwork(BaseNode):
         super().__init__(*args, **kwargs)
         self._network: Network | None = None
         self._pending_assoc_rls: list[AssociatedRL] = []
+        self._is_pcp: bool = False
+        self._is_behavior_health: bool = False
+        self._is_specialist: bool = False
 
 
     def set_network(self, network: Network):
@@ -53,3 +57,21 @@ class RoleNetwork(BaseNode):
 
     def get_pending_assoc_rls(self) -> list[AssociatedRL]:
         return self._pending_assoc_rls
+
+    def set_is_pcp(self, is_pcp: bool):
+        self._is_pcp = is_pcp
+
+    def get_is_pcp(self) -> bool:
+        return self._is_pcp
+
+    def set_is_behavior_health(self, is_behavior_health: bool):
+        self._is_behavior_health = is_behavior_health
+
+    def get_is_behavior_health(self) -> bool:
+        return self._is_behavior_health
+
+    def set_is_specialist(self, is_specialist: bool):
+        self._is_specialist = is_specialist
+
+    def get_is_specialist(self) -> bool:
+        return self._is_specialist

@@ -1,19 +1,21 @@
+import importlib
 from typing import Any
 
 from neomodel import StructuredNode
 
-from config.attribute_settings import ATTRIBUTES_CONFIG
+from config.attribute_settings import ATTRIBUTES_CONFIG, SPECIAL_ATTRIBUTES
 from config.attributes_mapping import AttributeMapping
 from models.aton.nodes.identifier import NPI, Identifier, PPGID
 from models.aton.nodes.location import Location
 from models.aton.nodes.network import Network
 from models.aton.nodes.organization import Organization
+from models.aton.nodes.organization_context import OrganizationContext
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.nodes.role_specialty import RoleSpecialty
-from models.portico import PPProv, PPProvTinLoc, PPNet, PPPrac
+from models.portico import PPProv, PPProvTinLoc, PPNet, PPPrac, PPProvAttrib
 import portico_reads.service.fmg_codes.load_fmg_codes as fmg_loader
 import logging
 
@@ -44,13 +46,12 @@ def get_net_attributes(pp_net:PPNetDict, network:Network):
             log.debug(f"No mapping found for attribute {attribute.get('attribute_id')}, hence it will not be loaded")
 
 def get_provider_attributes(provider:PPProv, organization: Organization):
+    log.info(f"Special Attributes: {SPECIAL_ATTRIBUTES}")
     for attribute in provider.attributes:
+        if str(attribute.attribute_id) in SPECIAL_ATTRIBUTES:
+            transform_special_attribute(attribute.attribute_id, attribute, organization)
+            continue
         attribute_fields: dict[str, Any] = {}
-        # log.debug(f"Attribute Id: {attribute.attribute_id}")
-        # attribute_id = attribute.attribute_id
-        # if str(attribute_id) == "502" or str(attribute_id) == "101278":
-        #     mapping = ATTRIBUTES_CONFIG["provider"][str(attribute.attribute_id)]
-        #     log.debug(f"Mapping: {mapping}")
         for value in attribute.values:
             field_id = str(value.field_id)
             if value.value_date:
@@ -296,3 +297,67 @@ def transform_field(data: str, transformer_list: list[Any]) -> str:
     return transformed_data
 
 
+def transform_special_attribute(attribute_id: int, *args):
+    func_info = SPECIAL_ATTRIBUTES[str(attribute_id)]
+    special_attribute_func = func_info["func_name"]
+    func_name = _resolve(special_attribute_func)
+    # ---------------------------------------------------------------------------------------------
+    # create a dictionary of arguments and their values from the args list
+    # kwargs = {}
+    # arg_index = 0
+    # for kw_argument in func_info["arguments"]:
+    #     kwargs[kw_argument] = args[arg_index]
+    #     arg_index += 1
+    # use a dictionary comprehension to build the kwargs dictionary dynamically from two lists
+    # the first list contains the argument names, the second list contains the argument values
+    # long form of writing this code is above this comment
+    # ---------------------------------------------------------------------------------------------
+    kwargs = {k: v for k, v in zip(func_info["arguments"], args)}
+    log.info(f"Special Attribute function name: {special_attribute_func}")
+    log.info(f"Special Attribute function: {func_name}")
+    log.info(f"Special Attribute kwargs: {kwargs}")
+    func_name(**kwargs)
+
+
+def _resolve(func_path: str):
+    """
+    Resolves a fully qualified function path to the corresponding callable object.
+
+    This function takes a string representing the fully qualified path of a
+    function, loads the corresponding Python module, and retrieves the callable
+    object referred to by the function path. It is commonly used for dynamic
+    function resolution.
+
+    :param func_path: The fully qualified path to a function in the format
+        "module.submodule.function_name".
+    :type func_path: str
+    :return: The callable object corresponding to the given function path.
+    :rtype: Callable
+    """
+    module_name, func_name = func_path.rsplit(".", 1)
+    module = importlib.import_module(module_name)
+    return getattr(module, func_name)
+
+def transform_hat_code_attr(**kwargs):
+    prov_attrib = kwargs.get("prov_attrib")
+    org = kwargs.get("organization")
+    log.debug("Transforming hat code attribute")
+    for value in prov_attrib.values:
+        log.debug(f"Value: {value}")
+        log.debug(f"Value: {value.value}")
+        log.debug(f"Role Instances: {type(org.get_pending_role_instances())}")
+        for role, role_instances in org.get_pending_role_instances().items():
+            log.debug(f"Role: {role}")
+            if role == "has_role":
+                for role_instance in role_instances:
+                    log.debug(f"Role Networks: {role_instance.get_pending_rns()}")
+                    for role_network in role_instance.get_pending_rns():
+                        if value.value == "PS":
+                            role_network.set_is_pcp(True)
+                            role_network.set_is_specialist(True)
+                        elif value.value == "SP":
+                            role_network.set_is_specialist(True)
+                        elif value.value == "PC":
+                            role_network.set_is_pcp(True)
+                        elif value.value == "BH":
+                            role_network.set_is_behavior_health(True)
