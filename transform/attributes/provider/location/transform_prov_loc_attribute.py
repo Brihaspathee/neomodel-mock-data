@@ -31,7 +31,7 @@ def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_lo
             node = build_node_for_attribute(mapping, attribute_fields)
             log.debug(f"Created Node for prov loc attribute: {node}")
             if isinstance(node, RoleSpecialty):
-                role_location.add_specialty(node)
+                role_location.context.add_specialty(node)
             if isinstance(node, Qualification):
                 qualification: Qualification = node
                 if qualification.type == "DHSSE Certification":
@@ -39,5 +39,5 @@ def get_prov_loc_attributes(pprov: PPProv, pp_prov_tin_loc:PPProvTinLoc, role_lo
                         qualification.status = "PASSED"
                     elif qualification.status == "C":
                         qualification.status = "CANCELLED"
-                aton_location:Location = role_location.get_location()
-                aton_location.add_pending_qualification(qualification)
+                aton_location:Location = role_location.context.get_location()
+                aton_location.context.add_qualification(qualification)

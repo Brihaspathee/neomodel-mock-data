@@ -1,8 +1,10 @@
 import models
+from models.aton.context.location_context import LocationContext
+from models.aton.context.role_network_context import AssociatedRL
 from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.location import Location
 from models.aton.nodes.role_instance import RoleInstance
-from models.aton.nodes.role_network import AssociatedRL, RoleNetwork
+from models.aton.nodes.role_network import RoleNetwork
 from models.portico import PPProvTinLoc
 from utils.address_util import get_state
 import logging
@@ -31,11 +33,12 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     :rtype: Location
     """
     location: Location = Location()
+    location.context = LocationContext(location)
     log.debug(f"Location name:{prov_tin_loc.name}")
     portico_location: LegacySystemID = LegacySystemID(value=str(prov_tin_loc.id),
                                                       system="PORTICO",
                                                       systemIdType="LOC ID")
-    location.set_portico_source(portico_location)
+    location.context.set_portico_source(portico_location)
     location.name = prov_tin_loc.name
     location.street_address = prov_tin_loc.address.addr1
     location.secondary_address = prov_tin_loc.address.addr2
@@ -53,7 +56,7 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     # Set pending validation for the location
     # ------------------------------------------------------------------------------
     validation: Validation = Validation(type="address", source="smartystreets", validation_key=hash_code)
-    location.set_pending_validation(validation)
+    location.context.set_validation(validation)
     return location
 
 def get_assoc_rl(pp_prov_tin_loc:PPProvTinLoc,
@@ -106,9 +109,9 @@ def get_rn(code: str, role_instance: RoleInstance):
     :return: A RoleNetwork instance if a match is found; otherwise, None.
     :rtype: RoleNetwork or None
     """
-    rns: list[RoleNetwork] = role_instance.get_pending_rns()
+    rns: list[RoleNetwork] = role_instance.context.get_rns()
     for rn in rns:
-        if rn.get_network().code == code:
+        if rn.context.get_network().code == code:
             return rn
     return None
 
@@ -123,9 +126,9 @@ def get_assoc_loc_rn(prov_tin_loc_hash_code:str, role_network:RoleNetwork) -> As
         role locations
     :return: The matching AssociatedRL instance if found, otherwise None
     """
-    for assoc_rl in role_network.get_pending_assoc_rls():
+    for assoc_rl in role_network.context.get_assoc_rls():
         rl = assoc_rl.role_location
-        location_hash_code = get_hash_key_for_location(rl.get_location())
+        location_hash_code = get_hash_key_for_location(rl.context.get_location())
         if location_hash_code == prov_tin_loc_hash_code:
             return assoc_rl
     return None
@@ -147,8 +150,8 @@ def get_assoc_loc_ri(prov_tin_loc_hash_code:str, role_instance: RoleInstance) ->
     :return: An `AssociatedRL` instance if a matching role-location is found; otherwise, None.
     :rtype: AssociatedRL | None
     """
-    for rl in role_instance.get_pending_rls():
-        location_hash_code = get_hash_key_for_location(rl.get_location())
+    for rl in role_instance.context.get_rls():
+        location_hash_code = get_hash_key_for_location(rl.context.get_location())
         if location_hash_code == prov_tin_loc_hash_code:
             assoc_rl = AssociatedRL(role_location=rl)
             return assoc_rl

@@ -38,4 +38,4 @@ def get_prac_loc_attributes(pp_prac: PPPrac,
             node = build_node_for_attribute(mapping, attribute_fields)
             if isinstance(node, RoleSpecialty):
                 log.debug(f"Role Specialty isPrimary {node.isPrimary}")
-                role_instance.add_prac_rs(node)
+                role_instance.context.add_prac_rs(node)

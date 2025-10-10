@@ -48,7 +48,7 @@ def _(provider:PPProv) -> Organization:
     log.debug(f"TIN is {tax_id}")
     organization.context.add_identifier(tax_id)
     contact: Contact = get_provider_address(provider)
-    organization.add_contact(contact)
+    organization.context.add_contact(contact)
     # get_provider_attributes(provider, organization)
     # ------------------------------------------------------------------------------
     # Populate locations associated with the organization

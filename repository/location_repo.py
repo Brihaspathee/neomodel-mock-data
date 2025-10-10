@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 
 def get_or_create_location(location:Location):
-    validation: Validation = location.get_pending_validation()
+    validation: Validation = location.context.get_validation()
     log.debug(f"Location {location.name} needs validation, validation key is: {validation.validation_key}")
     if not validation:
         raise Exception("Location needs validation")
@@ -25,7 +25,7 @@ def get_or_create_location(location:Location):
         location.save()
         saved_val = create_validation(validation)
         create_qualifications(location)
-        legacy_system_id: LegacySystemID = location.get_portico_source().save()
+        legacy_system_id: LegacySystemID = location.context.get_portico_source().save()
         legacy_system_id.location.connect(location)
         prov_tin_loc: PP_PROV_TIN_LOC = PP_PROV_TIN_LOC(loc_id=int(legacy_system_id.value))
         prov_tin_loc.save()
@@ -36,7 +36,7 @@ def get_or_create_location(location:Location):
         return location
 
 def check_for_qualification_updates(existing_location:Location, updated_location:Location):
-    new_quals = updated_location.get_pending_qualifications()
+    new_quals = updated_location.context.get_qualifications()
     new_quals.sort(key=lambda x: x.type)
     query = """
             MATCH (loc:Location)-[:HAS_QUALIFICATION]->(q)
@@ -92,10 +92,10 @@ def is_qual_updated(new_qual: Qualification,
 def create_qualifications(loc: Location):
     log.debug(
         f"Writing qualifications to Aton for location {loc.name}"
-        f"Qualifications are: {loc.get_pending_qualifications()}"
+        f"Qualifications are: {loc.context.get_qualifications()}"
     )
     rel = getattr(loc, "qualifications")
-    for qual_node in loc.get_pending_qualifications():
+    for qual_node in loc.context.get_qualifications():
         if not hasattr(qual_node, "element_id") or qual_node.element_id is None:
             qual_node.save()
             log.debug(f"Qualification saved to Aton its element id is: {qual_node.element_id}")

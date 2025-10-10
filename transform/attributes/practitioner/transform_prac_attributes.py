@@ -33,9 +33,9 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
             log.debug(f"Conditions for creating the node may not have been met")
             continue
         if isinstance(node, Identifier):
-            practitioner.add_identifier(node)
+            practitioner.context.add_identifier(node)
         elif isinstance(node, Qualification):
-            practitioner.add_qualification(node)
+            practitioner.context.add_qualification(node)
         elif isinstance(node, Practitioner):
             log.debug(f"This is a Practitioner {node}")
             transform_prac_node(attribute_id, node, practitioner )
@@ -43,11 +43,11 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
             log.error(f"Unable to determine node type for attribute {attribute_id}"
                       f"for practitioner {pp_prac.id} name is {pp_prac.fname}")
 
-def transform_prac_loc_attributes(pp_prac: PPPrac,
-                                  pp_prov_tin_loc: PPProvTinLoc,
-                                  prov_id: int,
-                            role_instance:RoleInstance):
-    pass
+# def transform_prac_loc_attributes(pp_prac: PPPrac,
+#                                   pp_prov_tin_loc: PPProvTinLoc,
+#                                   prov_id: int,
+#                             role_instance:RoleInstance):
+#     pass
 
 
 def transform_prac_node(attribute_id: int, source_prac: Practitioner, destination_prac: Practitioner):

@@ -1,5 +1,7 @@
 import logging
 
+from models.aton.context.role_instance_context import RoleInstanceContext
+from models.aton.context.role_location_context import RoleLocationContext
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.hours_of_operation import HoursOfOperation
 from models.aton.nodes.telecom import Telecom
@@ -33,7 +35,8 @@ def transform_provider_location(provider: PPProv, organization:Organization):
         # ------------------------------------------------------------------------------
         log.debug("Transforming Portico Provider Location")
         role_instance: RoleInstance = RoleInstance()
-        role_instance.set_role_type("has_role")
+        role_instance.context = RoleInstanceContext(role_instance)
+        role_instance.context.set_role_type("has_role")
         if provider.prov_locs:
             # ------------------------------------------------------------------------------
             # Process the provider locations
@@ -76,19 +79,20 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
         # Add the role location to the role instance
         # ------------------------------------------------------------------------------
         role_location: RoleLocation = RoleLocation()
+        role_location.context = RoleLocationContext(role_location)
         if prov_loc.PRIMARY == "Y":
-            role_location.set_is_primary(True)
+            role_location.context.set_is_primary(True)
         prov_tin_loc: PPProvTinLoc = prov_loc.location
         log.debug(f"Location Address:{prov_tin_loc.address}")
         hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=prov_tin_loc)
         log.debug(f"Hash Code:{hash_code}")
         location = set_location(hash_code, prov_tin_loc)
-        role_location.set_location(location)
+        role_location.context.set_location(location)
         contact: Contact = get_location_phone(prov_tin_loc)
         transform_attributes("PROV_LOC", pp_prov, prov_tin_loc, role_location)
-        role_location.add_contact(contact)
+        role_location.context.add_contact(contact)
         get_prov_loc_office_hours(pp_prov, prov_tin_loc, role_location)
-        role_instance.add_pending_rl(role_location)
+        role_instance.context.add_rl(role_location)
         log_role_location_contacts(role_location=role_location)
 
 
@@ -126,8 +130,8 @@ def get_prov_loc_office_hours(provider:PPProv, pp_prov_tin_loc:PPProvTinLoc, rol
     if not converted_office_hours:
         return
     is_office_hours_set = False
-    if role_location.get_pending_contacts():
-        for contact in role_location.get_pending_contacts():
+    if role_location.context.get_contacts():
+        for contact in role_location.context.get_contacts():
             if contact.use == "Directory":
                 hours_of_operation: HoursOfOperation = HoursOfOperation(hours=converted_office_hours)
                 contact.set_pending_hours_of_operation(hours_of_operation)
@@ -138,11 +142,11 @@ def get_prov_loc_office_hours(provider:PPProv, pp_prov_tin_loc:PPProvTinLoc, rol
         contact.use = "Directory"
         hours_of_operation: HoursOfOperation = HoursOfOperation(hours=converted_office_hours)
         contact.set_pending_hours_of_operation(hours_of_operation)
-        role_location.add_contact(contact)
+        role_location.context.add_contact(contact)
 
 def log_role_location_contacts(role_location: RoleLocation):
-    if role_location.get_pending_contacts():
-        for contact in role_location.get_pending_contacts():
+    if role_location.context.get_contacts():
+        for contact in role_location.context.get_contacts():
             log.debug(f"Contact: {contact}")
             log.debug(f"Contact Use: {contact.use}")
             log.debug(f"Contact Hours of operation: {contact.get_pending_hours_of_operation()}")

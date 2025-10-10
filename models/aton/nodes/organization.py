@@ -51,22 +51,5 @@ class Organization(BaseNode):
         self.parent_ppg_id = None
         self.context: Any = None
 
-        self._pending_contacts: list[Contact] = []
-
-        self._pending_practitioners: list[Practitioner] = []
-
-
-    def add_contact(self, contact:Contact):
-        self._pending_contacts.append(contact)
-
-    def add_practitioner(self, practitioner: Practitioner):
-        self._pending_practitioners.append(practitioner)
-
-    def get_pending_contacts(self):
-        return self._pending_contacts
-
-
-    def get_pending_practitioners(self):
-        return self._pending_practitioners
 
 

@@ -1,3 +1,5 @@
+from typing import Any
+
 from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
 
 from models.aton.nodes.base_node import BaseNode
@@ -29,27 +31,7 @@ class Location(BaseNode):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._pending_validation: Validation | None = None
-        self._portico_source: LegacySystemID | None = None
-        self._pending_qualifications: list[Qualification] = []
+        self.context: Any = None
 
     def __repr__(self):
         return f"{self.name} - {self.street_address} - {self.city} - {self.state} - {self.zip_code}"
-
-    def set_pending_validation(self, validation: Validation):
-        self._pending_validation = validation
-
-    def get_pending_validation(self) -> Validation:
-        return self._pending_validation
-
-    def set_portico_source(self, portico_source: LegacySystemID):
-        self._portico_source = portico_source
-
-    def get_portico_source(self) -> LegacySystemID:
-        return self._portico_source
-
-    def add_pending_qualification(self, qualification: Qualification):
-        self._pending_qualifications.append(qualification)
-
-    def get_pending_qualifications(self) -> list[Qualification]:
-        return self._pending_qualifications

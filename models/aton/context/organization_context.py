@@ -3,6 +3,7 @@ import weakref
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import Identifier, NPI, TIN, MedicaidID, MedicareID, PPGID, LegacySystemID
 from models.aton.nodes.organization import Organization
+from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
@@ -42,6 +43,7 @@ class OrganizationContext:
             "has_role": [],
             "contracted_by": []
         }
+        self._practitioners: list[Practitioner] = []
 
     def add_identifier(self, identifier:Identifier):
         """
@@ -120,9 +122,9 @@ class OrganizationContext:
         """
         Adds a new role instance to the internal list of role instances.
         """
-        if role_instance.get_role_type() == "has_role":
+        if role_instance.context.get_role_type() == "has_role":
             self._role_instances["has_role"].append(role_instance)
-        elif role_instance.get_role_type() == "contracted_by":
+        elif role_instance.context.get_role_type() == "contracted_by":
             self._role_instances["contracted_by"].append(role_instance)
         else:
             ValueError(f"{role_instance} is not a valid role instance")
@@ -132,3 +134,15 @@ class OrganizationContext:
         Retrieves the role instances associated with the instance.
         """
         return self._role_instances
+
+    def add_practitioner(self, practitioner: Practitioner):
+        """
+        Adds a new practitioner to the internal list of practitioners.
+        """
+        self._practitioners.append(practitioner)
+
+    def get_practitioners(self):
+        """
+        Retrieves the practitioners associated with the instance.
+        """
+        return self._practitioners

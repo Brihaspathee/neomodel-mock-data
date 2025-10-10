@@ -26,14 +26,14 @@ def process_role_locations(role_instance:RoleInstance):
     :type role_instance: RoleInstance
     :return: None
     """
-    for role_location in role_instance.get_pending_rls():
-        location: Location = role_location.get_location()
+    for role_location in role_instance.context.get_rls():
+        location: Location = role_location.context.get_location()
         location = get_or_create_location(location)
         role_location.save()
-        if role_location.get_is_primary():
+        if role_location.context.get_is_primary():
             role_instance.primary_location.connect(role_location)
         create_contacts(role_location)
-        for speciality in role_location.get_pending_specialties():
+        for speciality in role_location.context.get_specialties():
             create_role_specialty(speciality, role_instance)
             speciality.role_locations.connect(role_location)
         role_location.location.connect(location)

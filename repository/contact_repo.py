@@ -8,10 +8,10 @@ log = logging.getLogger(__name__)
 def create_contacts(contact_owner:Any):
     log.debug(
         f"Writing contacts"
-        f"Contacts are: {contact_owner.get_pending_contacts()}"
+        f"Contacts are: {contact_owner.context.get_contacts()}"
     )
     rel = getattr(contact_owner, "contacts")
-    for contact in contact_owner.get_pending_contacts():
+    for contact in contact_owner.context.get_contacts():
         if not hasattr(contact, "element_id") or contact.element_id is None:
             contact.save()
             log.debug(f"Contact saved to Aton its element id is: {contact.element_id}")

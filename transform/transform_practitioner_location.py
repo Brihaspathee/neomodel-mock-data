@@ -1,3 +1,4 @@
+from models.aton.context.role_location_context import RoleLocationContext
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.portico import PPPrac, PPProv, PPProvTinLoc
@@ -16,19 +17,20 @@ def transform_practitioner_location(pp_prac:PPPrac, role_instance:RoleInstance, 
         # for whom the transformation is being applied.
         if pp_prov.id == prov_id:
             role_location: RoleLocation = RoleLocation()
+            role_location.context = RoleLocationContext(role_location)
             if prac_loc.PRIMARY == "Y":
-                role_location.set_is_primary(True)
+                role_location.context.set_is_primary(True)
             pp_prov_tin_loc: PPProvTinLoc = prac_loc.location
             hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=pp_prov_tin_loc)
             location = set_location(hash_code, pp_prov_tin_loc)
-            role_location.set_location(location)
+            role_location.context.set_location(location)
             transform_attributes("PRAC_LOC",pp_prac, pp_prov_tin_loc, prov_id, role_instance)
             log.debug(f"Practitioner: {pp_prac.fname}")
             log.debug(f"Provider: {prov_id}")
             log.debug(f"Location {pp_prov_tin_loc.name} id is {pp_prov_tin_loc.id}")
-            log.debug(f"Role Specialties in Role Instance {role_instance.get_pending_prac_rs()}")
-            role_instance.add_pending_rl(role_location)
+            log.debug(f"Role Specialties in Role Instance {role_instance.context.get_prac_rs()}")
+            role_instance.context.add_rl(role_location)
     log.debug(f"Provider Id:{prov_id}")
-    log.debug(f"Added {len(role_instance.get_pending_rls())} role locations to role instance")
+    log.debug(f"Added {len(role_instance.context.get_rls())} role locations to role instance")
     if pp_prac.networks:
         transform_practitioner_net_cycle(prac_net_cycles=pp_prac.networks, role_instance=role_instance, prov_id=prov_id)

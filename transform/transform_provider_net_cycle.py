@@ -1,6 +1,7 @@
+from models.aton.context.role_network_context import RoleNetworkContext
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
-from models.aton.nodes.role_network import RoleNetwork, AssociatedRL
+from models.aton.nodes.role_network import RoleNetwork
 from models.aton.nodes.network import Network
 from models.aton.relationships.role_location_serves import RoleLocationServes
 from models.portico import PPProvNetCycle, PPProvTinLoc
@@ -49,6 +50,7 @@ def transform_provider_net_cycle(prov_net_cycles: list[PPProvNetCycle], role_ins
         else:
             # If not present, then create a new role network
             role_network = RoleNetwork()
+            role_network.context = RoleNetworkContext(role_network)
             role_network.suppress_pcp_assignment = False
             # ------------------------------------------------------------------------------
             # The network associated with the provider should already be available in
@@ -62,7 +64,7 @@ def transform_provider_net_cycle(prov_net_cycles: list[PPProvNetCycle], role_ins
             # ------------------------------------------------------------------------------
             # Set the network in the role network so that it can be associated
             # ------------------------------------------------------------------------------
-            role_network.set_network(network)
+            role_network.context.set_network(network)
         # ------------------------------------------------------------------------------
         # Iterate through the location cycles within the provider network cycle
         # ------------------------------------------------------------------------------
@@ -80,9 +82,9 @@ def transform_provider_net_cycle(prov_net_cycles: list[PPProvNetCycle], role_ins
             assoc_rl.rls_edges.append(rls)
             if not present_in_rn:
                 # If the role location is not present in the role network, then add it to the list
-                role_network.add_pending_assoc_rl(assoc_rl)
+                role_network.context.add_assoc_rl(assoc_rl)
         if not is_rn_present:
             # If the role network is not present in the role instance, then add it to the list
-            role_instance.add_pending_rn(role_network)
-    log.debug(f"# of Role Networks: {len(role_instance.get_pending_rns())}")
+            role_instance.context.add_rn(role_network)
+    log.debug(f"# of Role Networks: {len(role_instance.context.get_rns())}")
 
