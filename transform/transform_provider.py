@@ -1,3 +1,4 @@
+from models.aton.context.contact_context import ContactContext
 from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.identifier import TIN, LegacySystemID
@@ -80,6 +81,7 @@ def get_tin(provider:PPProv) -> TIN:
 
 def get_provider_address(provider:PPProv) -> Contact:
     contact: Contact = Contact()
+    contact.context = ContactContext(contact)
     for pp_address in provider.addresses:
         log.debug(f"Provider Address is {pp_address}")
         log.debug(f"Provider Address is {pp_address.address}")
@@ -91,7 +93,7 @@ def get_provider_address(provider:PPProv) -> Contact:
             log.warning(
                 f"Unknown address type {pp_address.address.type} for provider {provider.name}"
             )
-        contact.set_pending_address(address)
+        contact.context.set_address(address)
         if pp_address.address.phones:
             telecom: Telecom = Telecom()
             for addr_phone in pp_address.address.phones:
@@ -109,7 +111,7 @@ def get_provider_address(provider:PPProv) -> Contact:
                     log.warning(
                         f"Unknown phone type {addr_phone.phone.type} for provider {provider.name}"
                     )
-            contact.set_pending_telecom(telecom)
+            contact.context.set_telecom(telecom)
     return contact
 
 # def compare_and_update_properties(provider:PPProv, organization:Organization):

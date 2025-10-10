@@ -1,5 +1,6 @@
 import logging
 
+from models.aton.context.contact_context import ContactContext
 from models.aton.context.role_instance_context import RoleInstanceContext
 from models.aton.context.role_location_context import RoleLocationContext
 from models.aton.nodes.contact import Contact
@@ -98,6 +99,7 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
 
 def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:
     contact: Contact = Contact()
+    contact.context = ContactContext(contact)
     contact.use = "Directory"
     if pp_prov_tin_loc.address:
         loc_address = pp_prov_tin_loc.address
@@ -114,7 +116,7 @@ def get_location_phone(pp_prov_tin_loc:PPProvTinLoc) -> Contact:
                     telecom.tty = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
                 elif addr_phone.phone.type == "AFH":
                     telecom.afterHoursNumber = addr_phone.phone.areacode + addr_phone.phone.exchange + addr_phone.phone.num
-            contact.set_pending_telecom(telecom)
+            contact.context.set_telecom(telecom)
     return contact
 
 def get_prov_loc_office_hours(provider:PPProv, pp_prov_tin_loc:PPProvTinLoc, role_location:RoleLocation):
@@ -134,14 +136,14 @@ def get_prov_loc_office_hours(provider:PPProv, pp_prov_tin_loc:PPProvTinLoc, rol
         for contact in role_location.context.get_contacts():
             if contact.use == "Directory":
                 hours_of_operation: HoursOfOperation = HoursOfOperation(hours=converted_office_hours)
-                contact.set_pending_hours_of_operation(hours_of_operation)
+                contact.context.set_hours_of_operation(hours_of_operation)
                 is_office_hours_set = True
                 break
     if not is_office_hours_set:
         contact: Contact = Contact()
         contact.use = "Directory"
         hours_of_operation: HoursOfOperation = HoursOfOperation(hours=converted_office_hours)
-        contact.set_pending_hours_of_operation(hours_of_operation)
+        contact.context.set_hours_of_operation(hours_of_operation)
         role_location.context.add_contact(contact)
 
 def log_role_location_contacts(role_location: RoleLocation):
@@ -149,7 +151,7 @@ def log_role_location_contacts(role_location: RoleLocation):
         for contact in role_location.context.get_contacts():
             log.debug(f"Contact: {contact}")
             log.debug(f"Contact Use: {contact.use}")
-            log.debug(f"Contact Hours of operation: {contact.get_pending_hours_of_operation()}")
+            log.debug(f"Contact Hours of operation: {contact.context.get_hours_of_operation()}")
 
 
 
