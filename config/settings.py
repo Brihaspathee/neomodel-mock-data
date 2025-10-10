@@ -23,6 +23,7 @@ log = logging.getLogger(__name__)
 def fetch_secrets():
     log.debug("Fetching Secrets using log")
     db_secrets = SecretsAPI(["ss.neo4j.url",
+                             "ss.neo4j.protocol",
                              "ss.neo4j.username",
                              "ss.neo4j.password",
                              "ss.neo4j.database",
@@ -61,6 +62,7 @@ POSTGRES = {
 # NEO4J
 NEO4J = {
     "url": secrets["ss.neo4j.url"],
+    "protocol": secrets["ss.neo4j.protocol"],
     "username": secrets["ss.neo4j.username"],
     "port": secrets["ss.neo4j.port"],
     "host": secrets["ss.neo4j.host"],

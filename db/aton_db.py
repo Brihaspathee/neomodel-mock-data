@@ -6,13 +6,14 @@ log = logging.getLogger(__name__)
 
 def init_db():
     log.debug("Initializing DB")
+    protocol: str = settings.NEO4J["protocol"]
     user: str = settings.NEO4J["username"]
     password: str = settings.NEO4J["password"]
     host: str = settings.NEO4J["host"]
     port: str = settings.NEO4J["port"]
     database: str = settings.NEO4J["database"]
 
-    config.DATABASE_URL = f"bolt://{user}:{password}@{host}:{port}/{database}"
+    config.DATABASE_URL = f"{protocol}://{user}:{password}@{host}:{port}/{database}"
 
     # Test the connection immediately
     try:
