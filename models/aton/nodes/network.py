@@ -1,7 +1,8 @@
-from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, BooleanProperty
+from typing import Any
+
+from neomodel import StringProperty, RelationshipTo, BooleanProperty
 
 from models.aton.nodes.base_node import BaseNode
-from models.aton.nodes.identifier import LegacySystemID
 
 
 class Network(BaseNode):
@@ -15,10 +16,4 @@ class Network(BaseNode):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._pending_portico_source: LegacySystemID | None = None
-
-    def set_portico_source(self, source: LegacySystemID):
-        self._pending_portico_source = source
-
-    def get_portico_source(self):
-        return self._pending_portico_source
+        self.context: Any = None

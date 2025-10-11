@@ -172,7 +172,6 @@ def update_organization(existing_org: Organization,
     """
     log.debug(
         f"Updating organization {existing_org.name} in Aton"
-        f"Organization parent Id: {existing_org.parent_ppg_id}"
     )
     existing_org, changed = update_org_node_properties(existing_org, updated_org,relationships)
     if changed:
