@@ -1,13 +1,8 @@
 from typing import Any
 
-from neomodel import StructuredNode, StringProperty, BooleanProperty, FloatProperty, RelationshipTo, RelationshipFrom
+from neomodel import StringProperty, BooleanProperty, FloatProperty, RelationshipTo, RelationshipFrom
 
 from models.aton.nodes.base_node import BaseNode
-from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import Identifier, NPI, TIN, PPGID, MedicareID, MedicaidID, LegacySystemID
-from models.aton.nodes.practitioner import Practitioner
-from models.aton.nodes.qualification import Qualification
-from models.aton.nodes.role_instance import RoleInstance
 
 
 class Organization(BaseNode):
@@ -28,11 +23,11 @@ class Organization(BaseNode):
     children = RelationshipFrom("Organization", "PART_OF")
 
     pp_prov = RelationshipFrom("models.aton.nodes.pp_prov.PP_PROV", "SOURCES")
-    npi = RelationshipTo("NPI", "HAS_NPI")
-    tin = RelationshipTo("TIN", "HAS_TIN")
-    medicare_id = RelationshipTo("MedicareID", "HAS_MEDICARE_ID")
-    medicaid_id = RelationshipTo("MedicaidID", "HAS_MEDICAID_ID")
-    ppg_id = RelationshipTo("PPGID", "HAS_PPG_ID")
+    npi = RelationshipTo("models.aton.nodes.identifier.NPI", "HAS_NPI")
+    tin = RelationshipTo("models.aton.nodes.identifier.TIN", "HAS_TIN")
+    medicare_id = RelationshipTo("models.aton.nodes.identifier.MedicareID", "HAS_MEDICARE_ID")
+    medicaid_id = RelationshipTo("models.aton.nodes.identifier.MedicaidID", "HAS_MEDICAID_ID")
+    ppg_id = RelationshipTo("models.aton.nodes.identifier.PPGID", "HAS_PPG_ID")
 
     contacts = RelationshipTo("models.aton.nodes.contact.Contact",
                               "HAS_ORGANIZATION_CONTACT")
@@ -40,15 +35,14 @@ class Organization(BaseNode):
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
                                     "HAS_QUALIFICATION")
 
-    role = RelationshipTo("RoleInstance", "HAS_ROLE")
-    contracted_by = RelationshipFrom("RoleInstance", "CONTRACTED_BY")
-    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier","HAS_LEGACY_SYSTEM_ID")
+    role = RelationshipTo("models.aton.nodes.role_instance.RoleInstance", "HAS_ROLE")
+    contracted_by = RelationshipFrom("models.aton.nodes.role_instance.RoleInstance", "CONTRACTED_BY")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.LegacySystemID","HAS_LEGACY_SYSTEM_ID")
 
 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.parent_ppg_id = None
         self.context: Any = None
 
 

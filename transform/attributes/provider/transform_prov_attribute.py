@@ -51,7 +51,7 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                 else:
                     organization.pcp_practitioner_required = False
                 if node.parent_ppg_id:
-                    organization.parent_ppg_id = node.parent_ppg_id
+                    organization.context.set_parent_ppg_id(node.parent_ppg_id)
             organization.context.add_identifier(node)
         elif isinstance(node, Qualification):
             organization.context.add_qualification(node)

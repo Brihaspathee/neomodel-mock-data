@@ -32,7 +32,7 @@ def upsert_organizations(organizations: list[Organization]):
     """
     sorted_orgs = sorted(
         organizations,
-        key=lambda org: (org.parent_ppg_id is not None, org.parent_ppg_id or "")
+        key=lambda org: (org.context.get_parent_ppg_id() is not None, org.context.get_parent_ppg_id() or "")
     )
     for organization in sorted_orgs:
         prov_id = organization.context.get_portico_source().value
@@ -61,7 +61,7 @@ def create_organization(org: Organization):
     """
     log.debug(
         f"Writing organization {org.name} to Aton"
-        f"Organization parent Id: {org.parent_ppg_id}"
+        f"Organization parent Id: {org.context.get_parent_ppg_id()}"
     )
     try:
         log.debug(org.__properties__)
@@ -71,9 +71,9 @@ def create_organization(org: Organization):
         pp_prov:PP_PROV = PP_PROV(prov_id=int(legacySystemId.value))
         pp_prov.save()
         pp_prov.organization.connect(org)
-        if org.parent_ppg_id is not None:
-            log.debug(f"Organization has parent {org.parent_ppg_id}")
-            ppg = PPGID.nodes.get(value=org.parent_ppg_id)
+        if org.context.get_parent_ppg_id() is not None:
+            log.debug(f"Organization has parent {org.context.get_parent_ppg_id()}")
+            ppg = PPGID.nodes.get(value=org.context.get_parent_ppg_id())
             log.debug(f"Parent PPG is {ppg}")
             parent_org = ppg.organization.single()
             log.debug(f"Parent org is {parent_org.name}")

@@ -29,6 +29,7 @@ class OrganizationContext:
     """
     def __init__(self, org:Organization):
         self.organization = weakref.proxy(org)
+        self._parent_ppg_id: str | None = None
         self._portico_source: LegacySystemID | None = None
         self._identifiers = {
             "npi": [],
@@ -146,3 +147,9 @@ class OrganizationContext:
         Retrieves the practitioners associated with the instance.
         """
         return self._practitioners
+
+    def set_parent_ppg_id(self, ppg_id: str):
+        self._parent_ppg_id = ppg_id
+
+    def get_parent_ppg_id(self):
+        return self._parent_ppg_id
