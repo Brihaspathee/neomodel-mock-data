@@ -24,7 +24,7 @@
     "name": "PROV_PPG_ID",
     "category": "Identifier",
     "attr_type": "PPG_ID",
-    "class": "models.aton.nodes.identifier.PPGID",
+    "class": "models.aton.context.ppg_id_context.PPGIDContext",
     "fields": {
       "106275": "capitated_ppg",
       "106276": "pcp_required",

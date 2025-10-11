@@ -105,10 +105,3 @@ class PPGID(Identifier):
         "models.aton.nodes.organization.Organization",
         "HAS_PPG_ID"
     )
-
-    def __init__(self, *args, capitated_ppg=None, pcp_required=None, parent_ppg_id=None, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Temporary storage for other values associated with this identifier
-        self.capitated_ppg = capitated_ppg
-        self.pcp_required = pcp_required
-        self.parent_ppg_id = parent_ppg_id

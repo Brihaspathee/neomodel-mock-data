@@ -137,9 +137,9 @@ def transform_special_attribute(attribute_id: int, *args):
     # long form of writing this code is above this comment
     # ---------------------------------------------------------------------------------------------
     kwargs = {k: v for k, v in zip(func_info["arguments"], args)}
-    log.info(f"Special Attribute function name: {special_attribute_func}")
-    log.info(f"Special Attribute function: {func_name}")
-    log.info(f"Special Attribute kwargs: {kwargs}")
+    log.debug(f"Special Attribute function name: {special_attribute_func}")
+    log.debug(f"Special Attribute function: {func_name}")
+    log.debug(f"Special Attribute kwargs: {kwargs}")
     func_name(**kwargs)
 
 

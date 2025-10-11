@@ -1,5 +1,6 @@
 from typing import Any
 
+from models.aton.context.ppg_id_context import PPGIDContext
 from models.aton.nodes.identifier import Identifier, PPGID
 from models.aton.nodes.organization import Organization
 from config.attribute_settings import ATTRIBUTES_CONFIG, SPECIAL_ATTRIBUTES
@@ -12,7 +13,7 @@ from transform.attributes.transform_attribute_util import build_node_for_attribu
 log = logging.getLogger(__name__)
 
 def get_provider_attributes(provider:PPProv, organization: Organization):
-    log.info(f"Special Attributes: {SPECIAL_ATTRIBUTES}")
+    log.debug(f"Special Attributes: {SPECIAL_ATTRIBUTES}")
     for attribute in provider.attributes:
         if str(attribute.attribute_id) in SPECIAL_ATTRIBUTES:
             transform_special_attribute(attribute.attribute_id, attribute, organization)
@@ -37,7 +38,8 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
         # log.debug(f"Is this Type NPI: {isinstance(node, Identifier):}")
         # log.debug(f"Is this Type Qualification: {isinstance(node, Qualification):}")
         if isinstance(node, Identifier):
-            if isinstance(node, PPGID):
+            is_identifier_added = False
+            if isinstance(node, PPGIDContext):
                 log.debug(f"This is a PPG ID {node.value}")
                 log.debug(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
                 log.debug(f"This is a PPG ID - PCP required  {node.pcp_required}")
@@ -52,7 +54,13 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                     organization.pcp_practitioner_required = False
                 if node.parent_ppg_id:
                     organization.context.set_parent_ppg_id(node.parent_ppg_id)
-            organization.context.add_identifier(node)
+                ppg_id = PPGID(value=node.value)
+                organization.context.add_identifier(ppg_id)
+                is_identifier_added = True
+            # # if identifier is a PPG ID, then it would have been added above
+            # # else add it to the organization
+            if not is_identifier_added:
+                organization.context.add_identifier(node)
         elif isinstance(node, Qualification):
             organization.context.add_qualification(node)
         else:
