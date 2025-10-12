@@ -34,17 +34,19 @@ def main():
     init_db()
     enable_mock()
 
-    user_input: str = input("Select an option: \n1. Load all data\n2. Load data for a single provider :")
+    user_input: str = input("Select an option: \n0. Load all networks only\n1. Load all providers\n2. Load data for a single provider :")
+    if user_input == "0":
+        log.debug("Loading all networks only")
+        with (portico_db.get_session() as session):
+            pp_nets: list[PPNet] = network_read.get_networks(session)
+            products: list[Product] = transformer(pp_nets)
+            for product in products:
+                write_products_networks(product)
     if user_input == "1":
         log.debug("Loading all data")
         with (portico_db.get_session() as session):
             fmg_codes.load_fmg_codes(session)
-            pp_nets: list[PPNet] = network_read.get_networks(session)
             providers: list[PPProv] = provider_read.read_provider(session)
-            # log_providers(providers)
-            products: list[Product] = transformer(pp_nets)
-            for product in products:
-                write_products_networks(product)
             organizations: list[Organization]=transformer(providers)
             write_to_aton(organizations)
     # elif user_input == "2":

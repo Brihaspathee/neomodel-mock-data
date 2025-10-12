@@ -4,6 +4,7 @@ from aton_writes.service.upsert_role_location import process_role_locations
 from aton_writes.service.upsert_role_network import process_role_networks
 from aton_writes.service.upsert_role_specialty import create_role_specialty
 from models.aton.nodes.identifier import LegacySystemID
+from repository.identifier_repo import create_identifiers
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.pp_prac import PP_PRAC
 from models.aton.nodes.practitioner import Practitioner
@@ -71,7 +72,7 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     pp_prac: PP_PRAC = PP_PRAC(prac_id=int(legacy_system_id.value))
     pp_prac.save()
     pp_prac.practitioner.connect(practitioner)
-    create_identifiers(prac=practitioner)
+    create_identifiers(owner_node=practitioner)
     create_qualifications(prac=practitioner)
     role_instance: RoleInstance = practitioner.context.get_role_instance()
     log.debug(f"Pending Role Specialties: {role_instance.context.get_prac_rs()}")
@@ -83,29 +84,6 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     process_role_networks(role_instance, organization.context)
     process_prac_role_specialties(role_instance)
     log.debug(f"Practitioner created with element id {practitioner.element_id}")
-
-
-def create_identifiers(prac: Practitioner):
-    """
-    Creates and connects identifiers for a practitioner.
-
-    This function retrieves the pending identifiers for the provided practitioner,
-    saves them if they do not have an `element_id`, and establishes the necessary
-    connections to the related nodes. The identifiers are logged after being saved.
-
-    :param prac: The practitioner object for whom identifiers are to be created.
-    :type prac: Practitioner
-
-    :return: None
-    """
-    log.debug(f"About to create identifiers for practitioner {prac.first_name}")
-    for rel_name, id_list in prac.context.get_identifiers().items():
-        rel = getattr(prac, rel_name)
-        for id_node in id_list:
-            if not hasattr(id_node, "element_id") or id_node.element_id is None:
-                id_node.save()
-            log.debug(f"Identifier saved to Aton its element id is: {id_node.element_id}")
-            rel.connect(id_node)
 
 
 def create_qualifications(prac: Practitioner):

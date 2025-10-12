@@ -5,7 +5,8 @@ from neomodel import db
 from sqlalchemy.orm import relationship
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import PPGID, LegacySystemID, TIN
+from models.aton.nodes.identifier import PPGID, LegacySystemID
+from repository.identifier_repo import create_identifiers
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
 from aton_writes.service.upsert_practitioner import upsert_practitioner
@@ -80,7 +81,7 @@ def create_organization(org: Organization):
             if parent_org is not None:
                 org.parent.connect(parent_org)
         log.debug(f"Organization written to Aton its id is: {org.element_id}")
-        create_identifiers(org)
+        create_identifiers(owner_node=org)
         # log.debug(f"Pending Role instances:{org.get_pending_role_instances()}")
         create_qualifications(org)
         create_contacts(org)
@@ -91,33 +92,6 @@ def create_organization(org: Organization):
         log.error(f"Error writing organization to Aton: {e}")
         log.debug(traceback.format_exc())
         raise
-
-
-def create_identifiers(org):
-    """
-    Creates and connects identifiers for the pending elements in the given organization.
-
-    This function iterates over the pending identifiers of an organization, retrieves or
-    creates identifiers if necessary, saves them, and connects them to the appropriate
-    relationships within the organization.
-
-    :param org: The organization containing pending identifiers.
-    :type org: Organization
-    :return: None
-    """
-    for rel_name, id_list in org.context.get_identifiers().items():
-        rel = getattr(org, rel_name)
-        for id_node in id_list:
-            if not hasattr(id_node, "element_id") or id_node.element_id is None:
-                if isinstance(id_node, TIN):
-                    id_node, _ = id_node.get_or_create(
-                        {"value": id_node.value},
-                        {"legalName": id_node.legal_name},
-                    )
-                else:
-                    id_node.save()
-                log.debug(f"Identifier saved to Aton its element id is: {id_node.element_id}")
-                rel.connect(id_node)
 
 
 def create_qualifications(org: Organization):
