@@ -5,7 +5,7 @@ from models.aton.nodes.role_network import RoleNetwork
 from models.aton.nodes.network import Network
 from models.aton.relationships.role_location_serves import RoleLocationServes
 from models.portico import PPProvNetCycle, PPProvTinLoc
-from transform.transform_utils import get_assoc_rl, get_rn
+from transform.transform_utils import get_assoc_rl, get_rn, consolidate_rls_spans
 from utils.location_util import get_hash_key_for_prov_tin_loc, get_hash_key_for_location
 from repository.network_repo import find_network_by_code
 import logging
@@ -83,6 +83,10 @@ def transform_provider_net_cycle(prov_net_cycles: list[PPProvNetCycle], role_ins
             if not present_in_rn:
                 # If the role location is not present in the role network, then add it to the list
                 role_network.context.add_assoc_rl(assoc_rl)
+        # Loop through each of the associated role locations and consolidate the role location serves edges
+        for assoc_rl in role_network.context.get_assoc_rls():
+            # Assign back the consolidated role location serves edges
+            assoc_rl.rls_edges = consolidate_rls_spans(assoc_rl.rls_edges)
         if not is_rn_present:
             # If the role network is not present in the role instance, then add it to the list
             role_instance.context.add_rn(role_network)

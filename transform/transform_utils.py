@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+from datetime import timedelta, date
+
 import models
 from models.aton.context.location_context import LocationContext
 from models.aton.context.role_network_context import AssociatedRL
@@ -5,6 +8,7 @@ from models.aton.nodes.identifier import LegacySystemID
 from models.aton.nodes.location import Location
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_network import RoleNetwork
+from models.aton.relationships.role_location_serves import RoleLocationServes
 from models.portico import PPProvTinLoc
 from utils.address_util import get_state
 import logging
@@ -156,3 +160,51 @@ def get_assoc_loc_ri(prov_tin_loc_hash_code:str, role_instance: RoleInstance) ->
             assoc_rl = AssociatedRL(role_location=rl)
             return assoc_rl
     return None
+
+def consolidate_rls_spans(spans: list[RoleLocationServes]) -> list[RoleLocationServes]:
+    """
+    This function takes a list of RoleLocationServes objects and consolidates them into a single list
+    of RoleLocationServes objects based on the start and end dates of the spans.
+    """
+
+    @dataclass
+    class Span:
+        start_date: date
+        end_date: date
+
+    if not spans:
+        log.debug("No spans found")
+        return []
+    if len(spans) == 1:
+        log.debug("Only one span found")
+        return spans
+
+    simple_spans = [Span(span.start_date, span.end_date) for span in spans]
+    sorted_spans = sorted(simple_spans, key=lambda span: span.start_date)
+    log.debug(f"Sorted spans: {sorted_spans}")
+    merged_spans = [sorted_spans[0]]
+    log.debug("-"*60)
+    # Loop through the sorted spans starting from the second span
+    for current_span in sorted_spans[1:]:
+        # Check if the current span can be merged with the last span in the merged spans list
+        # merged[-1] means "get the most recent merged span"
+        last_span = merged_spans[-1]
+        # Check if the current span starts before, on or within one day after the previous span ends
+        if current_span.start_date <= last_span.end_date + timedelta(days=1):
+            log.debug(f"Merging spans {last_span} and {current_span}")
+            # If the condition is true, then the two spans are continuous and should be merged into one
+            # Merge happens by updating the end date of the last span.
+            # The new merged end date should be the latter of the two end dates.
+            last_span.end_date = max(last_span.end_date, current_span.end_date)
+        else:
+            # If the condition is false, then the two spans are not continuous and
+            # should be added to the merged spans list
+            merged_spans.append(current_span)
+    log.debug("-"*60)
+    log.debug(f"Final Consolidated spans:")
+    for s in merged_spans:
+        log.debug(s)
+    return [
+        RoleLocationServes(**{"start_date": span.start_date, "end_date": span.end_date})
+        for span in merged_spans
+    ]
