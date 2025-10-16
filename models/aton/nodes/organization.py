@@ -12,7 +12,7 @@ class Organization(BaseNode):
     description: str = StringProperty(required=False)
     type: str = StringProperty(required=True)
     capitated: bool = BooleanProperty(required=False)
-    pcp_practitioner_required: bool = BooleanProperty(required=False)
+    pcp_practitioner_required: bool = BooleanProperty(required=False, db_property='pcpPractitionerRequired')
     atypical: bool = BooleanProperty(required=False)
     popularity: float = FloatProperty(required=False)
 
