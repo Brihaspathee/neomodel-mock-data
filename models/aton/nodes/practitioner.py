@@ -4,9 +4,6 @@ from neo4j.time import DateType
 from neomodel import StringProperty, DateProperty, RelationshipTo, ArrayProperty, RelationshipFrom
 
 from models.aton.nodes.base_node import BaseNode
-from models.aton.nodes.identifier import LegacySystemID, Identifier, NPI, DEA_Number, MedicareID, MedicaidID
-from models.aton.nodes.qualification import Qualification
-from models.aton.nodes.role_instance import RoleInstance
 
 
 class Practitioner(BaseNode):
@@ -31,7 +28,7 @@ class Practitioner(BaseNode):
     dea_number = RelationshipTo("models.aton.nodes.identifier.DEA_Number", "HAS_DEA_NUMBER")
     medicare_id = RelationshipTo("models.aton.nodes.identifier.MedicareID", "HAS_MEDICARE_ID")
     medicaid_id = RelationshipTo("models.aton.nodes.identifier.MedicaidID", "HAS_MEDICAID_ID")
-    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier", "HAS_LEGACY_SYSTEM_ID")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.LegacySystemIdentifier", "HAS_LEGACY_SYSTEM_IDENTIFIER")
 
     # Qualifications
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",

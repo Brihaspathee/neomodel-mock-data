@@ -1,6 +1,6 @@
 from models.aton.context.practitioner_context import PractitionerContext
 from models.aton.context.role_instance_context import RoleInstanceContext
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.role_instance import RoleInstance
@@ -26,9 +26,9 @@ def transform_practitioner(pp_prov:PPProv, organization: Organization):
         role_instance: RoleInstance = RoleInstance()
         role_instance.context = RoleInstanceContext(role_instance)
         practitioner.context.set_role_instance(role_instance)
-        aton_pp_prac: LegacySystemID = LegacySystemID(value=pp_prac.id,
-                                                      system="PORTICO",
-                                                      systemIdType="PRAC ID")
+        aton_pp_prac: LegacySystemIdentifier = LegacySystemIdentifier(value=pp_prac.id,
+                                                                      system="PORTICO",
+                                                                      systemIdType="PRAC ID")
         practitioner.context.set_portico_source(aton_pp_prac)
         transform_attributes("PRACTITIONER", pp_prac, practitioner)
         organization.context.add_practitioner(practitioner)

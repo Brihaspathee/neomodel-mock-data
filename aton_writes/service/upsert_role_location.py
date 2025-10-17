@@ -1,5 +1,5 @@
 from aton_writes.service.upsert_role_specialty import create_role_specialty
-from models.aton.nodes.data_dictionary.dd_specialty import DD_Specialty
+from models.aton.nodes.data_dictionary.dd_specialty_type import DD_SpecialtyType
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.location import Location
 from neomodel.exceptions import DoesNotExist

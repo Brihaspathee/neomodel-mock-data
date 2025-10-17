@@ -4,7 +4,7 @@ from datetime import timedelta, date
 import models
 from models.aton.context.location_context import LocationContext
 from models.aton.context.role_network_context import AssociatedRL
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.location import Location
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_network import RoleNetwork
@@ -39,9 +39,9 @@ def set_location(hash_code, prov_tin_loc) -> Location:
     location: Location = Location()
     location.context = LocationContext(location)
     log.debug(f"Location name:{prov_tin_loc.name}")
-    portico_location: LegacySystemID = LegacySystemID(value=str(prov_tin_loc.id),
-                                                      system="PORTICO",
-                                                      systemIdType="LOC ID")
+    portico_location: LegacySystemIdentifier = LegacySystemIdentifier(value=str(prov_tin_loc.id),
+                                                                      system="PORTICO",
+                                                                      systemIdType="LOC ID")
     location.context.set_portico_source(portico_location)
     location.name = prov_tin_loc.name
     location.street_address = prov_tin_loc.address.addr1

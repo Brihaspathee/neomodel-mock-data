@@ -37,7 +37,7 @@ class Organization(BaseNode):
 
     role = RelationshipTo("models.aton.nodes.role_instance.RoleInstance", "HAS_ROLE")
     contracted_by = RelationshipFrom("models.aton.nodes.role_instance.RoleInstance", "CONTRACTED_BY")
-    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.LegacySystemID","HAS_LEGACY_SYSTEM_ID")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.LegacySystemIdentifier","HAS_LEGACY_SYSTEM_IDENTIFIER")
 
 
 

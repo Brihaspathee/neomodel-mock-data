@@ -5,7 +5,7 @@ from neomodel import db
 from sqlalchemy.orm import relationship
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import PPGID, LegacySystemID
+from models.aton.nodes.identifier import PPGID, LegacySystemIdentifier
 from repository.identifier_repo import create_identifiers
 from models.aton.nodes.organization import Organization
 from aton_writes.service.upsert_role_instance import process_role_instance
@@ -67,7 +67,7 @@ def create_organization(org: Organization):
     try:
         log.debug(org.__properties__)
         org.save()
-        legacySystemId: LegacySystemID = org.context.get_portico_source().save()
+        legacySystemId: LegacySystemIdentifier = org.context.get_portico_source().save()
         legacySystemId.organization.connect(org)
         pp_prov:PP_PROV = PP_PROV(prov_id=int(legacySystemId.value))
         pp_prov.save()

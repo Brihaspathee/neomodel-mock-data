@@ -12,7 +12,7 @@ class Network(BaseNode):
     isHNETNetwork = BooleanProperty(required=False)
 
     product = RelationshipTo("models.aton.nodes.product.Product", "PART_OF")
-    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier", "HAS_LEGACY_SYSTEM_ID")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.LegacySystemIdentifier", "HAS_LEGACY_SYSTEM_IDENTIFIER")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

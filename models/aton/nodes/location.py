@@ -1,11 +1,8 @@
 from typing import Any
 
-from neomodel import StructuredNode, StringProperty, RelationshipFrom, RelationshipTo
+from neomodel import StringProperty, RelationshipFrom, RelationshipTo
 
 from models.aton.nodes.base_node import BaseNode
-from models.aton.nodes.identifier import LegacySystemID
-from models.aton.nodes.qualification import Qualification
-from models.aton.nodes.validation import Validation
 
 
 class Location(BaseNode):
@@ -26,7 +23,7 @@ class Location(BaseNode):
 
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",
                                     "HAS_QUALIFICATION")
-    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.Identifier", "HAS_LEGACY_SYSTEM_ID")
+    legacy_system_id = RelationshipTo("models.aton.nodes.identifier.LegacySystemIdentifier", "HAS_LEGACY_SYSTEM_IDENTIFIER")
     pp_prov_tin_loc = RelationshipTo("models.aton.nodes.pp_prov_tin_loc.PP_PROV_TIN_LOC", "SOURCES")
 
     def __init__(self, *args, **kwargs):

@@ -1,7 +1,7 @@
 import weakref
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import Identifier, NPI, TIN, MedicaidID, MedicareID, PPGID, LegacySystemID
+from models.aton.nodes.identifier import Identifier, NPI, TIN, MedicaidID, MedicareID, PPGID, LegacySystemIdentifier
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
@@ -30,7 +30,7 @@ class OrganizationContext:
     def __init__(self, org:Organization):
         self.organization = weakref.proxy(org)
         self._parent_ppg_id: str | None = None
-        self._portico_source: LegacySystemID | None = None
+        self._portico_source: LegacySystemIdentifier | None = None
         self._identifiers = {
             "npi": [],
             "tin": [],
@@ -92,7 +92,7 @@ class OrganizationContext:
         """
         return self._contacts
 
-    def set_portico_source(self, portico_source: LegacySystemID):
+    def set_portico_source(self, portico_source: LegacySystemIdentifier):
         """
         Sets the portico source for the organization.
         """

@@ -1,18 +1,18 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo
 
-from models.aton.nodes.data_dictionary.specialty import Specialty
+from models.aton.nodes.data_dictionary.specialty_type import SpecialtyType
 
 
 class DataDictionary(StructuredNode):
     definition: str = StringProperty(required=True)
 
-    specialty = RelationshipTo('Specialty', 'SPECIALTIES_DEFINED')
+    specialty = RelationshipTo('models.aton.nodes.data_dictionary.specialty_type', 'SPECIALTIES_DEFINED')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._pending_specialty: Specialty | None = None
+        self._pending_specialty: SpecialtyType | None = None
 
-    def set_specialty(self, specialty: Specialty):
+    def set_specialty(self, specialty: SpecialtyType):
         self._pending_specialty = specialty
 
     def get_specialty(self):

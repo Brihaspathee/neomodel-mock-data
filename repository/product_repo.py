@@ -1,7 +1,7 @@
 
 from neomodel import DoesNotExist
 
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.product import Product
 
 import logging
@@ -16,7 +16,7 @@ def find_product_by_code(code: str):
         pass
 
     try:
-        return (LegacySystemID.nodes.
+        return (LegacySystemIdentifier.nodes.
                 get(value=code, systemIdType="NET ID", system="PORTICO").
                 sources.single())
     except DoesNotExist:
@@ -39,6 +39,6 @@ def find_product_by_code_or_name(code: str, name: str) -> tuple[Product | None, 
 
 def find_pp_net_by_id(code: str):
     try:
-        return LegacySystemID.nodes.get(value=code, systemIdType="NET ID", system="PORTICO")
+        return LegacySystemIdentifier.nodes.get(value=code, systemIdType="NET ID", system="PORTICO")
     except DoesNotExist:
         return None

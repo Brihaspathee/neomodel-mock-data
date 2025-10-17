@@ -1,6 +1,6 @@
 from neomodel import db
 
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.location import Location
 from models.aton.nodes.pp_prov_tin_loc import PP_PROV_TIN_LOC
 from models.aton.nodes.qualification import Qualification
@@ -25,7 +25,7 @@ def get_or_create_location(location:Location):
         location.save()
         saved_val = create_validation(validation)
         create_qualifications(location)
-        legacy_system_id: LegacySystemID = location.context.get_portico_source().save()
+        legacy_system_id: LegacySystemIdentifier = location.context.get_portico_source().save()
         legacy_system_id.location.connect(location)
         prov_tin_loc: PP_PROV_TIN_LOC = PP_PROV_TIN_LOC(loc_id=int(legacy_system_id.value))
         prov_tin_loc.save()

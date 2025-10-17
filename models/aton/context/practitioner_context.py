@@ -1,6 +1,6 @@
 import weakref
 
-from models.aton.nodes.identifier import Identifier, NPI, DEA_Number, MedicareID, MedicaidID, LegacySystemID
+from models.aton.nodes.identifier import Identifier, NPI, DEA_Number, MedicareID, MedicaidID, LegacySystemIdentifier
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
@@ -10,7 +10,7 @@ class PractitionerContext:
 
     def __init__(self, practitioner:Practitioner):
         self.practitioner = weakref.proxy(practitioner)
-        self._portico_source: LegacySystemID | None = None
+        self._portico_source: LegacySystemIdentifier | None = None
         self._identifiers = {
             "npi": [],
             "medicare_id": [],
@@ -30,7 +30,7 @@ class PractitionerContext:
             self._identifiers["medicare_id"].append(identifier)
         elif isinstance(identifier, MedicaidID):
             self._identifiers["medicaid_id"].append(identifier)
-        elif isinstance(identifier, LegacySystemID):
+        elif isinstance(identifier, LegacySystemIdentifier):
             self._identifiers["legacy_system_id"].append(identifier)
         else:
             ValueError(f"{identifier} is not a valid identifier")
@@ -50,7 +50,7 @@ class PractitionerContext:
     def get_role_instance(self):
         return self._role_instance
 
-    def set_portico_source(self, source: LegacySystemID):
+    def set_portico_source(self, source: LegacySystemIdentifier):
         self._portico_source = source
 
     def get_portico_source(self):

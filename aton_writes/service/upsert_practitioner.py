@@ -3,7 +3,7 @@
 from aton_writes.service.upsert_role_location import process_role_locations
 from aton_writes.service.upsert_role_network import process_role_networks
 from aton_writes.service.upsert_role_specialty import create_role_specialty
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemIdentifier
 from repository.identifier_repo import create_identifiers
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.pp_prac import PP_PRAC
@@ -66,7 +66,7 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     """
     log.debug(f"About to create practitioner to organization {organization.name} with element id {organization.element_id}")
     practitioner.save()
-    legacy_system_id: LegacySystemID = practitioner.context.get_portico_source()
+    legacy_system_id: LegacySystemIdentifier = practitioner.context.get_portico_source()
     legacy_system_id.save()
     legacy_system_id.practitioner.connect(practitioner)
     pp_prac: PP_PRAC = PP_PRAC(prac_id=int(legacy_system_id.value))

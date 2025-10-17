@@ -1,6 +1,6 @@
 import weakref
 
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.location import Location
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.validation import Validation
@@ -10,14 +10,14 @@ class LocationContext:
 
     def __init__(self, location:Location):
         self.location = weakref.proxy(location)
-        self._portico_source: LegacySystemID | None = None
+        self._portico_source: LegacySystemIdentifier | None = None
         self._qualifications: list[Qualification] = []
         self._validation: Validation | None = None
 
-    def set_portico_source(self, portico_source: LegacySystemID):
+    def set_portico_source(self, portico_source: LegacySystemIdentifier):
         self._portico_source = portico_source
 
-    def get_portico_source(self) -> LegacySystemID:
+    def get_portico_source(self) -> LegacySystemIdentifier:
         return self._portico_source
 
     def add_qualification(self, qualification: Qualification):

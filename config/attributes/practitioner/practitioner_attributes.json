@@ -37,7 +37,7 @@
     "name": "PRAC_HN_LEG_PRAC_ID",
     "category": "Identifier",
     "attr_type": "LEGACY_SYSTEM_ID",
-    "class": "models.aton.nodes.identifier.LegacySystemID",
+    "class": "models.aton.nodes.identifier.LegacySystemIdentifier",
     "fields": {
       "105838": "value"
     },

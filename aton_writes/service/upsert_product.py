@@ -1,6 +1,6 @@
 import logging
 
-from models.aton.nodes.identifier import LegacySystemID
+from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.product import Product
 from repository.product_repo import find_product_by_code_or_name, find_pp_net_by_id
 from repository.network_repo import find_network_by_code_or_name
@@ -55,7 +55,7 @@ def find_or_create_product(product):
     existing_product, is_prod_found_by_name = find_product_by_code_or_name(product.code, product.name)
     if not existing_product:
         product.save()
-        pp_net: LegacySystemID = product.context.get_portico_source()
+        pp_net: LegacySystemIdentifier = product.context.get_portico_source()
         pp_net.save()
         log.info(f"Product node and PP_NET node created for {product.code}")
         pp_net.product.connect(product)
@@ -71,9 +71,9 @@ def find_or_create_product(product):
             # that have the same name but different ids.
             # Before creating the PP_NET node, we need to check if the PP_NET node already exists.
             # If it does not, then create it.
-            pp_net: LegacySystemID = find_pp_net_by_id(product.context.get_portico_source().value)
+            pp_net: LegacySystemIdentifier = find_pp_net_by_id(product.context.get_portico_source().value)
             if pp_net is None:
-                pp_net: LegacySystemID = product.context.get_portico_source()
+                pp_net: LegacySystemIdentifier = product.context.get_portico_source()
                 log.debug(f"Product {product.code}'s portico source is: {pp_net}")
                 pp_net.save()
                 log.info(f"PP_NET node created for product {product.code}")
@@ -102,7 +102,7 @@ def find_or_create_network(network):
     existing_network, is_net_found_by_name = find_network_by_code_or_name(network.code, network.name)
     if not existing_network:
         network.save()
-        pp_net: LegacySystemID = network.context.get_portico_source()
+        pp_net: LegacySystemIdentifier = network.context.get_portico_source()
         pp_net.save()
         pp_net.network.connect(network)
         log.info(f"Created Network and PP_NET node for {network.code}")
@@ -115,9 +115,9 @@ def find_or_create_network(network):
             # In ATON we will not be creating two nodes with the same name.
             # One ATON Network node will be linked to more than one PP_NET nodes
             # that have the same name but different ids
-            pp_net: LegacySystemID = find_pp_net_by_id(network.context.get_portico_source().value)
+            pp_net: LegacySystemIdentifier = find_pp_net_by_id(network.context.get_portico_source().value)
             if pp_net is None:
-                pp_net: LegacySystemID = network.context.get_portico_source()
+                pp_net: LegacySystemIdentifier = network.context.get_portico_source()
                 log.debug(f"Network {network.code}'s portico source is: {pp_net}")
                 pp_net.save()
                 log.info(f"PP_NET node created for network {network.code}")

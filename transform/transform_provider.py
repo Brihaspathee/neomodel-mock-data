@@ -1,7 +1,7 @@
 from models.aton.context.contact_context import ContactContext
 from models.aton.nodes.address import Address
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import TIN, LegacySystemID
+from models.aton.nodes.identifier import TIN, LegacySystemIdentifier
 from models.aton.nodes.organization import Organization
 from models.aton.context.organization_context import OrganizationContext
 from models.aton.nodes.telecom import Telecom
@@ -35,9 +35,9 @@ def _(provider:PPProv) -> Organization:
     # if not organization:
     organization = Organization(name=provider.name)
     organization.context = OrganizationContext(organization)
-    pp_prov: LegacySystemID = LegacySystemID(value=str(provider.id),
-                                             system="PORTICO",
-                                             systemIdType="PROV ID")
+    pp_prov: LegacySystemIdentifier = LegacySystemIdentifier(value=str(provider.id),
+                                                             system="PORTICO",
+                                                             systemIdType="PROV ID")
     organization.context.set_portico_source(pp_prov)
     organization.alias = provider.name
     organization.description = provider.name
