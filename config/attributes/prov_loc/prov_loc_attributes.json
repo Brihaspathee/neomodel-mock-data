@@ -5,7 +5,7 @@
     "attr_type": "Provider Location Specialties",
     "class": "models.aton.nodes.role_specialty.RoleSpecialty",
     "fields": {
-      "111355": "specialty"
+      "111355": {"property": "specialty", "type": "string"}
     }
   },
   "103797": {
@@ -14,10 +14,10 @@
     "attr_type": "Certification",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "106797": "start_date",
-      "106798": "end_date",
-      "106675": "status",
-      "106796": "value"
+      "106797": {"property": "start_date", "type": "date"},
+      "106798": {"property": "end_date", "type": "date"},
+      "106675": {"property": "status", "type": "string"},
+      "106796": {"property": "value", "type": "string"}
     },
     "ignore": [],
     "adornments": {

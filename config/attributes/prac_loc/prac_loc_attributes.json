@@ -5,8 +5,8 @@
     "attr_type": "Practitioner Location Specialties",
     "class": "models.aton.nodes.role_specialty.RoleSpecialty",
     "fields": {
-      "111635": "_isPrimary",
-      "111636": "specialty"
+      "111635": {"property": "_isPrimary", "type": "string"},
+      "111636": {"property": "specialty", "type": "string"}
     }
   }
 }

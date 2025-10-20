@@ -1,6 +1,6 @@
 from typing import Any
 
-from neo4j.time import DateType
+from neo4j.time._metaclasses import DateType
 from neomodel import StringProperty, DateProperty, RelationshipTo, ArrayProperty, RelationshipFrom
 
 from models.aton.nodes.base_node import BaseNode

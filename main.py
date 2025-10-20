@@ -22,7 +22,7 @@ def main():
     log.debug(f"Running on {settings.ENVIRONMENT} environment")
     log.debug(f"POSTGRES info {settings.POSTGRES} environment")
     log.debug(f"NEO4J info {settings.NEO4J} environment")
-    log.info(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
+    log.debug(f"ATTRIBUTES CONFIG {attribute_settings.ATTRIBUTES_CONFIG}")
     log.debug(f"Contact use mapping:{contact_settings.CONTACT_USE_MAPPING}")
     log.debug(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
     log.debug(f"County state mapping:{county_settings.COUNTY_STATE_MAPPING}")

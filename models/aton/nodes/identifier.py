@@ -1,17 +1,18 @@
 from typing import Type, TypeVar
 
-from neo4j.time import DateType
 from neomodel import StringProperty, DateProperty, StructuredNode, RelationshipFrom
 from neomodel.exceptions import DoesNotExist, MultipleNodesReturned
 
 from models.aton.nodes.base_node import BaseNode
+from models.aton.nodes.node_utils import convert_dates_to_native
+import logging
+
+log = logging.getLogger(__name__)
 
 T = TypeVar("T", bound="Identifier")
 class Identifier(BaseNode):
 
     value: str= StringProperty(required=True)
-    start_date: DateType= DateProperty(required=False, db_property='startDate')
-    end_date: DateType= DateProperty(required=False, db_property='endDate')
 
     @classmethod
     def get_or_create(cls: Type[T], lookup_props: dict, other_props: dict) -> tuple[
@@ -28,8 +29,17 @@ class Identifier(BaseNode):
             ) from e
         return node, created
 
+    def save(self, *args, **kwargs):
+        log.debug(">>> Saving an identifier node")
+        node = super().save(*args, **kwargs)
+        convert_dates_to_native(self)
+        return node
+
 class NPI(Identifier):
     _node_labels = ('Identifier', 'NPI')
+
+    start_date: DateProperty = DateProperty(required=False, db_property='startDate')
+    end_date: DateProperty = DateProperty(required=False, db_property='endDate')
 
     organization = RelationshipFrom(
         "models.aton.nodes.organization.Organization",
@@ -71,6 +81,8 @@ class MedicaidID(Identifier):
         "models.aton.nodes.practitioner.Practitioner",
         "HAS_MEDICAID_ID"
     )
+    start_date: DateProperty = DateProperty(required=False, db_property='startDate')
+    end_date: DateProperty = DateProperty(required=False, db_property='endDate')
     state: str= StringProperty(required=False)
 
 class LegacySystemIdentifier(Identifier):
@@ -94,6 +106,8 @@ class DEA_Number(Identifier):
         "HAS_DEA_NUMBER"
     )
     state: str= StringProperty(required=False)
+    start_date: DateProperty = DateProperty(required=False, db_property='startDate')
+    end_date: DateProperty = DateProperty(required=False, db_property='endDate')
 
 class PPGID(Identifier):
     _node_labels = ('Identifier', 'PPGID'),

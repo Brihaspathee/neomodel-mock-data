@@ -5,9 +5,9 @@
     "attr_type": "NPI",
     "class": "models.aton.nodes.identifier.NPI",
     "fields": {
-      "706": "value",
-      "708": "start_date",
-      "709": "end_date"
+      "706": {"property": "value", "type": "string"},
+      "708": {"property": "start_date", "type":  "date"},
+      "709": {"property": "end_date", "type": "date"}
     },
     "ignore": ["707"]
   },
@@ -17,7 +17,7 @@
     "attr_type": "MedicareID",
     "class": "models.aton.nodes.identifier.MedicareID",
     "fields": {
-      "100283": "value"
+      "100283": {"property": "value", "type": "string"}
     }
   },
   "103277": {
@@ -26,12 +26,25 @@
     "attr_type": "PPG_ID",
     "class": "models.aton.context.ppg_id_context.PPGIDContext",
     "fields": {
-      "106275": "capitated_ppg",
-      "106276": "pcp_required",
-      "105835": "value",
-      "105836": "parent_ppg_id"
+      "106275": {"property": "capitated_ppg", "type": "string"},
+      "106276": {"property": "pcp_required", "type": "string"},
+      "105835": {"property": "value", "type": "string"},
+      "105836": {"property": "parent_ppg_id", "type": "string"}
     },
     "ignore": ["107275"]
+  },
+  "100053": {
+    "name": "PROV_LICENSE",
+    "category": "Qualification",
+    "attr_type": "License",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "100263": {"property": "value", "type": "string"},
+      "100264": {"property": "state", "type":  "string"},
+      "100678": {"property": "start_date", "type":  "date"},
+      "100679": {"property": "end_date", "type": "date"},
+      "104029": {"property": "status", "type":  "string"}
+    }
   },
   "101277": {
     "name": "PROV_AAAASF_ACCRED",
@@ -39,8 +52,8 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "101956": "start_date",
-      "102795": "end_date"
+      "101956": {"property": "start_date", "type":  "date"},
+      "102795": {"property": "end_date", "type": "date"}
     },
     "ignore": ["101955"],
     "adornments": {
@@ -62,9 +75,9 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "101137": "start_date",
-      "102815": "end_date",
-      "104381": "level"
+      "101137": {"property": "start_date", "type":  "date"},
+      "102815": {"property": "end_date", "type": "date"},
+      "104381": {"property": "level", "type": "string"}
     },
     "ignore": ["101136"],
     "adornments": {
@@ -79,9 +92,9 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "101141": "start_date",
-      "102915": "end_date",
-      "104380": "level"
+      "101141": {"property": "start_date", "type":  "date"},
+      "102915": {"property": "end_date", "type": "date"},
+      "104380": {"property": "level", "type": "string"}
     },
     "ignore": ["101143"],
     "adornments": {
@@ -96,8 +109,8 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "101958": "start_date",
-      "102856": "end_date"
+      "101958": {"property": "start_date", "type":  "date"},
+      "102856": {"property": "end_date", "type": "date"}
     },
     "ignore": ["101957"],
     "adornments": {
@@ -112,8 +125,8 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "106177": "start_date",
-      "106178": "end_date"
+      "106177": {"property": "start_date", "type":  "date"},
+      "106178": {"property": "end_date", "type": "date"}
     },
     "ignore": ["106175", "106175"],
     "adornments": {
@@ -135,8 +148,8 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "101978": "start_date",
-      "103130": "end_date"
+      "101978": {"property": "start_date", "type":  "date"},
+      "103130": {"property": "end_date", "type": "date"}
     },
     "ignore": ["101977", "103129"],
     "adornments": {
@@ -158,8 +171,8 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "102276": "start_date",
-      "103134": "end_date"
+      "102276": {"property": "start_date", "type":  "date"},
+      "103134": {"property": "end_date", "type": "date"}
     },
     "ignore": ["102275", "103133"],
     "adornments": {
@@ -181,8 +194,8 @@
     "attr_type": "Accreditation",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "100313": "start_date",
-      "103141": "end_date"
+      "100313": {"property": "start_date", "type":  "date"},
+      "103141": {"property": "end_date", "type": "date"}
     },
     "ignore": ["100312", "104376", "103140"],
     "adornments": {
@@ -204,10 +217,10 @@
     "attr_type": "Certification",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "102444": "start_date",
-      "102445": "end_date",
-      "102735": "type",
-      "102443": "status"
+      "102444": {"property": "start_date", "type":  "date"},
+      "102445": {"property": "end_date", "type": "date"},
+      "102735": {"property": "type", "type": "string"},
+      "102443": {"property": "status", "type": "string"}
     },
     "field_transformers": {
       "102735": [

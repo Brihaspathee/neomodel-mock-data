@@ -1,7 +1,8 @@
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Any, Type
+from typing import Dict, List, Any, Type, Optional
+
 
 @dataclass
 class FieldMapper:
@@ -21,6 +22,13 @@ class FieldTransformer:
     # The value Any is future proofing for any other pattern
     value: str | FieldMapper | Any
 
+@dataclass
+class FieldInfo:
+    property: str
+    type: str # "string" | "number" | "date" | "boolean" | "object" | "array" | "list" | "object"
+    item_type: Optional[str] = None # Used if type == "list"
+    class_path: Optional[str] = None # Optional: for nested object list
+
 # -------------------------------------------------------------------------------
 # Attribute Mapping Data class
 # -------------------------------------------------------------------------------
@@ -32,7 +40,7 @@ class AttributeMapping:
     name: str
     category: str
     attr_type: str
-    fields: Dict[str, str]
+    fields: Dict[str, FieldInfo]
     node_class: Type
     ignore: List[str] = field(default_factory=list)
     adornments: Dict[str, Any] = field(default_factory=dict)

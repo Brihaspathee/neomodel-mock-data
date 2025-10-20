@@ -5,7 +5,7 @@
     "attr_type": "Vendor Network",
     "class": "models.aton.nodes.network.Network",
     "fields": {
-      "100802": "isVendorNetwork"
+      "100802": {"property": "isVendorNetwork", "type": "string"}
     }
   },
   "103937": {
@@ -14,7 +14,7 @@
     "attr_type": "HNET Network",
     "class": "models.aton.nodes.network.Network",
     "fields": {
-      "107035": "isHNETNetwork"
+      "107035": {"property": "isHNETNetwork", "type": "string"}
     }
   }
 }

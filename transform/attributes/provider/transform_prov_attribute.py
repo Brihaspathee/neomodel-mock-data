@@ -21,6 +21,7 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
         attribute_fields: dict[str, Any] = {}
         for value in attribute.values:
             field_id = str(value.field_id)
+            # attribute_fields[field_id] = value.value
             if value.value_date:
                 attribute_fields[field_id] = value.value_date
             elif value.value_number:
@@ -63,5 +64,8 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                 organization.context.add_identifier(node)
         elif isinstance(node, Qualification):
             organization.context.add_qualification(node)
+            log.debug(f"Qualification added to organization {organization.element_id}")
+            if node.start_date:
+                log.debug(f"Qualification node date type: {type(node.start_date)}")
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}")

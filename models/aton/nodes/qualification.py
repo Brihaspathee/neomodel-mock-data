@@ -1,7 +1,13 @@
-from neomodel import StructuredNode, StringProperty, DateProperty, RelationshipFrom
+from datetime import date
+
+from neomodel import StructuredNode, StringProperty, DateProperty, RelationshipFrom, db
 
 from models.aton.nodes.base_node import BaseNode
+import logging
 
+from models.aton.nodes.node_utils import convert_dates_to_native
+
+log = logging.getLogger(__name__)
 
 class Qualification(BaseNode):
     type = StringProperty(required=True)
@@ -30,4 +36,5 @@ class Qualification(BaseNode):
     def save(self, *args, **kwargs):
         node = super().save(*args, **kwargs)
         self._add_secondary_label()
+        convert_dates_to_native(self)
         return node

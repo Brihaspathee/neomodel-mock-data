@@ -5,9 +5,9 @@
     "attr_type": "NPI",
     "class": "models.aton.nodes.identifier.NPI",
     "fields": {
-      "701": "value",
-      "703": "start_date",
-      "704": "end_date"
+      "701": {"property": "value", "type": "string"},
+      "703": {"property": "start_date", "type": "date"},
+      "704": {"property": "end_date", "type": "date"}
     },
     "ignore": ["702", "705"]
   },
@@ -17,11 +17,11 @@
     "attr_type": "MedicaidID",
     "class": "models.aton.nodes.identifier.MedicaidID",
     "fields": {
-      "100302": "value",
-      "100303": "state",
-      "104755": "start_date",
-      "100934": "end_date"
-    },
+      "100302": {"property": "value", "type": "string"},
+      "100303": {"property": "state", "type": "string"},
+      "104755": {"property": "start_date", "type": "date"},
+      "100934": {"property": "end_date", "type": "date"}
+},
     "ignore": ["18956"]
   },
   "100084": {
@@ -30,7 +30,7 @@
     "attr_type": "MedicareID",
     "class": "models.aton.nodes.identifier.MedicareID",
     "fields": {
-      "100301": "value"
+      "100301": {"property": "value", "type": "string"}
     }
   },
   "103279": {
@@ -39,7 +39,7 @@
     "attr_type": "LEGACY_SYSTEM_ID",
     "class": "models.aton.nodes.identifier.LegacySystemIdentifier",
     "fields": {
-      "105838": "value"
+      "105838": {"property": "value", "type": "string"}
     },
     "adornments": {
       "system": "HNET",
@@ -52,10 +52,10 @@
     "attr_type": "DEA",
     "class": "models.aton.nodes.identifier.DEA_Number",
     "fields": {
-      "100260": "value",
-      "100697": "state",
-      "100259": "end_date"
-    }
+      "100260": {"property": "value", "type": "string"},
+      "100697": {"property": "state", "type": "string"},
+      "100259": {"property": "end_date", "type": "date"}
+}
   },
   "101619": {
     "name": "PRAC_CCS",
@@ -63,8 +63,8 @@
     "attr_type": "Certification",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "102450": "start_date",
-      "102451": "end_date"
+      "102450": {"property": "start_date", "type": "date"},
+      "102451": {"property": "end_date", "type": "date"}
     },
     "ignore": ["102449"],
     "adornments": {
@@ -86,9 +86,9 @@
     "attr_type": "Qualification",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "111315": "state",
-      "101085": "type"
-    },
+      "111315": {"property": "state", "type": "string"},
+      "101085": {"property": "type", "type": "string"}
+},
     "ignore": ["100242", "111575"],
     "adornments": {
       "issuer": "Early and Periodic Screening, Diagnostic and Treatment"
@@ -107,10 +107,10 @@
     "attr_type": "Practitioner",
     "class": "models.aton.nodes.practitioner.Practitioner",
     "fields": {
-      "106896": "altFirstName",
-      "107055": "altMiddleName",
-      "107056": "altLastName"
-    }
+      "106896": {"property": "altFirstName", "type": "string"},
+      "107055": {"property": "altMiddleName", "type": "string"},
+      "107056": {"property": "altLastName", "type": "string"}
+}
   },
   "100039": {
     "name": "PRAC_DEMOGRAPHICS",
@@ -118,9 +118,9 @@
     "attr_type": "Practitioner",
     "class": "models.aton.nodes.practitioner.Practitioner",
     "fields": {
-      "100233": "ethnicity",
-      "110355": "race"
-    },
+      "100233": {"property": "ethnicity", "type": "string"},
+      "110355": {"property": "race", "type": "string"}
+},
     "ignore": ["100232"]
   },
   "100052": {
@@ -129,13 +129,13 @@
     "attr_type": "License",
     "class": "models.aton.nodes.qualification.Qualification",
     "fields": {
-      "106595": "startDate",
-      "100677": "endDate",
-      "100261": "state",
-      "100262": "value",
-      "104028": "status",
-      "106855": "type"
-    },
+      "106595": {"property": "start_date", "type": "date"},
+      "100677": {"property": "end_date", "type": "date"},
+      "100261": {"property": "state", "type": "string"},
+      "100262": {"property": "value", "type": "string"},
+      "104028": {"property": "status", "type": "string"},
+      "106855": {"property": "type", "type": "string"}
+},
     "field_transformers": {
       "104028": [
         {

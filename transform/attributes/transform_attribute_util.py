@@ -1,8 +1,9 @@
 import importlib
+from datetime import datetime, date
 from typing import Any
 
 from config.attribute_settings import SPECIAL_ATTRIBUTES
-from config.attributes_mapping import AttributeMapping
+from config.attributes_mapping import AttributeMapping, FieldInfo
 from neomodel import StructuredNode
 import portico_reads.service.fmg_codes.load_fmg_codes as fmg_loader
 
@@ -45,11 +46,19 @@ def build_node_for_attribute(mapping:AttributeMapping,
         if field_id in mapping.ignore:
             continue
         if field_id in mapping.fields:
+            field_info_dict:dict = mapping.fields[field_id]
+            field_info = FieldInfo(**field_info_dict)
             # Check if the field has a transformer
             if field_id in mapping.field_transformers:
                 field_value = transform_field(field_value, mapping.field_transformers[field_id])
-            aton_prop = mapping.fields[field_id]
-            props[aton_prop] = field_value
+            # Type conversion
+            field_value = _convert_field_type(field_value, field_info)
+            # Assign property
+            prop_name = field_info.property
+            if field_info.type == "list":
+                props.setdefault(prop_name, []).append(field_value)
+            else:
+                props[prop_name] = field_value
 
     props.update(mapping.adornments)
     log.debug(f"Aton Properties: {props}")
@@ -57,6 +66,34 @@ def build_node_for_attribute(mapping:AttributeMapping,
     node_instance = mapping.node_class(**props)
     log.debug(f"Node instance: {node_instance}")
     return node_instance
+
+
+def _convert_field_type(value: any, field_info: FieldInfo) -> Any:
+    if value is None:
+        return None
+    if field_info.type == "date":
+        # handle date conversion
+        log.debug(f"Converting value {value} to date its type is {type(value)}")
+        if isinstance(value, date):
+            log.debug(f"it is an instance of datetime")
+            # return value.isoformat()
+            # try:
+            #     return datetime.strptime(value, "%Y-%m-%d").date()
+            # except ValueError:
+            #     try:
+            #         return datetime.strptime(value, "%m/%d/%Y").date()
+            #     except ValueError:
+            #         return value # leave it as-is if format is unknown
+        return value
+    if field_info.type == "int":
+        return int(value)
+    if field_info.type == "float":
+        return float(value)
+    if field_info.type == "list" and field_info.item_type == "object" and field_info.class_path:
+        module_name, class_name = field_info.class_path.rsplit(".", 1)
+        cls = getattr(importlib.import_module(module_name), class_name)
+        return cls(**value)
+    return value
 
 def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, Any]) -> bool:
     """

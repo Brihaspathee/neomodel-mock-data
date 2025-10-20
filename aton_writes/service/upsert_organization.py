@@ -115,6 +115,8 @@ def create_qualifications(org: Organization):
     rel = getattr(org, "qualifications")
     for qual_node in org.context.get_qualifications():
         if not hasattr(qual_node, "element_id") or qual_node.element_id is None:
+            if qual_node.start_date is not None:
+                log.debug(f"Qual node date type:{type(qual_node.start_date)}")
             qual_node.save()
             log.debug(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
             rel.connect(qual_node)

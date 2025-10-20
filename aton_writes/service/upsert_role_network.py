@@ -1,5 +1,6 @@
 from models.aton.nodes.network import Network
 from models.aton.context.organization_context import OrganizationContext
+from models.aton.nodes.node_utils import update_relationship_dates
 from models.aton.nodes.role_instance import RoleInstance
 import logging
 
@@ -34,10 +35,12 @@ def process_role_networks(role_instance:RoleInstance,
             rl = assoc_rl.role_location
             log.debug(f"Role Location inside the network:{rl.element_id}")
             for rls in assoc_rl.rls_edges:
-                rl.role_network.connect(rn, {
+                rel = rl.role_network.connect(rn, {
                     "start_date": rls.start_date,
                     "end_date": rls.end_date
                 })
+                log.debug(f"RLS element id:{rel.element_id}")
+                update_relationship_dates(rel, rls.start_date, rls.end_date)
             if rn.context.get_is_pcp():
                 log.debug(f"Create IS_PCP edge between role network node with element id {rl.element_id} "
                          f"and role network node with element id {rn.element_id}")
