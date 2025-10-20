@@ -20,6 +20,19 @@
       "100283": {"property": "value", "type": "string"}
     }
   },
+  "100011": {
+    "name": "PROV_MEDICAID",
+    "category": "Identifier",
+    "attr_type": "MedicaidID",
+    "class": "models.aton.nodes.identifier.MedicaidID",
+    "fields": {
+      "100094": {"property": "value", "type": "string"},
+      "100477": {"property": "state", "type": "string"},
+      "104756": {"property": "start_date", "type":  "date"},
+      "103215": {"property": "end_date", "type": "date"}
+    },
+    "ignore": ["18958"]
+  },
   "103277": {
     "name": "PROV_PPG_ID",
     "category": "Identifier",
@@ -69,6 +82,52 @@
     "conditions": [
       {
         "field_id": "100314",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "100090": {
+    "name": "PROV_URAC_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "100317": {"property": "start_date", "type":  "date"},
+      "103155": {"property": "end_date", "type": "date"}
+    },
+    "ignore": ["103154", "100316"],
+    "adornments": {
+      "type": "URAC Accreditation",
+      "issuer": "Utilization Review Accreditation Commission",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "100316",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
+  },
+  "100091": {
+    "name": "PROV_HCFA_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "100319": {"property": "start_date", "type":  "date"},
+      "103132": {"property": "end_date", "type": "date"}
+    },
+    "ignore": ["103131", "100318"],
+    "adornments": {
+      "type": "HCFA Accreditation",
+      "issuer": "Health Care Financing Administration",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "100318",
         "operator": "equals",
         "value": "Y"
       }
