@@ -44,7 +44,35 @@
       "100678": {"property": "start_date", "type":  "date"},
       "100679": {"property": "end_date", "type": "date"},
       "104029": {"property": "status", "type":  "string"}
+    },
+    "adornments": {
+      "type": "LICE_MLC",
+      "secondary_label": "License"
     }
+  },
+  "100089": {
+    "name": "PROV_NCQA_ACCRED",
+    "category": "Qualification",
+    "attr_type": "Accreditation",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "100315": {"property": "start_date", "type":  "date"},
+      "103149": {"property": "end_date", "type": "date"},
+      "104375": {"property": "level", "type": "list"}
+    },
+    "ignore": ["103148", "100314"],
+    "adornments": {
+      "type": "NCQA Accreditation",
+      "issuer": "National Committee of Quality Assurance",
+      "secondary_label": "Accreditation"
+    },
+    "conditions": [
+      {
+        "field_id": "100314",
+        "operator": "equals",
+        "value": "Y"
+      }
+    ]
   },
   "101277": {
     "name": "PROV_AAAASF_ACCRED",

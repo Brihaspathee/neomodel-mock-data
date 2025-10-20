@@ -38,34 +38,35 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
         # log.debug(f"Node type: {type(node)}")
         # log.debug(f"Is this Type NPI: {isinstance(node, Identifier):}")
         # log.debug(f"Is this Type Qualification: {isinstance(node, Qualification):}")
-        if isinstance(node, Identifier):
-            is_identifier_added = False
-            if isinstance(node, PPGIDContext):
-                log.debug(f"This is a PPG ID {node.value}")
-                log.debug(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
-                log.debug(f"This is a PPG ID - PCP required  {node.pcp_required}")
-                log.debug(f"This is a PPG ID - Parent PPG ID  {node.parent_ppg_id}")
-                if node.capitated_ppg == "Y":
-                    organization.capitated = True
-                else:
-                    organization.capitated = False
-                if node.pcp_required == "Y":
-                    organization.pcp_practitioner_required = True
-                else:
-                    organization.pcp_practitioner_required = False
-                if node.parent_ppg_id:
-                    organization.context.set_parent_ppg_id(node.parent_ppg_id)
-                ppg_id = PPGID(value=node.value)
-                organization.context.add_identifier(ppg_id)
-                is_identifier_added = True
-            # # if identifier is a PPG ID, then it would have been added above
-            # # else add it to the organization
-            if not is_identifier_added:
-                organization.context.add_identifier(node)
-        elif isinstance(node, Qualification):
-            organization.context.add_qualification(node)
-            log.debug(f"Qualification added to organization {organization.element_id}")
-            if node.start_date:
-                log.debug(f"Qualification node date type: {type(node.start_date)}")
-        else:
-            log.error(f"Unable to determine node type for attribute {attribute_id}")
+        if node:
+            if isinstance(node, Identifier):
+                is_identifier_added = False
+                if isinstance(node, PPGIDContext):
+                    log.debug(f"This is a PPG ID {node.value}")
+                    log.debug(f"This is a PPG ID - capitated ppg {node.capitated_ppg}")
+                    log.debug(f"This is a PPG ID - PCP required  {node.pcp_required}")
+                    log.debug(f"This is a PPG ID - Parent PPG ID  {node.parent_ppg_id}")
+                    if node.capitated_ppg == "Y":
+                        organization.capitated = True
+                    else:
+                        organization.capitated = False
+                    if node.pcp_required == "Y":
+                        organization.pcp_practitioner_required = True
+                    else:
+                        organization.pcp_practitioner_required = False
+                    if node.parent_ppg_id:
+                        organization.context.set_parent_ppg_id(node.parent_ppg_id)
+                    ppg_id = PPGID(value=node.value)
+                    organization.context.add_identifier(ppg_id)
+                    is_identifier_added = True
+                # # if identifier is a PPG ID, then it would have been added above
+                # # else add it to the organization
+                if not is_identifier_added:
+                    organization.context.add_identifier(node)
+            elif isinstance(node, Qualification):
+                organization.context.add_qualification(node)
+                log.debug(f"Qualification added to organization {organization.element_id}")
+                if node.start_date:
+                    log.debug(f"Qualification node date type: {type(node.start_date)}")
+            else:
+                log.error(f"Unable to determine node type for attribute {attribute_id}")

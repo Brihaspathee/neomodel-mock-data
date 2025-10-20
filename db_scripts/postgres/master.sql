@@ -70,3 +70,6 @@
 \i centene/scenarios/scenario_1/practitioner/prac-10/scenario-data.sql
 \i centene/scenarios/scenario_1/practitioner/prac-11/scenario-data.sql
 \i centene/scenarios/scenario_1/practitioner/prac-12/scenario-data.sql
+
+-- Insert data for Scenario - 1
+\i centene/scenarios/scenario_2/scenario-data.sql
