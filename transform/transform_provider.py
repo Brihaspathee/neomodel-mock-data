@@ -5,6 +5,7 @@ from models.aton.nodes.identifier import TIN, LegacySystemIdentifier
 from models.aton.nodes.organization import Organization
 from models.aton.context.organization_context import OrganizationContext
 from models.aton.nodes.telecom import Telecom
+from transform.qualification_deduplication import select_unique_qualifications
 from transform.transformers import transform_to_aton
 from transform.transform_provider_location import transform_provider_location
 from transform.transform_practitioner import transform_practitioner
@@ -50,17 +51,18 @@ def _(provider:PPProv) -> Organization:
     organization.context.add_identifier(tax_id)
     contact: Contact = get_provider_address(provider)
     organization.context.add_contact(contact)
-    # get_provider_attributes(provider, organization)
     # ------------------------------------------------------------------------------
     # Populate locations associated with the organization
     # ------------------------------------------------------------------------------
     transform_provider_location(provider, organization)
-    # get_provider_attributes(provider, organization)
     transform_attributes("PROVIDER", provider, organization)
     # ------------------------------------------------------------------------------
     # Add the practitioners associated with the organization
     # ------------------------------------------------------------------------------
     transform_practitioner(provider, organization)
+    if organization.context.get_qualifications():
+        qual_results = select_unique_qualifications(organization.context.get_qualifications())
+        log.info(qual_results)
     return organization
 
 def get_tin(provider:PPProv) -> TIN:
