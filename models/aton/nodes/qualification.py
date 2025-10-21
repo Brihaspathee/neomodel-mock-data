@@ -1,6 +1,6 @@
 from datetime import date
 
-from neomodel import StructuredNode, StringProperty, DateProperty, RelationshipFrom, db
+from neomodel import StructuredNode, StringProperty, DateProperty, RelationshipFrom, db, ArrayProperty
 
 from models.aton.nodes.base_node import BaseNode
 import logging
@@ -17,6 +17,7 @@ class Qualification(BaseNode):
     value = StringProperty(required=False)
     start_date = DateProperty(required=False, db_property="startDate")
     end_date = DateProperty(required=False, db_property="endDate")
+    level = ArrayProperty(required=False, db_property="level")
     secondary_label: str = ""
 
     organization = RelationshipFrom("models.aton.nodes.organization.Organization", "HAS_QUALIFICATION")
@@ -35,6 +36,7 @@ class Qualification(BaseNode):
 
     def save(self, *args, **kwargs):
         node = super().save(*args, **kwargs)
+        log.debug(f"Node saved: {node}")
         self._add_secondary_label()
-        convert_dates_to_native(self)
+        convert_dates_to_native(node)
         return node

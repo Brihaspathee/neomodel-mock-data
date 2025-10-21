@@ -26,7 +26,7 @@ def get_provider_attributes(provider:PPProv, organization: Organization):
                 attribute_fields[field_id] = value.value_date
             elif value.value_number:
                 attribute_fields[field_id] = value.value_number
-            else:
+            elif value.value:
                 attribute_fields[field_id] = value.value
         log.debug(f"Attribute Fields: {attribute_fields}")
         attribute_id = attribute.attribute_id

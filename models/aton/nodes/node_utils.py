@@ -33,13 +33,19 @@ def convert_dates_to_native(node):
         # Only process DateProperty fields
         if isinstance(attr_obj, DateProperty):
             val = getattr(node, attr_name)
+            log.debug(f"Value of the attribute: {val}")
             if val and isinstance(val, date):
                 # Determine the property name in Neo4j
                 prop_name = getattr(attr_obj, 'db_property', None) or attr_name
-                # Cypher query: match node by elementId and set native DATE
-                query = f"""
-                MATCH (n:{node.__class__.__name__})
-                WHERE elementId(n) = elementId(n)
-                SET n.{prop_name} = date($date_val)
-                """
-                db.cypher_query(query, {'date_val': val.isoformat()})
+                element_id = getattr(node, 'element_id', None)
+                if element_id:
+                    # Cypher query: match node by elementId and set native DATE
+                    query = f"""
+                    MATCH (n:{node.__class__.__name__})
+                    WHERE elementId(n) = $elementId
+                    SET n.{prop_name} = date($date_val)
+                    """
+                    db.cypher_query(query, {
+                        'date_val': val.isoformat(),
+                        'elementId': element_id
+                    })

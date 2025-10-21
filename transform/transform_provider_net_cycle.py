@@ -34,6 +34,10 @@ def transform_provider_net_cycle(prov_net_cycles: list[PPProvNetCycle], role_ins
     :rtype: None
     """
     for prov_net_cycle in prov_net_cycles:
+        par_status: str = prov_net_cycle.status.upper()
+        # Skip the provider network cycles that are not in PAR status
+        if par_status != 'PAR':
+            continue
         role_network: RoleNetwork | None = None
         log.debug(f"Network Address:{prov_net_cycle.net_id}")
         # ------------------------------------------------------------------------------

@@ -31,7 +31,13 @@
       "104756": {"property": "start_date", "type":  "date"},
       "103215": {"property": "end_date", "type": "date"}
     },
-    "ignore": ["18958"]
+    "ignore": ["18958"],
+    "conditions": [
+      {
+        "field_id": "100094",
+        "operator": "not null"
+      }
+    ]
   },
   "103277": {
     "name": "PROV_PPG_ID",
@@ -61,7 +67,13 @@
     "adornments": {
       "type": "LICE_MLC",
       "secondary_label": "License"
-    }
+    },
+    "conditions": [
+      {
+        "field_id": "100263",
+        "operator": "not null"
+      }
+    ]
   },
   "100089": {
     "name": "PROV_NCQA_ACCRED",
@@ -297,6 +309,105 @@
         "value": "Y"
       }
     ]
+  },
+  "101577": {
+    "name": "PROV_ECP_TYPE",
+    "category": "Qualification",
+    "attr_type": "Certification",
+    "class": "models.aton.nodes.qualification.Qualification",
+    "fields": {
+      "102376": {"property": "level", "type":  "list"},
+      "102377": {"property": "level", "type":  "list"},
+      "102378": {"property": "level", "type":  "list"},
+      "102379": {"property": "level", "type":  "list"},
+      "102380": {"property": "level", "type":  "list"},
+      "102381": {"property": "level", "type":  "list"},
+      "107536": {"property": "level", "type":  "list"}
+    },
+    "field_transformers": {
+      "102376": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "FQHC_RHC"
+            }
+          }
+        }
+      ],
+      "102377": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "Hospital"
+            }
+          }
+        }
+      ],
+      "102378": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "Ryan White HIV Provider"
+            }
+          }
+        }
+      ],
+      "102379": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "Indian Tribal Provider"
+            }
+          }
+        }
+      ],
+      "102380": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "Family Planning Provider"
+            }
+          }
+        }
+      ],
+      "102381": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "Other ECP"
+            }
+          }
+        }
+      ],
+      "107536": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "School Based Provider"
+            }
+          }
+        }
+      ]
+    },
+    "adornments": {
+      "type": "CERT_ECP",
+      "issuer": "Essential Community Provider",
+      "secondary_label": "Certification"
+    }
   },
   "101617": {
     "name": "PROV_CCS",

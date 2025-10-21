@@ -35,6 +35,7 @@ def build_node_for_attribute(mapping:AttributeMapping,
              attribute fields, or None if the conditions are not satisfied.
     :rtype: StructuredNode | None
     """
+    log.debug(f"Building node for attribute {mapping.name}")
     if not evaluate_conditions(mapping, attribute_fields):
         log.debug("Conditions not met, skipping node creation")
         return None
@@ -51,6 +52,8 @@ def build_node_for_attribute(mapping:AttributeMapping,
             # Check if the field has a transformer
             if field_id in mapping.field_transformers:
                 field_value = transform_field(field_value, mapping.field_transformers[field_id])
+                if field_value == "":
+                    continue
             # Type conversion
             field_value = _convert_field_type(field_value, field_info)
             # Assign property
@@ -115,8 +118,13 @@ def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, A
     conditions = getattr(mapping, "conditions", [])
     log.debug(f"Conditions: {conditions}")
     for condition in conditions:
-        field_id = condition["field_id"]
         operator = condition["operator"]
+        field_id = condition["field_id"]
+        if operator == "not null":
+            if field_id not in attribute_fields:
+                return False
+            else:
+                continue
         expected_value = condition["value"]
         actual_value = attribute_fields.get(field_id)
         log.debug(f"Actual Value: {actual_value}")
@@ -150,7 +158,11 @@ def transform_field(data: str, transformer_list: list[Any]) -> str:
             mapping_type = value["mapping_type"]
             mappings = value["mappings"]
             if mapping_type == "literal":
-                split_data = mappings[data]
+                try:
+                    split_data = mappings[data]
+                except KeyError:
+                    log.debug(f"Literal mapping not found for {data}, hence it will not be loaded")
+                # split_data = mappings[data]
             if mapping_type == "code":
                 fmg_type = value["code_type"]
                 split_data = mappings[fmg_loader.FMG_CODES[fmg_type][data]]
