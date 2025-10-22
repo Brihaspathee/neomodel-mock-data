@@ -1,0 +1,14 @@
+{
+  "LICE_MLC": {
+    "unique_keys": ["value", "state"],
+    "selection_rule": "temporal"
+  },
+  "ACCRED_AAAASF": {
+    "unique_keys": ["type"],
+    "selection_rule": "temporal"
+  },
+  "CERT_ECP": {
+    "unique_keys": ["type", "level"],
+    "selection_rule": "temporal"
+  }
+}

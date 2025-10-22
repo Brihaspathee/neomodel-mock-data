@@ -1,4 +1,4 @@
-from config import settings, attribute_settings, contact_settings, county_settings
+from config import settings, attribute_settings, contact_settings, county_settings, qualification_rules_settings
 from db import PorticoDB, init_db
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.product import Product
@@ -26,6 +26,7 @@ def main():
     log.debug(f"Contact use mapping:{contact_settings.CONTACT_USE_MAPPING}")
     log.debug(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
     log.debug(f"County state mapping:{county_settings.COUNTY_STATE_MAPPING}")
+    log.debug(f"Qualification Rules:{qualification_rules_settings.QUALIFICATION_RULES}")
     logging.basicConfig(level=logging.DEBUG)
 
     # Read the providers from Portico

@@ -244,7 +244,10 @@ INSERT INTO portown.pp_prov_attrib (id,prov_id,attribute_id) VALUES
 	 (13,2,100114),
 	 (14,2,100114),
     (15, 1, 100053),
-    (16, 1, 100053);
+    (16, 1, 100053),
+    (17, 1, 100053),
+    (18, 1, 100053),
+    (19, 1, 101277);
 
 
 -- Insert PP_PROV_ATTRIB_VALUES
@@ -257,7 +260,7 @@ INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,v
 	 (13,6,101137,NULL,'2018-08-01',NULL),
 	 (12,6,101136,'Y',NULL,NULL),
 	 (14,6,104381,'Medicare Deemed Status',NULL,NULL),
-	 (5,2,101958,'','2020-07-01',NULL),
+	 (5,2,101958,NULL,'2020-07-01',NULL),
 	 (4,2,101957,'YES',NULL,NULL);
 INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,value_date,value_number) VALUES
 	 (1,1,706,'235625546',NULL,NULL),
@@ -291,7 +294,17 @@ INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,v
 	 (37, 16, 100263, '78342344', NULL, NULL, NULL),
 	 (38, 16, 100264, 'FL', NULL, NULL, NULL),
 	 (39, 16, 100678, NULL, '2019-01-01', NULL, NULL),
-	 (40, 16, 100679, NULL, '2027-12-31', NULL, NULL);
+	 (40, 16, 100679, NULL, '2027-12-31', NULL, NULL),
+	 (41, 17, 100263, '78342345', NULL, NULL, NULL),
+	 (42, 17, 100264, 'GA', NULL, NULL, NULL),
+	 (43, 17, 100678, NULL, '2017-01-01', NULL, NULL),
+	 (44, 17, 100679, NULL, '2023-12-31', NULL, NULL),
+	 (45, 18, 100263, '78342345', NULL, NULL, NULL),
+	 (46, 18, 100264, 'GA', NULL, NULL, NULL),
+	 (47, 18, 100678, NULL, '2020-01-01', NULL, NULL),
+	 (48, 18, 100679, NULL, '4000-01-01', NULL, NULL),
+	 (49,19,101955,'Y',NULL,NULL, NULL),
+	 (50,19,101956,NULL,'2024-10-01',NULL, NULL);
 
 
 -- Insert PP_PROV_TIN_LOC

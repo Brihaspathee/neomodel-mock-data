@@ -113,6 +113,12 @@ class OrganizationContext:
         """
         self._qualifications.append(qualification)
 
+    def set_qualifications(self, qualifications: list[Qualification]):
+        """
+        Sets the qualifications for the instance.
+        """
+        self._qualifications = qualifications
+
     def get_qualifications(self):
         """
         Retrieves the qualifications associated with the instance.

@@ -87,7 +87,7 @@
     },
     "ignore": ["103148", "100314"],
     "adornments": {
-      "type": "NCQA Accreditation",
+      "type": "ACCRED_NCQA",
       "issuer": "National Committee of Quality Assurance",
       "secondary_label": "Accreditation"
     },
@@ -110,7 +110,7 @@
     },
     "ignore": ["103154", "100316"],
     "adornments": {
-      "type": "URAC Accreditation",
+      "type": "ACCRED_URAC",
       "issuer": "Utilization Review Accreditation Commission",
       "secondary_label": "Accreditation"
     },
@@ -133,7 +133,7 @@
     },
     "ignore": ["103131", "100318"],
     "adornments": {
-      "type": "HCFA Accreditation",
+      "type": "ACCRED_HCFA",
       "issuer": "Health Care Financing Administration",
       "secondary_label": "Accreditation"
     },
@@ -156,7 +156,7 @@
     },
     "ignore": ["101955"],
     "adornments": {
-      "type": "AAAASF Accreditation",
+      "type": "ACCRED_AAAASF",
       "issuer": "American Association for Accreditation of Ambulatory Surgery Facilities",
       "secondary_label": "Accreditation"
     },
@@ -176,11 +176,11 @@
     "fields": {
       "101137": {"property": "start_date", "type":  "date"},
       "102815": {"property": "end_date", "type": "date"},
-      "104381": {"property": "level", "type": "string"}
+      "104381": {"property": "level", "type": "list"}
     },
     "ignore": ["101136"],
     "adornments": {
-      "type": "AAAHC Accreditation",
+      "type": "ACCRED_AAAHC",
       "issuer": "Accreditation Association for Ambulatory Health Care",
       "secondary_label": "Accreditation"
     }
@@ -193,11 +193,11 @@
     "fields": {
       "101141": {"property": "start_date", "type":  "date"},
       "102915": {"property": "end_date", "type": "date"},
-      "104380": {"property": "level", "type": "string"}
+      "104380": {"property": "level", "type": "list"}
     },
     "ignore": ["101143"],
     "adornments": {
-      "type": "ACR Accreditation",
+      "type": "ACCRED_ACR",
       "issuer": "American College of Radiology",
       "secondary_label": "Accreditation"
     }
@@ -213,7 +213,7 @@
     },
     "ignore": ["101957"],
     "adornments": {
-      "type": "AASM Accreditation",
+      "type": "ACCRED_AASM",
       "issuer": "American Association for Sleep Medicine",
       "secondary_label": "Accreditation"
     }
@@ -229,7 +229,7 @@
     },
     "ignore": ["106175", "106175"],
     "adornments": {
-      "type": "CIHQ Accreditation",
+      "type": "ACCRED_CIHQ",
       "issuer": "Centers for Improvement in Healthcare Quality",
       "secondary_label": "Accreditation"
     },
@@ -252,7 +252,7 @@
     },
     "ignore": ["101977", "103129"],
     "adornments": {
-      "type": "DNV Accreditation",
+      "type": "ACCRED_DNV",
       "issuer": "Det Norske Veritas",
       "secondary_label": "Accreditation"
     },
@@ -275,7 +275,7 @@
     },
     "ignore": ["102275", "103133"],
     "adornments": {
-      "type": "HFAP Accreditation",
+      "type": "ACCRED_HFAP",
       "issuer": "Healthcare Facilities Accreditation Program",
       "secondary_label": "Accreditation"
     },
@@ -298,7 +298,7 @@
     },
     "ignore": ["100312", "104376", "103140"],
     "adornments": {
-      "type": "TJC Accreditation",
+      "type": "ACCRED_TJC",
       "issuer": "The Joint Commission Accreditation",
       "secondary_label": "Accreditation"
     },

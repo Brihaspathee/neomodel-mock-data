@@ -62,7 +62,7 @@ def _(provider:PPProv) -> Organization:
     transform_practitioner(provider, organization)
     if organization.context.get_qualifications():
         qual_results = select_unique_qualifications(organization.context.get_qualifications())
-        log.info(qual_results)
+        organization.context.set_qualifications(qual_results)
     return organization
 
 def get_tin(provider:PPProv) -> TIN:
