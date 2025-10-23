@@ -23,6 +23,8 @@ def transform_practitioner(pp_prov:PPProv, organization: Organization):
                                                   ssn=pp_prac.ssn,
                                                   salutation=pp_prac.xname)
         practitioner.context = PractitionerContext(practitioner)
+        for hosp_priv in pp_prac.hosp_privileges:
+            log.info(f"Practitioner Hospital Privileges: {hosp_priv}")
         role_instance: RoleInstance = RoleInstance()
         role_instance.context = RoleInstanceContext(role_instance)
         practitioner.context.set_role_instance(role_instance)

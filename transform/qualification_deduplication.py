@@ -27,14 +27,14 @@ def _is_future(q: Qualification) -> bool:
     return _effective_start(q) > date.today()
 
 def select_unique_qualifications(qualifications: list[Qualification]) -> list[Qualification]:
-    log.info(f"Qualification rules:{QUALIFICATION_RULES}")
+    log.debug(f"Qualification rules:{QUALIFICATION_RULES}")
     results: list[Qualification] = []
     # Group qualifications by type
     qualifications.sort(key=attrgetter('type'))
     for qual_type, group_iter in groupby(qualifications, key=attrgetter('type')):
         group = list(group_iter)
         if qual_type not in QUALIFICATION_RULES:
-            log.info(f"Qualification type {qual_type} not in rules, keeping all")
+            log.debug(f"Qualification type {qual_type} not in rules, keeping all")
             continue
         type_rule = QUALIFICATION_RULES[qual_type]
         unique_keys = type_rule.get("unique_keys", [])

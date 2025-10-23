@@ -43,6 +43,10 @@ def upsert_organizations(organizations: list[Organization]):
             update_organization(existing_org, organization, relationships=['qualifications'])
         else:
             create_organization(organization)
+    for organization in sorted_orgs:
+        log.info(f"Organization {organization.name} written to Aton its element id is: {organization.element_id}")
+        log.info(f"Organization context:{organization.context}")
+        upsert_practitioner(organization)
 
 
 def create_organization(org: Organization):
@@ -86,7 +90,7 @@ def create_organization(org: Organization):
         create_qualifications(org)
         create_contacts(org)
         process_role_instance(org)
-        upsert_practitioner(org)
+        # upsert_practitioner(org)
         return True
     except Exception as e:
         log.error(f"Error writing organization to Aton: {e}")

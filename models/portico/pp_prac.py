@@ -8,6 +8,7 @@ from models.portico import Base
 if TYPE_CHECKING:
     from models.portico.pp_prac_attrib import PPPracAttrib
     from models.portico.pp_prac_loc_attrib import PPPracLocAttrib
+    from models.portico.pp_prac_hosp import PPPracHosp
 
 class PPPrac(Base):
     __tablename__ = "pp_prac"
@@ -34,6 +35,7 @@ class PPPrac(Base):
         back_populates="practitioner",
         cascade="all, delete-orphan"
     )
+    hosp_privileges:Mapped[List["PPPracHosp"]] = relationship("PPPracHosp", back_populates="practitioner")
 
 
     def __eq__(self, other):
