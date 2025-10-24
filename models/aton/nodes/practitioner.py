@@ -4,6 +4,7 @@ from neo4j.time._metaclasses import DateType
 from neomodel import StringProperty, DateProperty, RelationshipTo, ArrayProperty, RelationshipFrom
 
 from models.aton.nodes.base_node import BaseNode
+from models.aton.relationships.has_privilege import HasPrivilege
 
 
 class Practitioner(BaseNode):
@@ -35,7 +36,7 @@ class Practitioner(BaseNode):
                                     "HAS_QUALIFICATION")
 
     hosp_privileges = RelationshipTo("models.aton.nodes.organization.Organization",
-                                       "HAS_PRIVILEGE")
+                                       "HAS_PRIVILEGE",model=HasPrivilege)
 
     pp_prac = RelationshipFrom("models.aton.nodes.pp_prac.PP_PRAC", "SOURCES")
 

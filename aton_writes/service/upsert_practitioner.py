@@ -4,11 +4,13 @@ from aton_writes.service.upsert_role_location import process_role_locations
 from aton_writes.service.upsert_role_network import process_role_networks
 from aton_writes.service.upsert_role_specialty import create_role_specialty
 from models.aton.nodes.identifier import LegacySystemIdentifier
+from models.aton.relationships.has_privilege import HasPrivilege
 from repository.identifier_repo import create_identifiers
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.pp_prac import PP_PRAC
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.role_instance import RoleInstance
+from repository.organization_repo import get_organization_by_prov_id
 from repository.practitioner_repo import get_practitioner_by_prac_id
 from repository.role_instance_repo import get_role_instances
 import logging
@@ -74,6 +76,7 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     pp_prac.practitioner.connect(practitioner)
     create_identifiers(owner_node=practitioner)
     create_qualifications(prac=practitioner)
+    create_hosp_privileges(prac=practitioner)
     role_instance: RoleInstance = practitioner.context.get_role_instance()
     log.debug(f"Pending Role Specialties: {role_instance.context.get_prac_rs()}")
     log.debug(f"Role instance is: {type(role_instance)}")
@@ -154,3 +157,15 @@ def is_specialty_present(specialty: str, role_instance: RoleInstance) -> bool:
         if rel.specialty == specialty:
             return True
     return False
+
+def create_hosp_privileges(prac: Practitioner):
+    for hosp_priv in prac.context.get_privileges():
+        log.debug(f"Hospital Privileges: {hosp_priv}")
+        org: Organization = get_organization_by_prov_id(hosp_priv.prov_id)
+        if org:
+            hospital_privilege: HasPrivilege = HasPrivilege(privilegeType=hosp_priv.privilegeType)
+            prac.hosp_privileges.connect(org, {
+                "privilege_type":hosp_priv.privilegeType
+            })
+        else:
+            log.debug(f"No Organization with prov_id {hosp_priv.prov_id} found")

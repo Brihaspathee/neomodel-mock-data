@@ -9,6 +9,7 @@ from config.county_settings import load_county_mapping
 
 from sqlalchemy.orm import relationship
 
+from config.privilege_settings import load_hosp_priv_mapping
 from config.qualification_rules_settings import load_qual_rules
 from config.secrets_api import SecretsAPI
 import logging
@@ -74,4 +75,5 @@ NEO4J = {
 load_all_attributes()
 load_contact_mapping()
 load_county_mapping()
+load_hosp_priv_mapping()
 load_qual_rules()

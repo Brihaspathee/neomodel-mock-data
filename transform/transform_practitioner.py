@@ -1,4 +1,7 @@
-from models.aton.context.practitioner_context import PractitionerContext
+from datetime import date
+
+from config.privilege_settings import PRIVILEGE_TYPE_MAPPING
+from models.aton.context.practitioner_context import PractitionerContext, HospitalPrivilege
 from models.aton.context.role_instance_context import RoleInstanceContext
 from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.organization import Organization
@@ -25,6 +28,11 @@ def transform_practitioner(pp_prov:PPProv, organization: Organization):
         practitioner.context = PractitionerContext(practitioner)
         for hosp_priv in pp_prac.hosp_privileges:
             log.info(f"Practitioner Hospital Privileges: {hosp_priv}")
+            if hosp_priv.priv_exp_date is None or hosp_priv.priv_exp_date > date.today():
+                if hosp_priv.privilege is not None and get_hosp_priv_type(hosp_priv.privilege) is not None:
+                    hosp_priv_obj: HospitalPrivilege = HospitalPrivilege(privilegeType=get_hosp_priv_type(hosp_priv.privilege),
+                                                                         prov_id=str(hosp_priv.prov_id))
+                    practitioner.context.add_privilege(hosp_priv_obj)
         role_instance: RoleInstance = RoleInstance()
         role_instance.context = RoleInstanceContext(role_instance)
         practitioner.context.set_role_instance(role_instance)
@@ -44,3 +52,9 @@ def get_distinct_pracs(pp_prac_locs:list[PPPracLoc]) -> list[PPPrac]:
         if pp_prac not in pracs:
             pracs.append(pp_prac)
     return pracs
+
+def get_hosp_priv_type(portico_type:str) -> str | None:
+    try:
+        return PRIVILEGE_TYPE_MAPPING[portico_type]
+    except KeyError:
+        return None

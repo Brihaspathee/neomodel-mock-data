@@ -82,3 +82,6 @@
 
 -- Insert data for Scenario - 5
 \i centene/scenarios/scenario_5/provider/scenario-data.sql
+
+-- Insert data for PP_PRAC_HOSP
+\i centene/scenarios/pp_prac_hosp.sql

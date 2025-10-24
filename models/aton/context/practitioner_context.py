@@ -1,10 +1,15 @@
 import weakref
+from dataclasses import dataclass
 
 from models.aton.nodes.identifier import Identifier, NPI, DEA_Number, MedicareID, MedicaidID, LegacySystemIdentifier
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
 
+@dataclass
+class HospitalPrivilege:
+    privilegeType: str
+    prov_id: str
 
 class PractitionerContext:
 
@@ -20,6 +25,7 @@ class PractitionerContext:
         }
         self._qualifications: list[Qualification] = []
         self._role_instance: RoleInstance | None = None
+        self._privileges: list[HospitalPrivilege] = []
 
     def add_identifier(self, identifier: Identifier):
         if isinstance(identifier, NPI):
@@ -55,3 +61,9 @@ class PractitionerContext:
 
     def get_portico_source(self):
         return self._portico_source
+
+    def add_privilege(self, privilege: HospitalPrivilege):
+        self._privileges.append(privilege)
+
+    def get_privileges(self):
+        return self._privileges
