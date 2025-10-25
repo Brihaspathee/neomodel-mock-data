@@ -1,0 +1,283 @@
+Credentialing Type,Description,Geography Description,Geography Type,Geography Code,FIPS
+Alabama,Credentialing - Alabama,Alabama,State,AL,1
+Alabama_PV,Provisional - Alabama,Alabama,State,AL,1
+Alabama_RE,Recredentialing - Alabama,Alabama,State,AL,1
+Alaska,Credentialing - Alaska,Alaska,State,AK,2
+Alaska_RE,Recredentialing - Alaska,Alaska,State,AK,2
+Alaska_PV,Provisional - Alaska,Alaska,State,AK,2
+Bridgeway Acute Care,Credentialing - Bridgeway Acute Care,Arizona,State,AZ,4
+Bridgeway Acute Care_PV,Provisional - Bridgeway Acute Care,Arizona,State,AZ,4
+Bridgeway Acute Care_RE,Recredentialing - Bridgeway Acute Care,Arizona,State,AZ,4
+Bridgeway LTC,Credentialing - Bridgeway LTC,Arizona,State,AZ,4
+Bridgeway LTC_PV,Provisional - Bridgeway LTC,Arizona,State,AZ,4
+Bridgeway LTC_RE,Recredentialing - Bridgeway LTC,Arizona,State,AZ,4
+Arizona,Credentialing - Arizona,Arizona,State,AZ,4
+Arizona_PV,Provisional - Arizona,Arizona,State,AZ,4
+Arizona_RE,Recredentialing - Arizona,Arizona,State,AZ,4
+Arizona Care,Credentialing - Arizona Care,Arizona,State,AZ,4
+Arizona Care_PV,Provisional - Arizona Care,Arizona,State,AZ,4
+Arizona Care_RE,Recredentialing - Arizona Care,Arizona,State,AZ,4
+Arkansas,Credentialing - Arkansas,Arkansas,State,AR,5
+Arkansas_PV,Provisional - Arkansas,Arkansas,State,AR,5
+Arkansas_RE,Recredentialing - Arkansas,Arkansas,State,AR,5
+California,Credentialing - California,California,State,CA,6
+California_PV,Provisional - California,California,State,CA,6
+California_RE,Recredentialing - California,California,State,CA,6
+California Prison,Credentialing - California Prison,California,State,CA,6
+California Prison_PV,Provisional - California Prison,California,State,CA,6
+California Prison_RE,Recredentialing - California Prison,California,State,CA,6
+CA Abbreviated,Credentialing - CA Abbreviated,California,State,CA,6
+CA Abbreviated_RE,Recredentialing - CA Abbreviated,California,State,CA,6
+Medi-Cal,Credentialing - Medi-Cal,California,State,CA,6
+Medi-Cal_PV,Provisional - Medi-Cal,California,State,CA,6
+Medi-Cal_RE,Recredentialing - Medi-Cal,California,State,CA,6
+MHN MediCal,Credentialing - MHN MediCal,California,State,CA,6
+MHN MediCal_RE,Recredentialing - MHN MediCal,California,State,CA,6
+MHN MediCal_PV,Provisional - MHN MediCal,California,State,CA,6
+MHN California,Credentialing - MHN California,California,State,CA,6
+MHN California_PV,Provisional - MHN California,California,State,CA,6
+MHN California_RE,Recredentialing - MHN California,California,State,CA,6
+CA Exchange,Credentialing - CA Exchange,California,State,CA,6
+CA Exchange_PV,Provisional - CA Exchange,California,State,CA,6
+CA Exchange_RE,Recredentialing - CA Exchange,California,State,CA,6
+Colorado,Credentialing - Colorado,Colorado,State,CO,8
+Colorado_RE,Recredentialing - Colorado,Colorado,State,CO,8
+Colorado_PV,Provisional - Colorado,Colorado,State,CO,8
+Connecticut,Credentialing - Connecticut,Connecticut,State,CT,9
+Connecticut_RE,Recredentialing - Connecticut,Connecticut,State,CT,9
+Connecticut_PV,Provisional - Connecticut,Connecticut,State,CT,9
+Delaware,Credentialing - Delaware,Delaware,State,DE,10
+Delaware_RE,Recredentialing - Delaware,Delaware,State,DE,10
+Delaware_PV,Provisional - Delaware,Delaware,State,DE,10
+Sunshine,Credentialing - Sunshine,Florida,State,FL,12
+Sunshine_PV,Provisional - Sunshine,Florida,State,FL,12
+Sunshine_RE,Recredentialing - Sunshine,Florida,State,FL,12
+Cenpatico Sunshine,Credentialing - Cenpatico Sunshine,Florida,State,FL,12
+Cenpatico Sunshine_PV,Provisional - Cenpatico Sunshine,Florida,State,FL,12
+Cenpatico Sunshine_RE,Recredentialing - Cenpatico Sunshine,Florida,State,FL,12
+Peach State,Credentialing - Peach State,Georgia,State,GA,13
+Peach State_RE,Recredentialing - Peach State,Georgia,State,GA,13
+Peach State_PV,Provisional - Peach State,Georgia,State,GA,13
+Cenpatico Peach State,Credentialing - Cenpatico Peach State,Georgia,State,GA,13
+Cenpatico Peach State_PV,Provisional - Cenpatico Peach State,Georgia,State,GA,13
+Cenpatico Peach State_RE,Recredentialing - Cenpatico Peach State,Georgia,State,GA,13
+Cenpatico Magnolia,Credentialing - Cenpatico Magnolia,Georgia,State,GA,13
+Cenpatico Magnolia_PV,Provisional - Cenpatico Magnolia,Georgia,State,GA,13
+Cenpatico Magnolia_RE,Recredentialing - Cenpatico Magnolia,Georgia,State,GA,13
+Hawaii,Credentialing - Hawaii,Hawaii,State,HI,15
+Hawaii_RE,Recredentialing - Hawaii,Hawaii,State,HI,15
+Hawaii_PV,Provisional - Hawaii,Hawaii,State,HI,15
+Idaho,Credentialing - Idaho,Idaho,State,ID,16
+Idaho_RE,Recredentialing - Idaho,Idaho,State,ID,16
+Idaho_PV,Provisional - Idaho,Idaho,State,ID,16
+IL Meridian Complete ,Credentialing - IL Meridian Complete,Illinois,State,IL,17
+IL Meridian Complete_PV,Provisional - IL Meridian Complete,Illinois,State,IL,17
+IL Meridian Complete_RE,Recredentialing - IL Meridian Complete,Illinois,State,IL,17
+Illinois    ,Credentialing - Illinois,Illinois,State,IL,17
+Illinois_PV,Provisional - Illinois,Illinois,State,IL,17
+Illinois_RE,Recredentialing - Illinois,Illinois,State,IL,17
+Indiana,Credentialing - Indiana,Indiana,State,IN,18
+Indiana_PV,Provisional - Indiana,Indiana,State,IN,18
+Indiana_RE,Recredentialing - Indiana,Indiana,State,IN,18
+Cenpatico Indiana,Credentialing - Cenpatico Indiana,Indiana,State,IN,18
+Cenpatico Indiana_PV,Provisional - Cenpatico Indiana,Indiana,State,IN,18
+Cenpatico Indiana_RE,Recredentialing - Cenpatico Indiana,Indiana,State,IN,18
+Iowa,Credentialing - Iowa,Iowa,State,IA,19
+Iowa_PV,Provisional - Iowa,Iowa,State,IA,19
+Iowa_RE,Recredentialing - Iowa,Iowa,State,IA,19
+Sunflower,Credentialing - Sunflower,Kansas,State,KS,20
+Sunflower_RE,Recredentialing - Sunflower,Kansas,State,KS,20
+Sunflower_PV,Provisional - Sunflower,Kansas,State,KS,20
+Cenpatico Sunflower,Credentialing - Cenpatico Sunflower,Kansas,State,KS,20
+Cenpatico Sunflower_PV,Provisional - Cenpatico Sunflower,Kansas,State,KS,20
+Cenpatico Sunflower_RE,Recredentialing - Cenpatico Sunflower,Kansas,State,KS,20
+Kentucky,Credentialing - Kentucky,Kentucky,State,KY,21
+Kentucky_PV,Provisional - Kentucky,Kentucky,State,KY,21
+Kentucky_RE,Recredentialing - Kentucky,Kentucky,State,KY,21
+Louisiana,Credentialing - Louisiana,Louisiana,State,LA,22
+Louisiana_PV,Provisional - Louisiana,Louisiana,State,LA,22
+Louisiana_RE,Recredentialing - Louisiana,Louisiana,State,LA,22
+Maine,Credentialing - Maine,Maine,State,ME,23
+Maine_RE,Recredentialing - Maine,Maine,State,ME,23
+Maine_PV,Provisional - Maine,Maine,State,ME,23
+Maryland,Credentialing - Maryland,Maryland,State,MD,24
+Maryland_PV,Provisional - Maryland,Maryland,State,MD,24
+Maryland_RE,Recredentialing - Maryland,Maryland,State,MD,24
+Massachusetts,Credentialing - Massachusetts,Massachusetts,State,MA,25
+Massachusetts_RE,Recredentialing - Massachusetts,Massachusetts,State,MA,25
+Massachusetts_PV,Provisional - Massachusetts,Massachusetts,State,MA,25
+Superior,Credentialing - Superior,Michigan,State,MI,26
+Superior_PV,Provisional - Superior,Michigan,State,MI,26
+Superior_RE,Recredentialing - Superior,Michigan,State,MI,26
+Michigan,Credentialing - Michigan,Michigan,State,MI,26
+Michigan_PV,Provisional - Michigan,Michigan,State,MI,26
+Michigan_RE,Recredentialing - Michigan,Michigan,State,MI,26
+Cenpatico Superior,Credentialing - Cenpatico Superior,Michigan,State,MI,26
+Cenpatico Superior_PV,Provisional - Cenpatico Superior,Michigan,State,MI,26
+Cenpatico Superior_RE,Recredentialing - Cenpatico Superior,Michigan,State,MI,26
+Minnesota,Credentialing - Minnesota,Minnesota,State,MN,27
+Minnesota_RE,Recredentialing - Minnesota,Minnesota,State,MN,27
+Minnesota_PV,Provisional - Minnesota,Minnesota,State,MN,27
+Magnolia,Credentialing - Magnolia,Mississippi,State,MS,28
+Magnolia_PV,Provisional - Magnolia,Mississippi,State,MS,28
+Magnolia_RE,Recredentialing - Magnolia,Mississippi,State,MS,28
+Missouri,Credentialing - Missouri,Missouri,State,MO,29
+Missouri_PV,Provisional - Missouri,Missouri,State,MO,29
+Missouri_RE,Recredentialing - Missouri,Missouri,State,MO,29
+Cenpatico Missouri,Credentialing - Cenpatico Missouri,Missouri,State,MO,29
+Cenpatico Missouri_PV,Provisional - Cenpatico Missouri,Missouri,State,MO,29
+Cenpatico Missouri_RE,Recredentialing - Cenpatico Missouri,Missouri,State,MO,29
+Montana,Credentialing - Montana,Montana,State,MT,30
+Montana_RE,Recredentialing - Montana,Montana,State,MT,30
+Montana_PV,Provisional - Montana,Montana,State,MT,30
+Nebraska,Credentialing - Nebraska,Nebraska,State,NE,31
+Nebraska_PV,Provisional - Nebraska,Nebraska,State,NE,31
+Nebraska_RE,Recredentialing - Nebraska,Nebraska,State,NE,31
+Nevada,Credentialing - Nevada,Nevada,State,NV,32
+Nevada_PV,Provisional - Nevada,Nevada,State,NV,32
+Nevada_RE,Recredentialing - Nevada,Nevada,State,NV,32
+New Hampshire,Credentialing - New Hampshire,New Hampshire,State,NH,33
+New Hampshire_PV,Provisional - New Hampshire,New Hampshire,State,NH,33
+New Hampshire_RE,Recredentialing - New Hampshire,New Hampshire,State,NH,33
+Cenpatico NewHampshire,Credentialing - Cenpatico New Hampshire,New Hampshire,State,NH,33
+Cenpatico NewHampshire_PV,Provisional - Cenpatico New Hampshire,New Hampshire,State,NH,33
+Cenpatico NewHampshire_RE,Recredentialing - Cenpatico New Hampshire,New Hampshire,State,NH,33
+New Jersey_RE,Recredentialing - New Jersey,New Jersey,State,NJ,34
+New Jersey,Credentialing - New Jersey,New Jersey,State,NJ,34
+New Jersey_PV,Provisional - New Jersey,New Jersey,State,NJ,34
+New Mexico,Credentialing - New Mexico,New Mexico,State,NM,35
+New Mexico_PV,Provisional - New Mexico,New Mexico,State,NM,35
+New Mexico_RE,Recredentialing - New Mexico,New Mexico,State,NM,35
+Fidelis Care,Credentialing - Fidelis Care,New York,State,NY,36
+Fidelis Care_RE,Recredentialing - Fidelis Care,New York,State,NY,36
+New York,Credentialing - New York,New York,State,NY,36
+New York_RE,Recredentialing - New York,New York,State,NY,36
+New York_PV,Provisional - New York,New York,State,NY,36
+WC North Carolina,Credentialing - WC North Carolina,North Carolina,State,NC,37
+WC North Carolina_PV,Provisional - WC North Carolina,North Carolina,State,NC,37
+WC North Carolina_RE,Recredentialing - WC North Carolina,North Carolina,State,NC,37
+North Carolina,Credentialing - North Carolina,North Carolina,State,NC,37
+North Carolina_PV,Provisional - North Carolina,North Carolina,State,NC,37
+North Carolina_RE,Recredentialing - North Carolina,North Carolina,State,NC,37
+NC Tailored Trillium,Credentialing - NC Tailored Trillium,North Carolina,State,NC,37
+NC Tailored Trillium_PV,Provisional - NC Tailored Trillium,North Carolina,State,NC,37
+NC Tailored Trillium_RE,Recredentialing - NC Tailored Trillium,North Carolina,State,NC,37
+NC Tailored Partners,Credentialing - NC Tailored Partners,North Carolina,State,NC,37
+NC Tailored Partners_PV,Provisional - NC Tailored Partners,North Carolina,State,NC,37
+NC Tailored Partners_RE,Recredentialing - NC Tailored Partners,North Carolina,State,NC,37
+North Carolina MD,Credentialing- NC Medicaid only,North Carolina,State,NC,37
+North Carolina MD_RE,Recredentialing- NC Medicaid only,North Carolina,State,NC,37
+North Dakota,Credentialing - North Dakota,North Dakota,State,ND,38
+North Dakota_RE,Recredentialing - North Dakota,North Dakota,State,ND,38
+North Dakota_PV,Provisional - North Dakota,North Dakota,State,ND,38
+Buckeye,Credentialing - Buckeye,Ohio,State,OH,39
+Buckeye_PV,Provisional - Buckeye,Ohio,State,OH,39
+Buckeye_RE,Recredentialing - Buckeye,Ohio,State,OH,39
+Cenpatico Buckeye,Credentialing - Cenpatico Buckeye,Ohio,State,OH,39
+Cenpatico Buckeye_PV,Provisional - Cenpatico Buckeye,Ohio,State,OH,39
+Cenpatico Buckeye_RE,Recredentialing - Cenpatico Buckeye,Ohio,State,OH,39
+Oklahoma,Credentialing - Oklahoma,Oklahoma,State,OK,40
+Oklahoma_PV,Provisional - Oklahoma,Oklahoma,State,OK,40
+Oklahoma_RE,Recredentialing - Oklahoma,Oklahoma,State,OK,40
+Oregon,Credentialing - Oregon,Oregon,State,OR,41
+Oregon_PV,Provisional - Oregon,Oregon,State,OR,41
+Oregon_RE,Recredentialing - Oregon,Oregon,State,OR,41
+Pennsylvania,Credentialing - Pennsylvania,Pennsylvania,State,PA,42
+Pennsylvania_RE,Recredentialing - Pennsylvania,Pennsylvania,State,PA,42
+Pennsylvania_PV, Provisional - Pennsylvania,Pennsylvania,State,PA,42
+Cred Type,Credentialing - Rhode Island,Rhode Island,State,RI,44
+Recred Type,Recredentialing - Rhode Island,Rhode Island,State,RI,44
+Provision Type,Provisional - Rhode Island,Rhode Island,State,RI,44
+South Dakota,Credentialing - South Dakota,South Dakota,State,SD,46
+South Dakota_RE,Recredentialing - South Dakota,South Dakota,State,SD,46
+South Dakota_PV,Provisional - South Dakota,South Dakota,State,SD,46
+Tennessee_PV,Provisional - Tennessee,Tennessee,State,TN,47
+Tennessee,Credentialing - Tennessee,Tennessee,State,TN,47
+Tennessee_RE,Recredentialing - Tennessee,Tennessee,State,TN,47
+Medicare,Credentialing - Medicare,United State of America,Country,USA,00
+MHN Medicare,Credentialing - MHN Medicare,United State of America,Country,USA,00
+MHN Medicare_PV,Provisional - MHN Medicare,United State of America,Country,USA,00
+MHN Medicare_RE,Recredentialing - MHN Medicare,United State of America,Country,USA,00
+Medicare MEG,Credentialing - Medicare MEG,United State of America,Country,USA,00
+Medicare MEG_PV,Provisional - Medicare MEG,United State of America,Country,USA,00
+Medicare MEG_RE,Recredentialing - Medicare MEG,United State of America,Country,USA,00
+Medicare_RE,Recredentialing - Medicare,United State of America,Country,USA,00
+Medicare_PV,Provisional - Medicare,United State of America,Country,USA,00
+Utah,Credentialing - Utah,Utah,State,UT,49
+Utah_PV,Provisional - Utah,Utah,State,UT,49
+Utah_RE,Recredentialing - Utah,Utah,State,UT,49
+Vermont,Credentialing - Vermont,Vermont,State,VT,50
+Vermont_RE,Recredentialing - Vermont,Vermont,State,VT,50
+Vermont_PV,Provisional - Vermont,Vermont,State,VT,50
+Virginia,Credentialing - Virginia,Virginia,State,VA,51
+Virginia_RE,Recredentialing - Virginia,Virginia,State,VA,51
+Virginia_PV,Provisional - Virginia,Virginia,State,VA,51
+Washington,Credentialing - Washington,Washington,State,WA,53
+Washington_PV,Provisional - Washington,Washington,State,WA,53
+Washington_RE,Recredentialing - Washington,Washington,State,WA,53
+West Virginia,Credentialing - West Virginia,West Virginia,State,WV,54
+West Virginia_RE,Recredentialing - West Virginia,West Virginia,State,WV,54
+West Virginia_PV,Provisional - West Virginia,West Virginia,State,WV,54
+Wisconsin,Credentialing - Wisconsin,Wisconsin,State,WI,55
+Wisconsin_PV,Provisional - Wisconsin,Wisconsin,State,WI,55
+Wisconsin_RE,Recredentialing - Wisconsin,Wisconsin,State,WI,55
+Cenpatico Wisconsin,Credentialing - Cenpatico Wisconsin,Wisconsin,State,WI,55
+Cenpatico Wisconsin_PV ,Provisional - Cenpatico Wisconsin,Wisconsin,State,WI,55
+Cenpatico Wisconsin_RE,Recredentialing - Cenpatico Wisconsin,Wisconsin,State,WI,55
+Wyoming,Credentialing - Wyoming,Wyoming,State,WY,56
+Wyoming_RE,Recredentialing - Wyoming,Wyoming,State,WY,56
+Wyoming_PV,Provisional - Wyoming,Wyoming,State,WY,56
+PV,Provisional,,,,
+ICHP,Credentialing - ICHP,,,,
+ATCHP,Credentialing - ATCHP,,,,
+CCHP,Credentialing - CCHP,,,,
+ICHP_PV,Provisional - ICHP,,,,
+ISLA Health Plan_PV,Provisional - ISLA Health Plan,,,,
+ISLA Health Plan,Credentialing - ISLA Health Plan,,,,
+ATCHP_PV,Provisional - ATCHP,,,,
+CCHP_PV,Provisional - CCHP,,,,
+ATCHP_RE,Recredentialing - ATCHP,,,,
+CCHP_RE,Recredentialing - CCHP,,,,
+ICHP_RE,Recredentialing - ICHP,,,,
+ISLA Health Plan_RE,Recredentialing - ISLA Health Plan,,,,
+Dual,Credentialing - Dual,,,,
+Dual_PV,Provisional - Dual,,,,
+Dual_RE,Recredentialing - Dual,,,,
+Centurion_RE ,Recredentialing - Centurion,,,,
+Centurion_PV,Provisional - Centurion,,,,
+Centurion,Credentialing - Centurion,,,,
+Exchange_RE,Recredentialing - Exchange,,,,
+Exchange,Credentialing - Exchange,,,,
+Exchange_PV,Provisional - Exchange,,,,
+CCHHS,Credentialing - CCHHS,,,,
+CCHHS_PV,Provisional - CCHHS,,,,
+CCHHS_RE,Recredentialing - CCHHS,,,,
+Cenpatico ICHP,Credentialing - Cenpatico ICHP,,,,
+Cenpatico ICHP_PV,Provisional - Cenpatico ICHP,,,,
+Cenpatico ICHP_RE,Recredentialing - Cenpatico ICHP,,,,
+Cenpatico CCHP,Credentialing - Cenpatico CCHP,,,,
+Cenpatico CCHP_PV,Provisional - Cenpatico CCHP,,,,
+Cenpatico CCHP_RE,Recredentialing - Cenpatico CCHP,,,,
+Cenpatico ATCHP,Credentialing - Cenpatico ATCHP,,,,
+Cenpatico ATCHP_PV ,Provisional - Cenpatico ATCHP,,,,
+Cenpatico ATCHP_RE ,Recredentialing - Cenpatico ATCHP,,,,
+HealthSmart,Credentialing - HealthSmart,,,,
+HealthSmart_PV,Provisional - HealthSmart,,,,
+HealthSmart_RE,Recredentialing - HealthSmart,,,,
+IHPA,Credentialing - IHPA,,,,
+IHPA_PV,Provisional - IHPA,,,,
+IHPA_RE,Recredentialing - IHPA,,,,
+MHN Comm Market,Credentialing - MHN Comm Market,,,,
+MHN Comm Market_RE,Recredentialing - MHN Comm Market,,,,
+MHN Comm Market_PV,Provisional - MHN Comm Market,,,,
+ICNF,Credentialing - ICNF,,,,
+ICNF_PV,Provisional - ICNF,,,,
+ICNF_RE,Recredentialing - ICNF,,,,
+IHPA Meridian,Credentialing - IHPA Meridian,,,,
+IHPA Meridian_PV,Provisional - IHPA Meridian,,,,
+IHPA Meridian_RE,Recredentialing - IHPA Meridian,,,,
+Ascension_RE,Recredentialing - Ascension,,,,
+Ascension,Credentialing - Ascension,,,,
+Ascension_PV ,Provisional - Ascension,,,,
+TR,Traditional,,,,
+MC,Managed Care,,,,
