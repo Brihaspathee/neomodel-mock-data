@@ -55,7 +55,7 @@ def build_node_for_attribute(mapping:AttributeMapping,
             if field_id in mapping.field_transformers:
                 field_value = transform_field(field_value, mapping.field_transformers[field_id])
                 if isinstance(field_value, NodeMeta):
-                    log.info(f"It is node metadata")
+                    log.debug(f"It is node metadata")
                     mapping.node_class = field_value
                 elif field_value == "":
                     continue
@@ -172,14 +172,14 @@ def transform_field(data: str, transformer_list: list[Any]) -> str | Type:
                 fmg_type = value["code_type"]
                 split_data = mappings[fmg_loader.FMG_CODES[fmg_type][data]]
             if mapping_type == "inheritance":
-                log.info(f"Inheritance mapping for the field id {data} is to be determined")
+                log.debug(f"Inheritance mapping for the field id {data} is to be determined")
                 sub_class_string = mappings[data]
-                log.info(f"Sub Class String: {sub_class_string}")
+                log.debug(f"Sub Class String: {sub_class_string}")
                 node_class: Type = import_class(sub_class_string)
-                log.info(f"Node Class: {node_class}")
-                log.info(f"Node Class Name: {node_class.__name__}")
-                log.info(f"Node Class type: {type(node_class)}")
-                log.info(f"Node Class test: {isinstance(node_class, NodeMeta)}")
+                log.debug(f"Node Class: {node_class}")
+                log.debug(f"Node Class Name: {node_class.__name__}")
+                log.debug(f"Node Class type: {type(node_class)}")
+                log.debug(f"Node Class test: {isinstance(node_class, NodeMeta)}")
                 return node_class
 
         transformed_data = transformed_data + split_data

@@ -750,6 +750,37 @@ INSERT INTO portown.pc_prac_insurance (id,prac_id,carrier,"policy",expires,cover
 	 (1,1,'5865','Policy Number 1','2028-12-31','2_6MIL','2025-01-01','S','Y',NULL),
 	 (2,2,'2200','Policy Number 2','2030-12-31','4MIL','2023-01-01','I','N',NULL);
 
+-- Insert data for Disorders and Modalities
+INSERT INTO portown.pp_prac_attrib (id,prac_id,attribute_id) VALUES
+	 (21,1,101957),
+	 (22,2,101957),
+	 (23,1,101977),
+	 (24,2,101977);
+
+INSERT INTO portown.pp_prac_attrib_values (id,prac_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (52,21,103595,'TOBACCO',NULL,NULL,NULL),
+	 (53,22,103595,'MOOD',NULL,NULL,NULL),
+	 (54,23,103615,'ADOPTION',NULL,NULL,NULL),
+	 (55,24,103615,'BIPOLAR',NULL,NULL,NULL);
+
+-- Insert data for ECP Id and Medicaid Clinic Id
+INSERT INTO portown.pp_prov_attrib (id,prov_id,attribute_id) VALUES
+	 (20,1,103697),
+	 (21,1,103697),
+	 (22,2,103697),
+	 (23,2,103697);
+
+INSERT INTO portown.pp_prov_attrib_values (id,prov_attribute_id,field_id,value,value_date,value_number,label_cluster_id) VALUES
+	 (51,20,106535,'ECP',NULL,NULL,NULL),
+	 (52,20,106536,'TEST_ECP_ID_1',NULL,NULL,NULL),
+	 (53,21,106535,'CI',NULL,NULL,NULL),
+	 (54,21,106536,'TEST_MEDICAL_ID_1',NULL,NULL,NULL),
+	 (55,22,106535,'ECP',NULL,NULL,NULL),
+	 (56,22,106536,'TEST_ECP_ID_2',NULL,NULL,NULL),
+	 (57,23,106535,'CI',NULL,NULL,NULL),
+	 (58,23,106536,'TEST_MEDICAL_ID_2',NULL,NULL,NULL);
+
+
 
 
 

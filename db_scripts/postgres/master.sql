@@ -31,6 +31,7 @@
 \i centene/schema/pp_prac_addr.sql
 \i centene/schema/pc_prac_training.sql
 \i centene/schema/pp_prac_hosp.sql
+\i centene/schema/pc_prac_insurance.sql
 \i centene/schema/pp_prac_attrib.sql
 \i centene/schema/pp_prac_attrib_values.sql
 \i centene/schema/pp_prac_loc.sql

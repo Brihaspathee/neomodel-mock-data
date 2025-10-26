@@ -43,10 +43,10 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
             log.debug(f"This is a Practitioner {node}")
             transform_prac_node(attribute_id, node, practitioner )
         elif isinstance(node, Disorder):
-            log.info(f"This is a Disorder {node}")
+            log.debug(f"This is a Disorder {node}")
             ri.context.add_prac_disorders(node)
         elif isinstance(node, HealthcareService):
-            log.info(f"This is a HealthcareService {node}")
+            log.debug(f"This is a HealthcareService {node}")
             ri.context.add_prac_hs(node)
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}"
