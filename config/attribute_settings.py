@@ -1,8 +1,11 @@
 import importlib
 import json
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Type
 from config.attributes_mapping import AttributeMapping
+import logging
+
+log = logging.getLogger(__name__)
 
 ATTRIBUTES_CONFIG:Dict[str, Dict[str, AttributeMapping]] = {}
 SPECIAL_ATTRIBUTES:Dict[str, Dict[str, Any]] = {
@@ -33,7 +36,11 @@ def load_entity_attributes(entity_name: str, file_path: Path):
         raw = json.load(f)
     entity_dict = {}
     for attr_id, details in raw.items():
-        node_class = import_class(details["class"])
+        node_class: Type = import_class(details["class"])
+        log.debug(f"********* Inside load_entity_attributes: **********")
+        log.debug(f"Node class: {node_class}")
+        log.debug(f"Node class name: {node_class.__name__}")
+        log.debug(f"Node class type: {type(node_class)}")
         entity_dict[attr_id] = AttributeMapping(
             name=details["name"],
             category=details["category"],

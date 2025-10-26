@@ -1,7 +1,8 @@
 import weakref
 
 from models.aton.nodes.contact import Contact
-from models.aton.nodes.identifier import Identifier, NPI, TIN, MedicaidID, MedicareID, PPGID, LegacySystemIdentifier
+from models.aton.nodes.identifier import Identifier, NPI, TIN, MedicaidID, MedicareID, PPGID, LegacySystemIdentifier, \
+    ECP_ID, Medicaid_Clinic_ID
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
@@ -36,7 +37,9 @@ class OrganizationContext:
             "tin": [],
             "medicare_id": [],
             "medicaid_id": [],
-            "ppg_id": []
+            "ppg_id": [],
+            "ecp_id":[],
+            "medicaid_clinic_id": []
         }
         self._contacts: list[Contact] = []
         self._qualifications: list[Qualification] = []
@@ -71,6 +74,10 @@ class OrganizationContext:
             self._identifiers["medicare_id"].append(identifier)
         elif isinstance(identifier, MedicaidID):
             self._identifiers["medicaid_id"].append(identifier)
+        elif isinstance(identifier, ECP_ID):
+            self._identifiers["ecp_id"].append(identifier)
+        elif isinstance(identifier, Medicaid_Clinic_ID):
+            self._identifiers["medicaid_clinic_id"].append(identifier)
         else:
             ValueError(f"{identifier} is not a valid identifier")
 

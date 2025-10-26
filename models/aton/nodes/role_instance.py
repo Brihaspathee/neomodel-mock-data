@@ -18,6 +18,8 @@ class RoleInstance(BaseNode):
     role_networks = RelationshipTo("models.aton.nodes.role_network.RoleNetwork", "SERVES")
     specialties = RelationshipTo("models.aton.nodes.role_specialty.RoleSpecialty", "SPECIALIZES")
     prac_primary_specialty =  RelationshipTo("models.aton.nodes.role_specialty.RoleSpecialty", "PRIMARY_SPECIALTY_IS")
+    disorder = RelationshipTo("models.aton.nodes.disorder.Disorder", "TREATS_DISORDER")
+    healthcare_service = RelationshipTo("models.aton.nodes.healthcare_service.HealthcareService", "OFFERS_SERVICE")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

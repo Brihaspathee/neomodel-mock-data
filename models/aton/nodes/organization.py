@@ -28,6 +28,8 @@ class Organization(BaseNode):
     medicare_id = RelationshipTo("models.aton.nodes.identifier.MedicareID", "HAS_MEDICARE_ID")
     medicaid_id = RelationshipTo("models.aton.nodes.identifier.MedicaidID", "HAS_MEDICAID_ID")
     ppg_id = RelationshipTo("models.aton.nodes.identifier.PPGID", "HAS_PPG_ID")
+    ecp_id = RelationshipTo("models.aton.nodes.identifier.ECP_ID", "HAS_ECP_ID")
+    medicaid_clinic_id = RelationshipTo("models.aton.nodes.identifier.Medicaid_Clinic_ID", "HAS_MEDICAID_CLINIC_ID")
 
     contacts = RelationshipTo("models.aton.nodes.contact.Contact",
                               "HAS_ORGANIZATION_CONTACT")

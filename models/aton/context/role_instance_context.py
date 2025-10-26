@@ -1,5 +1,7 @@
 import weakref
 
+from models.aton.nodes.disorder import Disorder
+from models.aton.nodes.healthcare_service import HealthcareService
 from models.aton.nodes.role_instance import RoleInstance
 from models.aton.nodes.role_location import RoleLocation
 from models.aton.nodes.role_network import RoleNetwork
@@ -14,6 +16,8 @@ class RoleInstanceContext:
         self._rls: list[RoleLocation] = []
         self._rns: list[RoleNetwork] = []
         self._prac_rs: list[RoleSpecialty] = []
+        self._prac_disorders: list[Disorder] = []
+        self._prac_hs: list[HealthcareService] = []
 
     def set_role_type(self, role_type: str):
         self._role_type = role_type
@@ -38,3 +42,15 @@ class RoleInstanceContext:
 
     def get_prac_rs(self) -> list[RoleSpecialty]:
         return self._prac_rs
+
+    def add_prac_disorders(self, prac_disorders: Disorder):
+        self._prac_disorders.append(prac_disorders)
+
+    def get_prac_disorders(self) -> list[Disorder]:
+        return self._prac_disorders
+
+    def add_prac_hs(self, prac_hs: HealthcareService):
+        self._prac_hs.append(prac_hs)
+
+    def get_prac_hs(self) -> list[HealthcareService]:
+        return self._prac_hs

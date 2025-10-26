@@ -117,3 +117,18 @@ class PPGID(Identifier):
         "models.aton.nodes.organization.Organization",
         "HAS_PPG_ID"
     )
+
+class ECP_ID(Identifier):
+    _node_labels = ('Identifier', 'ECP_ID')
+    organization = RelationshipFrom(
+        "models.aton.nodes.organization.Organization",
+        "HAS_ECP_ID"
+    )
+
+class Medicaid_Clinic_ID(Identifier):
+    _node_labels = ('Identifier', 'Medicaid_Clinic_ID')
+    organization = RelationshipFrom(
+        "models.aton.nodes.organization.Organization",
+        "HAS_MEDICAID_CLINIC_ID"
+    )
+

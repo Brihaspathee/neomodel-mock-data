@@ -448,5 +448,41 @@
       "issuer": "California Children Services",
       "secondary_label": "Certification"
     }
+  },
+  "103697": {
+    "name": "PROV_BUS_IDENTIFIER",
+    "category": "Identifier",
+    "attr_type": "Identifier",
+    "class": "models.aton.nodes.identifier.Identifier",
+    "fields": {
+      "106536": {"property": "value", "type": "string"},
+      "106535": {"property": "test", "type": "string"}
+    },
+    "field_transformers": {
+      "106535": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "inheritance",
+            "mappings": {
+              "ECP": "models.aton.nodes.identifier.ECP_ID",
+              "CI": "models.aton.nodes.identifier.Medicaid_Clinic_ID"
+            }
+          }
+        }
+      ],
+      "102443": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "Y": "PASSED",
+              "N": "CANCELED"
+            }
+          }
+        }
+      ]
+    }
   }
 }

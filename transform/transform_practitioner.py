@@ -110,14 +110,14 @@ def get_cred_type(value:str) -> str | None:
         return "INITIAL"
 
 def get_insurance_carrier(pp_prac_insurance:PPPracInsurance) -> Insurance | None:
-    log.info(f"Practitioner Insurances: {pp_prac_insurance}")
-    log.info(f"Practitioner Insurance Carrier: {pp_prac_insurance.carrier}")
+    log.debug(f"Practitioner Insurances: {pp_prac_insurance}")
+    log.debug(f"Practitioner Insurance Carrier: {pp_prac_insurance.carrier}")
     if pp_prac_insurance.carrier is None:
         return None
     ins_carrier = fmg_loader.FMG_CODES["INSURANCE_CARRIER"][pp_prac_insurance.carrier]
     if ins_carrier is None:
         return None
-    log.info(f"Practitioner Insurance Carrier Description: {ins_carrier}")
+    log.debug(f"Practitioner Insurance Carrier Description: {ins_carrier}")
     value = pp_prac_insurance.policy
     coverage_amount = pp_prac_insurance.coverage
     coverage_type = pp_prac_insurance.coverage_type

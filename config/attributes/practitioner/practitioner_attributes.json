@@ -110,7 +110,7 @@
       "106896": {"property": "altFirstName", "type": "string"},
       "107055": {"property": "altMiddleName", "type": "string"},
       "107056": {"property": "altLastName", "type": "string"}
-}
+    }
   },
   "100039": {
     "name": "PRAC_DEMOGRAPHICS",
@@ -120,8 +120,26 @@
     "fields": {
       "100233": {"property": "ethnicity", "type": "string"},
       "110355": {"property": "race", "type": "string"}
-},
+    },
     "ignore": ["100232"]
+  },
+  "101977": {
+    "name": "PRAC_DISORDERS",
+    "category": "Practitioner",
+    "attr_type": "Disorder",
+    "class": "models.aton.nodes.disorder.Disorder",
+    "fields": {
+      "103615": {"property": "disorder_type", "type": "string"}
+    }
+  },
+  "101957": {
+    "name": "PRAC_MODALITIES",
+    "category": "Practitioner",
+    "attr_type": "Treatment_Modalities",
+    "class": "models.aton.nodes.healthcare_service.HealthcareService",
+    "fields": {
+      "103595": {"property": "hs_type", "type": "string"}
+    }
   },
   "100052": {
     "name": "PRAC_LICENSE",
@@ -135,7 +153,7 @@
       "100262": {"property": "value", "type": "string"},
       "104028": {"property": "status", "type": "string"},
       "106855": {"property": "type", "type": "string"}
-},
+    },
     "field_transformers": {
       "104028": [
         {

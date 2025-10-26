@@ -1,6 +1,8 @@
 from typing import Any
 
 from config.attribute_settings import ATTRIBUTES_CONFIG
+from models.aton.nodes.disorder import Disorder
+from models.aton.nodes.healthcare_service import HealthcareService
 from models.aton.nodes.identifier import Identifier
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
@@ -15,6 +17,7 @@ log = logging.getLogger(__name__)
 
 
 def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
+    ri: RoleInstance = practitioner.context.get_role_instance()
     for attribute in pp_prac.attributes:
         attribute_fields: dict[str, Any] = {}
         for value in attribute.values:
@@ -39,6 +42,12 @@ def get_prac_attributes(pp_prac:PPPrac, practitioner:Practitioner):
         elif isinstance(node, Practitioner):
             log.debug(f"This is a Practitioner {node}")
             transform_prac_node(attribute_id, node, practitioner )
+        elif isinstance(node, Disorder):
+            log.info(f"This is a Disorder {node}")
+            ri.context.add_prac_disorders(node)
+        elif isinstance(node, HealthcareService):
+            log.info(f"This is a HealthcareService {node}")
+            ri.context.add_prac_hs(node)
         else:
             log.error(f"Unable to determine node type for attribute {attribute_id}"
                       f"for practitioner {pp_prac.id} name is {pp_prac.fname}")

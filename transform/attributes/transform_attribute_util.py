@@ -1,8 +1,10 @@
 import importlib
 from datetime import datetime, date
-from typing import Any
+from typing import Any, Type
 
-from config.attribute_settings import SPECIAL_ATTRIBUTES
+from neomodel.sync_.core import NodeMeta
+
+from config.attribute_settings import SPECIAL_ATTRIBUTES, import_class
 from config.attributes_mapping import AttributeMapping, FieldInfo
 from neomodel import StructuredNode
 import portico_reads.service.fmg_codes.load_fmg_codes as fmg_loader
@@ -52,7 +54,10 @@ def build_node_for_attribute(mapping:AttributeMapping,
             # Check if the field has a transformer
             if field_id in mapping.field_transformers:
                 field_value = transform_field(field_value, mapping.field_transformers[field_id])
-                if field_value == "":
+                if isinstance(field_value, NodeMeta):
+                    log.info(f"It is node metadata")
+                    mapping.node_class = field_value
+                elif field_value == "":
                     continue
             # Type conversion
             field_value = _convert_field_type(field_value, field_info)
@@ -136,7 +141,7 @@ def evaluate_conditions(mapping: AttributeMapping, attribute_fields: dict[str, A
             return False
     return True
 
-def transform_field(data: str, transformer_list: list[Any]) -> str:
+def transform_field(data: str, transformer_list: list[Any]) -> str | Type:
     log.debug("Field Id to be transformed: " + data)
     log.debug(f"Transformers: {transformer_list}" )
     transformed_data = ""
@@ -166,6 +171,17 @@ def transform_field(data: str, transformer_list: list[Any]) -> str:
             if mapping_type == "code":
                 fmg_type = value["code_type"]
                 split_data = mappings[fmg_loader.FMG_CODES[fmg_type][data]]
+            if mapping_type == "inheritance":
+                log.info(f"Inheritance mapping for the field id {data} is to be determined")
+                sub_class_string = mappings[data]
+                log.info(f"Sub Class String: {sub_class_string}")
+                node_class: Type = import_class(sub_class_string)
+                log.info(f"Node Class: {node_class}")
+                log.info(f"Node Class Name: {node_class.__name__}")
+                log.info(f"Node Class type: {type(node_class)}")
+                log.info(f"Node Class test: {isinstance(node_class, NodeMeta)}")
+                return node_class
+
         transformed_data = transformed_data + split_data
     log.debug("Transformed Data: " + transformed_data)
     return transformed_data

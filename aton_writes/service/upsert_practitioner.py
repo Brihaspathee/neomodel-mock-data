@@ -48,6 +48,8 @@ def upsert_practitioner(organization: Organization):
                 role_instance.save()
                 existing_prac.role.connect(role_instance)
                 role_instance.contracted_organization.connect(organization)
+                create_prac_disorder(ri=role_instance)
+                create_prac_healthcare_service(ri=role_instance)
                 process_role_locations(role_instance)
                 process_role_networks(role_instance, organization.context)
                 process_prac_role_specialties(role_instance)
@@ -86,6 +88,8 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     role_instance.save()
     practitioner.role.connect(role_instance)
     role_instance.contracted_organization.connect(organization)
+    create_prac_disorder(ri=role_instance)
+    create_prac_healthcare_service(ri=role_instance)
     process_role_locations(role_instance)
     process_role_networks(role_instance, organization.context)
     process_prac_role_specialties(role_instance)
@@ -182,3 +186,13 @@ def create_prac_insurance(prac: Practitioner):
     for insurance in prac.context.get_insurance():
         insurance.save()
         prac.insurance.connect(insurance)
+
+def create_prac_disorder(ri: RoleInstance):
+    for disorder in ri.context.get_prac_disorders():
+        disorder.save()
+        ri.disorder.connect(disorder)
+
+def create_prac_healthcare_service(ri: RoleInstance):
+    for healthcare_service in ri.context.get_prac_hs():
+        healthcare_service.save()
+        ri.healthcare_service.connect(healthcare_service)
