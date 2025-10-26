@@ -746,7 +746,9 @@ INSERT INTO portown.pp_prac_cred_cycle (id,prac_id,cred_type,start_date,end_date
 	 (1,1,'Alabama','2018-01-01','4000-01-01','2018-01-01','Active',1,'Y','Health Alliance',1,'Test'),
 	 (2,2,'Missouri','2020-01-01','4000-01-01','2020-01-01','Active',1,'Y','St.Joseph Hospital',1,'Test');
 
-
+INSERT INTO portown.pc_prac_insurance (id,prac_id,carrier,"policy",expires,coverage,effective,coverage_type,coverage_unlimited,orig_effective_date) VALUES
+	 (1,1,'5865','Policy Number 1','2028-12-31','2_6MIL','2025-01-01','S','Y',NULL),
+	 (2,2,'2200','Policy Number 2','2030-12-31','4MIL','2023-01-01','I','N',NULL);
 
 
 
