@@ -3,6 +3,7 @@
 from aton_writes.service.upsert_role_location import process_role_locations
 from aton_writes.service.upsert_role_network import process_role_networks
 from aton_writes.service.upsert_role_specialty import create_role_specialty
+from models.aton.nodes.credentialing import Credentialing
 from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.relationships.has_privilege import HasPrivilege
 from repository.identifier_repo import create_identifiers
@@ -77,6 +78,7 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     create_identifiers(owner_node=practitioner)
     create_qualifications(prac=practitioner)
     create_hosp_privileges(prac=practitioner)
+    create_prac_cred(prac=practitioner)
     role_instance: RoleInstance = practitioner.context.get_role_instance()
     log.debug(f"Pending Role Specialties: {role_instance.context.get_prac_rs()}")
     log.debug(f"Role instance is: {type(role_instance)}")
@@ -169,3 +171,8 @@ def create_hosp_privileges(prac: Practitioner):
             })
         else:
             log.debug(f"No Organization with prov_id {hosp_priv.prov_id} found")
+
+def create_prac_cred(prac: Practitioner):
+    for credentialing in prac.context.get_credentials():
+        credentialing.save()
+        prac.credentials.connect(credentialing)

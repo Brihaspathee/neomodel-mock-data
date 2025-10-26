@@ -44,8 +44,8 @@ def upsert_organizations(organizations: list[Organization]):
         else:
             create_organization(organization)
     for organization in sorted_orgs:
-        log.info(f"Organization {organization.name} written to Aton its element id is: {organization.element_id}")
-        log.info(f"Organization context:{organization.context}")
+        log.debug(f"Organization {organization.name} written to Aton its element id is: {organization.element_id}")
+        log.debug(f"Organization context:{organization.context}")
         upsert_practitioner(organization)
 
 

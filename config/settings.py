@@ -9,6 +9,7 @@ from config.county_settings import load_county_mapping
 
 from sqlalchemy.orm import relationship
 
+from config.map_reader.cred_type_geo_map import load_cred_geo_mapping
 from config.privilege_settings import load_hosp_priv_mapping
 from config.qualification_rules_settings import load_qual_rules
 from config.secrets_api import SecretsAPI
@@ -77,3 +78,4 @@ load_contact_mapping()
 load_county_mapping()
 load_hosp_priv_mapping()
 load_qual_rules()
+load_cred_geo_mapping()

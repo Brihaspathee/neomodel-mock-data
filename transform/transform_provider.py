@@ -28,7 +28,7 @@ def _(provider:PPProv) -> Organization:
     :return: A new Organization instance created from the provided PPProv data.
     :rtype: Organization
     """
-    log.debug("Transforming Portico Provider")
+    log.debug(f"Transforming Portico Provider:{provider.name}")
     # ------------------------------------------------------------------------------
     # Populate basic details of an Organization
     # ------------------------------------------------------------------------------

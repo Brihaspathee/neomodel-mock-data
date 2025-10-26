@@ -38,6 +38,9 @@ class Practitioner(BaseNode):
     hosp_privileges = RelationshipTo("models.aton.nodes.organization.Organization",
                                        "HAS_PRIVILEGE",model=HasPrivilege)
 
+    credentials = RelationshipTo("models.aton.nodes.credentialing.Credentialing",
+                                 "HAS_CREDENTIALING")
+
     pp_prac = RelationshipFrom("models.aton.nodes.pp_prac.PP_PRAC", "SOURCES")
 
     def __init__(self, *args, **kwargs):

@@ -742,6 +742,11 @@ INSERT INTO portown.pp_prac_loc_attrib_values (id,prac_loc_attribute_id,field_id
 	 (79,40,111636,'Allergy & Immunology',NULL,NULL,NULL),
 	 (80,40,111635,'N',NULL,NULL,NULL);
 
+INSERT INTO portown.pp_prac_cred_cycle (id,prac_id,cred_type,start_date,end_date,committee_date,status,credentialer,is_delegated_cred,affiliated_agency,recruited_by,note) VALUES
+	 (1,1,'Alabama','2018-01-01','4000-01-01','2018-01-01','Active',1,'Y','Health Alliance',1,'Test'),
+	 (2,2,'Missouri','2020-01-01','4000-01-01','2020-01-01','Active',1,'Y','St.Joseph Hospital',1,'Test');
+
+
 
 
 
