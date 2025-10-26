@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from models.aton.nodes.credentialing import Credentialing
 from models.aton.nodes.identifier import Identifier, NPI, DEA_Number, MedicareID, MedicaidID, LegacySystemIdentifier
+from models.aton.nodes.insurance import Insurance
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.qualification import Qualification
 from models.aton.nodes.role_instance import RoleInstance
@@ -28,6 +29,7 @@ class PractitionerContext:
         self._role_instance: RoleInstance | None = None
         self._privileges: list[HospitalPrivilege] = []
         self._credentials: list[Credentialing] = []
+        self._insurance: list[Insurance] = []
 
     def add_identifier(self, identifier: Identifier):
         if isinstance(identifier, NPI):
@@ -75,3 +77,9 @@ class PractitionerContext:
 
     def get_credentials(self):
         return self._credentials
+
+    def add_insurance(self, insurance: Insurance):
+        self._insurance.append(insurance)
+
+    def get_insurance(self):
+        return self._insurance

@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from models.portico.pp_prac_loc_attrib import PPPracLocAttrib
     from models.portico.pp_prac_hosp import PPPracHosp
     from models.portico.pp_prac_cred_cycle import PPPracCredCycle
+    from models.portico.pc_prac_insurance import PPPracInsurance
 
 class PPPrac(Base):
     __tablename__ = "pp_prac"
@@ -38,6 +39,7 @@ class PPPrac(Base):
     )
     hosp_privileges:Mapped[List["PPPracHosp"]] = relationship("PPPracHosp", back_populates="practitioner")
     cred_cycles: Mapped[List["PPPracCredCycle"]] = relationship("PPPracCredCycle", back_populates="practitioner")
+    insurances: Mapped[List["PPPracInsurance"]] = relationship("PPPracInsurance", back_populates="practitioner")
 
 
     def __eq__(self, other):

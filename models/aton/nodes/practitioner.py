@@ -41,6 +41,9 @@ class Practitioner(BaseNode):
     credentials = RelationshipTo("models.aton.nodes.credentialing.Credentialing",
                                  "HAS_CREDENTIALING")
 
+    insurance = RelationshipTo("models.aton.nodes.insurance.Insurance",
+                                 "HAS_INSURANCE")
+
     pp_prac = RelationshipFrom("models.aton.nodes.pp_prac.PP_PRAC", "SOURCES")
 
     def __init__(self, *args, **kwargs):

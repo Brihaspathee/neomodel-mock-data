@@ -79,6 +79,7 @@ def create_practitioner(practitioner: Practitioner, organization: Organization):
     create_qualifications(prac=practitioner)
     create_hosp_privileges(prac=practitioner)
     create_prac_cred(prac=practitioner)
+    create_prac_insurance(prac=practitioner)
     role_instance: RoleInstance = practitioner.context.get_role_instance()
     log.debug(f"Pending Role Specialties: {role_instance.context.get_prac_rs()}")
     log.debug(f"Role instance is: {type(role_instance)}")
@@ -176,3 +177,8 @@ def create_prac_cred(prac: Practitioner):
     for credentialing in prac.context.get_credentials():
         credentialing.save()
         prac.credentials.connect(credentialing)
+
+def create_prac_insurance(prac: Practitioner):
+    for insurance in prac.context.get_insurance():
+        insurance.save()
+        prac.insurance.connect(insurance)

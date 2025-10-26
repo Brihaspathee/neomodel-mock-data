@@ -6,10 +6,12 @@ from models.aton.context.practitioner_context import PractitionerContext, Hospit
 from models.aton.context.role_instance_context import RoleInstanceContext
 from models.aton.nodes.credentialing import Credentialing
 from models.aton.nodes.identifier import LegacySystemIdentifier
+from models.aton.nodes.insurance import Insurance
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.practitioner import Practitioner
 from models.aton.nodes.role_instance import RoleInstance
-from models.portico import PPProv, PPPrac, PPPracLoc, PPPracCredCycle
+import portico_reads.service.fmg_codes.load_fmg_codes as fmg_loader
+from models.portico import PPProv, PPPrac, PPPracLoc, PPPracCredCycle, PPPracInsurance
 import logging
 
 from transform.attributes.transform_attribute import transform_attributes
@@ -39,6 +41,10 @@ def transform_practitioner(pp_prov:PPProv, organization: Organization):
             credentialing: Credentialing = get_prac_cred(cred_cycle)
             if credentialing is not None:
                 practitioner.context.add_credential(credentialing)
+        for pp_prac_insurance in pp_prac.insurances:
+            insurance: Insurance = get_insurance_carrier(pp_prac_insurance)
+            if insurance is not None:
+                practitioner.context.add_insurance(insurance)
         role_instance: RoleInstance = RoleInstance()
         role_instance.context = RoleInstanceContext(role_instance)
         practitioner.context.set_role_instance(role_instance)
@@ -66,7 +72,7 @@ def get_hosp_priv_type(portico_type:str) -> str | None:
         return None
 
 def get_prac_cred(pp_prac_cred_cycle: PPPracCredCycle) -> Credentialing | None:
-    log.info(f"Practitioner credential cycle - {pp_prac_cred_cycle}")
+    log.debug(f"Practitioner credential cycle - {pp_prac_cred_cycle}")
     cred_type: str = pp_prac_cred_cycle.cred_type
     try:
         cred_type_geo: dict[str, str] = CRED_TYPE_GEO_MAPPING[cred_type]
@@ -102,3 +108,33 @@ def get_cred_type(value:str) -> str | None:
         return "PROVISIONAL"
     else:
         return "INITIAL"
+
+def get_insurance_carrier(pp_prac_insurance:PPPracInsurance) -> Insurance | None:
+    log.info(f"Practitioner Insurances: {pp_prac_insurance}")
+    log.info(f"Practitioner Insurance Carrier: {pp_prac_insurance.carrier}")
+    if pp_prac_insurance.carrier is None:
+        return None
+    ins_carrier = fmg_loader.FMG_CODES["INSURANCE_CARRIER"][pp_prac_insurance.carrier]
+    if ins_carrier is None:
+        return None
+    log.info(f"Practitioner Insurance Carrier Description: {ins_carrier}")
+    value = pp_prac_insurance.policy
+    coverage_amount = pp_prac_insurance.coverage
+    coverage_type = pp_prac_insurance.coverage_type
+    if coverage_type is not None:
+        coverage_type = fmg_loader.FMG_CODES["INSURANCE_COVERAGE_TYPE"][coverage_type]
+    unlimited_coverage = pp_prac_insurance.coverage_unlimited
+    unltd_cov = False
+    if unlimited_coverage is not None:
+        if unlimited_coverage == 'Y':
+            unltd_cov = True
+    start_date = pp_prac_insurance.effective
+    end_date = pp_prac_insurance.expires
+    insurance: Insurance = Insurance(carrier=ins_carrier,
+                                     value=value,
+                                     coverage_amount=coverage_amount,
+                                     coverage_type=coverage_type,
+                                     unlimited_coverage=unltd_cov,
+                                     start_date=start_date,
+                                     end_date=end_date)
+    return insurance

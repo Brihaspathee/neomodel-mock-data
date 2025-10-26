@@ -33,6 +33,7 @@ from .pp_prac_net_cycle import PPPracNetCycle
 from .pp_prac_net_loc_cycle import PPPracNetLocCycle
 from .pp_prac_hosp import PPPracHosp
 from .pp_prac_cred_cycle import PPPracCredCycle
+from .pc_prac_insurance import PPPracInsurance
 
 __all__ = ["Base", "PPAddr","PPNet",
            "PPPhones", "PPAddrPhones", "PPProvTIN",
@@ -44,4 +45,5 @@ __all__ = ["Base", "PPAddr","PPNet",
            "PPProvLocAttrib", "PPProvLocAttribValues",
            "PPProvLocOfHours",  "PPPracAttrib", "PPPracAttribValues",
            "PPPrac", "PPPracLoc", "PPPracNetCycle", "PPPracNetLocCycle",
-           "PPPracLocAttrib", "PPPracLocAttribValues", "PPPracHosp", "PPPracCredCycle"]
+           "PPPracLocAttrib", "PPPracLocAttribValues", "PPPracHosp",
+           "PPPracCredCycle", "PPPracInsurance"]
