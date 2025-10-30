@@ -28,7 +28,7 @@ def main():
     log.debug(f"Address use mapping:{contact_settings.ADDRESS_USE_MAPPING}")
     log.debug(f"County state mapping:{county_settings.COUNTY_STATE_MAPPING}")
     log.debug(f"Qualification Rules:{qualification_rules_settings.QUALIFICATION_RULES}")
-    log.info(f"Cred Type Geo Mapping:{cred_type_geo_map.CRED_TYPE_GEO_MAPPING}")
+    log.debug(f"Cred Type Geo Mapping:{cred_type_geo_map.CRED_TYPE_GEO_MAPPING}")
     logging.basicConfig(level=logging.DEBUG)
 
     # Read the providers from Portico
