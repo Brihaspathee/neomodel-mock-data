@@ -208,3 +208,23 @@ def consolidate_rls_spans(spans: list[RoleLocationServes]) -> list[RoleLocationS
         RoleLocationServes(**{"start_date": span.start_date, "end_date": span.end_date})
         for span in merged_spans
     ]
+
+def is_portico_loc_and_aton_loc_match(prov_tin_loc: PPProvTinLoc, aton_loc:Location) -> bool:
+    portico_loc_hash_code = get_hash_key_for_prov_tin_loc(prov_tin_loc=prov_tin_loc)
+    log.debug(f"Portico Location Hash Code: {portico_loc_hash_code}")
+    aton_loc__hash_code = get_hash_key_for_location(location=aton_loc)
+    log.debug(f"Aton Location Hash Code: {aton_loc__hash_code}")
+    if aton_loc__hash_code == portico_loc_hash_code:
+        return True
+    else:
+        return False
+
+def is_aton_locs_match(aton_loc_1: Location, aton_loc_2:Location) -> bool:
+    aton_loc_1_hash_code = get_hash_key_for_location(location=aton_loc_1)
+    log.debug(f"Aton Location 1 Hash Code: {aton_loc_1_hash_code}")
+    aton_loc_2_hash_code = get_hash_key_for_location(location=aton_loc_2)
+    log.debug(f"Aton Location 2 Hash Code: {aton_loc_2_hash_code}")
+    if aton_loc_1_hash_code == aton_loc_2_hash_code:
+        return True
+    else:
+        return False

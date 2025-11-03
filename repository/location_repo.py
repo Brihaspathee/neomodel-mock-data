@@ -1,5 +1,6 @@
 from neomodel import db
 
+from models.aton.nodes.accessibility import Accessibility
 from models.aton.nodes.identifier import LegacySystemIdentifier
 from models.aton.nodes.location import Location
 from models.aton.nodes.pp_prov_tin_loc import PP_PROV_TIN_LOC
@@ -13,18 +14,21 @@ log = logging.getLogger(__name__)
 
 def get_or_create_location(location:Location):
     validation: Validation = location.context.get_validation()
+    accessibility: Accessibility = location.context.get_accessibility()
     log.debug(f"Location {location.name} needs validation, validation key is: {validation.validation_key}")
     if not validation:
         raise Exception("Location needs validation")
     location_in_db, val = find_location_by_key(validation.validation_key)
     if location_in_db:
         check_for_qualification_updates(location_in_db, location)
+        # to-do update accessibility when you do the update logic for location
         return location_in_db
     else:
         # saved_loc = location.save()
         location.save()
         saved_val = create_validation(validation)
         create_qualifications(location)
+        create_accessibility(location)
         legacy_system_id: LegacySystemIdentifier = location.context.get_portico_source().save()
         legacy_system_id.location.connect(location)
         prov_tin_loc: PP_PROV_TIN_LOC = PP_PROV_TIN_LOC(loc_id=int(legacy_system_id.value))
@@ -100,3 +104,17 @@ def create_qualifications(loc: Location):
             qual_node.save()
             log.debug(f"Qualification saved to Aton its element id is: {qual_node.element_id}")
             rel.connect(qual_node)
+
+def create_accessibility(location:Location):
+    log.debug(
+        f"Writing accessibility to Aton for location {location.name}"
+        f"Accessibility is: {location.context.get_accessibility()}"
+    )
+    if location.context.get_accessibility():
+        accessibility = location.context.get_accessibility()
+        accessibility.save()
+        location.accessibility.connect(accessibility)
+        validation: Validation = accessibility.context.get_validation()
+        if validation:
+            validation.save()
+            validation.accessibility.connect(accessibility)

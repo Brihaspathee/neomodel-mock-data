@@ -19,6 +19,8 @@ class Location(BaseNode):
     longitude: str = StringProperty(required=False)
 
     validation = RelationshipFrom("models.aton.nodes.validation.Validation", "VALIDATED")
+    accessibility = RelationshipTo("models.aton.nodes.accessibility.Accessibility",
+                                "ACCESSIBLE")
     role_locations = RelationshipFrom("models.aton.nodes.role_location.RoleLocation", "LOCATION_IS")
 
     qualifications = RelationshipTo("models.aton.nodes.qualification.Qualification",

@@ -8,3 +8,4 @@ class HasPanel(StructuredRel):
     highest_age_months = IntegerProperty(required=False)
     gender_limitation = StringProperty(required=False)
     service_population = ArrayProperty(StringProperty(), required=False)
+    status = StringProperty(required=False)

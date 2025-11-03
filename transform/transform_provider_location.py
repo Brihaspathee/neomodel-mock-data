@@ -6,7 +6,7 @@ from models.aton.context.role_location_context import RoleLocationContext
 from models.aton.nodes.contact import Contact
 from models.aton.nodes.hours_of_operation import HoursOfOperation
 from models.aton.nodes.telecom import Telecom
-from transform.transform_utils import set_location
+from transform.transform_utils import set_location, is_portico_loc_and_aton_loc_match
 from utils.location_util import get_hash_key_for_prov_tin_loc
 from models.aton.nodes.organization import Organization
 from models.aton.nodes.role_instance import RoleInstance
@@ -53,6 +53,17 @@ def transform_provider_location(provider: PPProv, organization:Organization):
         # Add the role instance to the organization
         # ------------------------------------------------------------------------------
         organization.context.add_role_instance(role_instance)
+        # ------------------------------------------------------------------------------
+        # Once all the role location and role networks are created,
+        # processes the provider location attributes.
+        # This is done because some attributes are dependent on having role location and
+        # role networks being present. An example of such an attribute is the "PANEL_QUESTIONS (100087)"
+        # ------------------------------------------------------------------------------
+        for role_location in role_instance.context.get_rls():
+            for prov_loc in provider.prov_locs:
+                log.debug(f"Provider for who the location is being processed: {provider.name}")
+                if is_portico_loc_and_aton_loc_match(prov_loc.location, role_location.context.get_location()):
+                    transform_attributes("PROV_LOC", provider, prov_loc.location, role_location, role_instance)
 
 def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
     """
@@ -90,7 +101,7 @@ def _process_prov_locs(pp_prov:PPProv, role_instance: RoleInstance):
         location = set_location(hash_code, prov_tin_loc)
         role_location.context.set_location(location)
         contact: Contact = get_location_phone(prov_tin_loc)
-        transform_attributes("PROV_LOC", pp_prov, prov_tin_loc, role_location)
+        # transform_attributes("PROV_LOC", pp_prov, prov_tin_loc, role_location, role_instance)
         role_location.context.add_contact(contact)
         get_prov_loc_office_hours(pp_prov, prov_tin_loc, role_location)
         role_instance.context.add_rl(role_location)

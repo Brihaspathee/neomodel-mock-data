@@ -12,6 +12,10 @@ SPECIAL_ATTRIBUTES:Dict[str, Dict[str, Any]] = {
     "100114":{
         "func_name": "transform.attributes.provider.special_prov_attributes.transform_hat_code_attr",
         "arguments": ["prov_attrib", "organization"]
+    },
+    "100087":{
+        "func_name": "transform.attributes.provider.location.special_prov_loc_attributes.transform_panel_attr",
+        "arguments": ["prov_loc_attrib", "role_instance", "prov_tin_loc"]
     }
 }
 

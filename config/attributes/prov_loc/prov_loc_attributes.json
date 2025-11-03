@@ -25,5 +25,40 @@
       "issuer": "Department of Health Services Site Evaluation",
       "secondary_label": "Certification"
     }
+  },
+  "100056": {
+    "name": "PROV_GENDER_LIMITATIONS",
+    "category": "PROVIDER_LOCATION",
+    "attr_type": "PANEL",
+    "class": "models.aton.relationships.has_panel.HasPanel",
+    "fields": {
+      "100269": {"property": "gender_limitation", "type": "string"}
+    },
+    "field_transformers": {
+      "100269": [
+        {
+          "transform_type": "mapping",
+          "value": {
+            "mapping_type": "literal",
+            "mappings": {
+              "M": "MALE_ONLY",
+              "F": "FEMALE_ONLY"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "100057": {
+    "name": "PROV_AGE_LIMITATIONS",
+    "category": "PROVIDER_LOCATION",
+    "attr_type": "PANEL",
+    "class": "models.aton.context.age_limitation_helper.AgeLimitationHelper",
+    "fields": {
+      "100517": {"property": "lowest_units", "type": "string"},
+      "100518": {"property": "highest_units", "type": "string"},
+      "100270": {"property": "lowest_age", "type": "int"},
+      "100271": {"property": "highest_age", "type": "int"}
+    }
   }
 }
