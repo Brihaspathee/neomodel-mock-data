@@ -10,9 +10,15 @@ from models.aton.relationships.role_location_serves import RoleLocationServes
 class AssociatedRL:
     def __init__(self, role_location: RoleLocation,
                  panel_edge: HasPanel | None = None,
+                 is_pcp: bool = False,
+                 is_behavior_health: bool = False,
+                 is_specialist: bool = False,
                  rls_edges: list[RoleLocationServes] = None):
         self.role_location = role_location
         self.panel_edge = panel_edge
+        self.is_pcp = is_pcp
+        self.is_behavior_health = is_behavior_health
+        self.is_specialist = is_specialist
         if rls_edges is None:
             self.rls_edges = []
         else:
@@ -30,9 +36,9 @@ class RoleNetworkContext:
         self.role_network = weakref.proxy(role_network)
         self._network: Network | None = None
         self._assoc_rls: list[AssociatedRL] = []
-        self._is_pcp: bool = False
-        self._is_behavior_health: bool = False
-        self._is_specialist: bool = False
+        # self._is_pcp: bool = False
+        # self._is_behavior_health: bool = False
+        # self._is_specialist: bool = False
         # self._assoc_panels: list[AssociatedPanel] | None = None
 
     def set_network(self, network: Network):
@@ -47,23 +53,23 @@ class RoleNetworkContext:
     def get_assoc_rls(self) -> list[AssociatedRL]:
         return self._assoc_rls
 
-    def set_is_pcp(self, is_pcp: bool):
-        self._is_pcp = is_pcp
+    # def set_is_pcp(self, is_pcp: bool):
+    #     self._is_pcp = is_pcp
+    #
+    # def get_is_pcp(self) -> bool:
+    #     return self._is_pcp
 
-    def get_is_pcp(self) -> bool:
-        return self._is_pcp
-
-    def set_is_behavior_health(self, is_behavior_health: bool):
-        self._is_behavior_health = is_behavior_health
-
-    def get_is_behavior_health(self) -> bool:
-        return self._is_behavior_health
-
-    def set_is_specialist(self, is_specialist: bool):
-        self._is_specialist = is_specialist
-
-    def get_is_specialist(self) -> bool:
-        return self._is_specialist
+    # def set_is_behavior_health(self, is_behavior_health: bool):
+    #     self._is_behavior_health = is_behavior_health
+    #
+    # def get_is_behavior_health(self) -> bool:
+    #     return self._is_behavior_health
+    #
+    # def set_is_specialist(self, is_specialist: bool):
+    #     self._is_specialist = is_specialist
+    #
+    # def get_is_specialist(self) -> bool:
+    #     return self._is_specialist
 
     # def add_assoc_panels(self, panel: AssociatedPanel):
     #     self._assoc_panels.append(panel)

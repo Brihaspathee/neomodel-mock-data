@@ -6,8 +6,8 @@ from models.aton.nodes.product import Product
 
 
 class ProductContext:
-    def __init__(self, product:Product):
-        self.product = weakref.proxy(product)
+    def __init__(self):
+        # self.product = weakref.proxy(product)
         self._networks: list[Network] = []
         self._portico_source: LegacySystemIdentifier | None = None
 

@@ -15,12 +15,18 @@ def transform_hat_code_attr(**kwargs):
                 for role_instance in role_instances:
                     log.debug(f"Role Networks: {role_instance.context.get_rns()}")
                     for role_network in role_instance.context.get_rns():
-                        if value.value == "PS":
-                            role_network.context.set_is_pcp(True)
-                            role_network.context.set_is_specialist(True)
-                        elif value.value == "SP":
-                            role_network.context.set_is_specialist(True)
-                        elif value.value == "PC":
-                            role_network.context.set_is_pcp(True)
-                        elif value.value == "BH":
-                            role_network.context.set_is_behavior_health(True)
+                        for assoc_rl in role_network.context.get_assoc_rls():
+                            if value.value == "PS":
+                                # role_network.context.set_is_pcp(True)
+                                # role_network.context.set_is_specialist(True)
+                                assoc_rl.is_specialist = True
+                                assoc_rl.is_pcp = True
+                            elif value.value == "SP":
+                                # role_network.context.set_is_specialist(True)
+                                assoc_rl.is_specialist = True
+                            elif value.value == "PC":
+                                # role_network.context.set_is_pcp(True)
+                                assoc_rl.is_pcp = True
+                            elif value.value == "BH":
+                                # role_network.context.set_is_behavior_health(True)
+                                assoc_rl.is_behavior_health = True

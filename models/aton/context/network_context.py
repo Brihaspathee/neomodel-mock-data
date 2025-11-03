@@ -5,8 +5,8 @@ from models.aton.nodes.network import Network
 
 
 class NetworkContext:
-    def __init__(self, network:Network):
-        self.network = weakref.proxy(network)
+    def __init__(self):
+        # self.network = weakref.proxy(network)
         self._portico_source: LegacySystemIdentifier | None = None
 
     def set_portico_source(self, source: LegacySystemIdentifier):

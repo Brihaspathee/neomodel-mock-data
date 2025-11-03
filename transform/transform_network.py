@@ -18,7 +18,7 @@ def _(pp_net:PPNet) -> Product:
     product: Product = Product(
         code=net_dict["id"],
         name=net_dict["description"])
-    product.context = ProductContext(product)
+    product.context = ProductContext()
     portico_prod: LegacySystemIdentifier = LegacySystemIdentifier(value= net_dict["id"],
                                                                   system="PORTICO",
                                                                   systemIdType="NET ID"
@@ -31,7 +31,7 @@ def _(pp_net:PPNet) -> Product:
             code=network["id"],
             name=network["description"]
         )
-        net.context = NetworkContext(net)
+        net.context = NetworkContext()
         transform_attributes("NETWORK", network, net)
         log.debug(f"Is this a vendor network: {net.isVendorNetwork}")
         log.debug(f"Is this a health network: {net.isHNETNetwork}")

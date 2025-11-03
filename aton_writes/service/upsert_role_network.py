@@ -47,15 +47,15 @@ def process_role_networks(role_instance:RoleInstance,
             panel_edge = assoc_rl.panel_edge
             if panel_edge:
                 rl.rn_has_panel.connect(rn, panel_edge.__properties__)
-            if rn.context.get_is_pcp():
+            if assoc_rl.is_pcp:
                 log.debug(f"Create IS_PCP edge between role network node with element id {rl.element_id} "
                          f"and role network node with element id {rn.element_id}")
                 rl.rn_pcp.connect(rn)
-            if rn.context.get_is_specialist():
+            if assoc_rl.is_specialist:
                 log.debug(f"Create IS_SPECIALIST edge between role network node with element id {rl.element_id} "
                          f"and role network node with element id {rn.element_id}")
                 rl.rn_specialist.connect(rn)
-            if rn.context.get_is_behavior_health():
+            if assoc_rl.is_behavioral_health:
                 log.debug(f"Create IS_BEHAVIORAL_HEALTH edge between role network node with element id {rl.element_id} "
                          f"and role network node with element id {rn.element_id}")
                 rl.rn_behavior_health.connect(rn)
