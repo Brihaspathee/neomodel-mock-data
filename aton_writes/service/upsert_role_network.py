@@ -55,7 +55,7 @@ def process_role_networks(role_instance:RoleInstance,
                 log.debug(f"Create IS_SPECIALIST edge between role network node with element id {rl.element_id} "
                          f"and role network node with element id {rn.element_id}")
                 rl.rn_specialist.connect(rn)
-            if assoc_rl.is_behavioral_health:
+            if assoc_rl.is_behavior_health:
                 log.debug(f"Create IS_BEHAVIORAL_HEALTH edge between role network node with element id {rl.element_id} "
                          f"and role network node with element id {rn.element_id}")
                 rl.rn_behavior_health.connect(rn)
