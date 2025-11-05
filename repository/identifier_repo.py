@@ -19,14 +19,15 @@ def create_identifiers(owner_node):
         for id_node in id_list:
             if not hasattr(id_node, "element_id") or id_node.element_id is None:
                 if isinstance(id_node, TIN):
+                    log.info(f"TIN Node:{id_node}")
                     id_node, _ = id_node.get_or_create(
                         {"value": id_node.value},
-                        {"legalName": id_node.legal_name},
+                        {"legal_name": id_node.legal_name},
                     )
                 elif isinstance(id_node, MedicaidID):
                     id_node, _ = id_node.get_or_create(
                         {"value": id_node.value, "state": id_node.state},
-                        {"startDate": id_node.start_date, "end_date": id_node.end_date},
+                        {"start_date": id_node.start_date, "end_date": id_node.end_date},
                     )
                 else:
                     id_node.save()

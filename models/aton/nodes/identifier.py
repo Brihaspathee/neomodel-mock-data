@@ -21,7 +21,14 @@ class Identifier(BaseNode):
             node = cls.nodes.get(**lookup_props)
             created = False
         except DoesNotExist:
+            log.info(">>> Creating an identifier node with lookup props %s", lookup_props)
+            log.info(">>> Creating an identifier node with other props %s", other_props)
             node = cls(**lookup_props, **other_props).save()
+            # node = cls(**lookup_props)
+            # for k, v in other_props.items():
+            #     setattr(node, k, v)
+            # log.info(">>> Sav identifier node %s", node)
+            # node.save()
             created = True
         except MultipleNodesReturned as e:
             raise MultipleNodesReturned(
@@ -52,7 +59,7 @@ class NPI(Identifier):
 
 class TIN(Identifier):
     _node_labels = ('Identifier', 'TIN' )
-    legal_name: str= StringProperty(required=False)
+    legal_name: str= StringProperty(required=False, db_property='legalName')
     organization = RelationshipFrom(
         "models.aton.nodes.organization.Organization",
         "HAS_TIN"

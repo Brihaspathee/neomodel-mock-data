@@ -57,7 +57,7 @@ def find_or_create_product(product):
         product.save()
         pp_net: LegacySystemIdentifier = product.context.get_portico_source()
         pp_net.save()
-        log.info(f"Product node and PP_NET node created for {product.code}")
+        log.debug(f"Product node and PP_NET node created for {product.code}")
         pp_net.product.connect(product)
         return product
     else:
@@ -76,7 +76,7 @@ def find_or_create_product(product):
                 pp_net: LegacySystemIdentifier = product.context.get_portico_source()
                 log.debug(f"Product {product.code}'s portico source is: {pp_net}")
                 pp_net.save()
-                log.info(f"PP_NET node created for product {product.code}")
+                log.debug(f"PP_NET node created for product {product.code}")
                 pp_net.product.connect(existing_product)
         existing_product.context = product.context
         product = existing_product
@@ -105,7 +105,7 @@ def find_or_create_network(network):
         pp_net: LegacySystemIdentifier = network.context.get_portico_source()
         pp_net.save()
         pp_net.network.connect(network)
-        log.info(f"Created Network and PP_NET node for {network.code}")
+        log.debug(f"Created Network and PP_NET node for {network.code}")
     else:
         # The network already exists with the same id and/or name
         log.debug(f"Network {network.name} already exists")
@@ -120,7 +120,7 @@ def find_or_create_network(network):
                 pp_net: LegacySystemIdentifier = network.context.get_portico_source()
                 log.debug(f"Network {network.code}'s portico source is: {pp_net}")
                 pp_net.save()
-                log.info(f"PP_NET node created for network {network.code}")
+                log.debug(f"PP_NET node created for network {network.code}")
                 pp_net.network.connect(existing_network)
         existing_network.context = network.context
         network = existing_network
