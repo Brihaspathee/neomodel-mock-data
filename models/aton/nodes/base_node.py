@@ -1,4 +1,13 @@
-from neomodel import StructuredNode, BooleanProperty
+import secrets
+import string
+
+from neomodel import StructuredNode, BooleanProperty, StringProperty
+
+import logging
+
+from utils.common_utils import generate_unique_code
+
+log = logging.getLogger(__name__)
 
 
 class BaseNode(StructuredNode):
@@ -20,6 +29,7 @@ class BaseNode(StructuredNode):
     __abstract_node__ = True
 
     isMockData = BooleanProperty(required=False)
+    code = StringProperty(required=False)
 
     def save(self, *args, **kwargs):
         """
@@ -31,7 +41,14 @@ class BaseNode(StructuredNode):
         :param kwargs: Keyword arguments to pass to the base save method
         :return: The result of calling the base save method
         """
-        from .mock_context import is_mock_enabled
+        from .mock_context import is_mock_enabled, get_create_entity_code
         if is_mock_enabled():
             self.isMockData = True
+        node_label = self.__label__
+        log.debug(f"Saving {node_label} node")
+        if get_create_entity_code() and (node_label == "Practitioner" or
+                                       node_label == "Organization" or
+                                       node_label == "Location"):
+            self.code = generate_unique_code(15)
         return super().save(*args, **kwargs)
+

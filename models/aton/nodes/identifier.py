@@ -21,8 +21,8 @@ class Identifier(BaseNode):
             node = cls.nodes.get(**lookup_props)
             created = False
         except DoesNotExist:
-            log.info(">>> Creating an identifier node with lookup props %s", lookup_props)
-            log.info(">>> Creating an identifier node with other props %s", other_props)
+            log.debug(">>> Creating an identifier node with lookup props %s", lookup_props)
+            log.debug(">>> Creating an identifier node with other props %s", other_props)
             node = cls(**lookup_props, **other_props).save()
             # node = cls(**lookup_props)
             # for k, v in other_props.items():

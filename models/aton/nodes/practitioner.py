@@ -8,9 +8,9 @@ from models.aton.relationships.has_privilege import HasPrivilege
 
 
 class Practitioner(BaseNode):
-    first_name: str = StringProperty(required=True)
-    last_name: str = StringProperty(required=True)
-    middle_name: str = StringProperty(required=False)
+    first_name: str = StringProperty(required=True, db_property='firstName')
+    last_name: str = StringProperty(required=True, db_property='lastName')
+    middle_name: str = StringProperty(required=False, db_property='middleName')
     birthDate: DateType = DateProperty(required=False)
     salutation: str = StringProperty(required=False)
     suffix: str = StringProperty(required=False)

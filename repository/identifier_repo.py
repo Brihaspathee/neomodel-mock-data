@@ -19,7 +19,7 @@ def create_identifiers(owner_node):
         for id_node in id_list:
             if not hasattr(id_node, "element_id") or id_node.element_id is None:
                 if isinstance(id_node, TIN):
-                    log.info(f"TIN Node:{id_node}")
+                    log.debug(f"TIN Node:{id_node}")
                     id_node, _ = id_node.get_or_create(
                         {"value": id_node.value},
                         {"legal_name": id_node.legal_name},

@@ -11,7 +11,7 @@ from utils.log_provider import log_providers, log_provider
 from aton_writes.service.aton_write import write_to_aton, write_products_networks
 from transform import transform_network
 from transform import transform_provider
-from models.aton.nodes.mock_context import enable_mock
+from models.aton.nodes.mock_context import enable_mock, set_create_entity_code
 import logging
 
 from models.portico import PPNet, PPProv
@@ -36,6 +36,7 @@ def main():
     portico_db.connect()
     init_db()
     enable_mock()
+    set_create_entity_code(True)
 
     user_input: str = input("Select an option: \n0. Load all networks only\n1. Load all providers\n2. Load data for a single provider :")
     if user_input == "0":
